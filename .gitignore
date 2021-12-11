@@ -1,0 +1,10 @@
+# Project exclude paths
+/cmake-build-debug/
+
+# Tal edit
+# **/.idea
+# **/CMakeLists.txt
+# .clang-format
+**/a.out
+**/latex
+**/html
