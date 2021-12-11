@@ -1,0 +1,6 @@
+5
+e
+f 21 omni
+f 10 qir
+tr 30 pq
+a

@@ -1,0 +1,7 @@
+6
+e
+f 99 raq
+f -100 shc
+b
+d
+d

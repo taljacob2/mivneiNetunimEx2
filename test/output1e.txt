@@ -1,0 +1,5 @@
+10 GRUEN
+30 BLAU
+10 GRUEN
+10 GRUEN
+wrong input

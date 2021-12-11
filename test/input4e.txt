@@ -1,0 +1,7 @@
+6
+e
+f 9 hotel
+f 8 shkorona
+f 11 bis
+e
+f 100 wann

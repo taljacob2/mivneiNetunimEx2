@@ -1,0 +1,22 @@
+21
+e
+f 1 Regen
+f 25 gegen
+f 150 t62 Hammer
+f 10 LEid
+f -7 Prinzip
+c
+a
+b
+a
+g
+b
+b
+d
+f -7 addition
+f 900 another MistAke
+g
+b
+b
+c
+a
