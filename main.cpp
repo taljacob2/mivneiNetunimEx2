@@ -1,3 +1,4 @@
+#include "Constants.h"
 #include <iostream>
 
 /**
@@ -7,6 +8,12 @@
  * @version 1.0
  */
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    try {
+        std::cout << "Hello, World!" << std::endl;
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+        return Constants::MAIN_ERROR;
+    }
+
     return 0;
 }
