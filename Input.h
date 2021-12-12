@@ -235,7 +235,7 @@ class Input {
                 countNumberOfDelimiterInString(str, delimiter) + 1;
         outputSplitArray = new std::string[outputSplitArraySize];
 
-        // Manipulate a deep-copy of `str` before using `strtok`.
+        // Create a deep-copy of `str` for using `strtok`.
         std::string strCopy = str;
         char *      token   = std::strtok((char *) strCopy.c_str(), &delimiter);
         for (int i = 0; (i < outputSplitArraySize) && (token); i++) {
