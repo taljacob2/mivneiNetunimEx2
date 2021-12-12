@@ -237,7 +237,8 @@ class Input {
 
         // Create a deep-copy of `str` for using `strtok`.
         std::string strCopy = str;
-        char *      token   = std::strtok((char *) strCopy.c_str(), &delimiter);
+        char *      token =
+                std::strtok(const_cast<char *>(strCopy.c_str()), &delimiter);
         for (int i = 0; (i < outputSplitArraySize) && (token); i++) {
             outputSplitArray[i] = token;
             token               = std::strtok(nullptr, &delimiter);
