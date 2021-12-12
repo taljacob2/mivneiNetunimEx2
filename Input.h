@@ -78,7 +78,7 @@ class Input {
     static void validateTestArray(std::string *testArray, int numberOfTests) {
         for (int i = 0; i < numberOfTests; i++) {
 
-            // Split the current line by ' ' delimiters.
+            // Split the current line by ' ' delimiter.
             int          splitArraySize;
             std::string *splitArray = nullptr;
             split(testArray[i], ' ', splitArray, splitArraySize);
