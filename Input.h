@@ -68,7 +68,8 @@ class Input {
      * @return `true` if the @p str given was found as a `char` between
      *         `Constants::MINIMUM_LETTER` and `Constants::MAXIMUM_LETTER`.
      *         Else, `false`.
-     * @see Constants::Constants
+     * @see Constants::MINIMUM_LETTER
+     * @see Constants::MAXIMUM_LETTER
      */
     static bool predicateIsValidLetter(std::string &str) {
         return (str.length() == 1) && (Constants::MINIMUM_LETTER <= str[0]) &&
@@ -76,6 +77,14 @@ class Input {
     }
 
   private:
+    /**
+     * @brief Gets a whole line from an input-stream - from the start of the
+     *        line until the `Constants::NEW_LINE` char (not included).
+     * @param istream the input-stream to get a line from.
+     * @return a `std::string` that contains represents the line gotten from
+     * the given @p istream input-stream.
+     * @see Constants::NEW_LINE
+     */
     static std::string getLine(std::istream &istream) {
         char        input;
         std::string returnValue;

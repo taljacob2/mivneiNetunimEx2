@@ -39,9 +39,6 @@ template<typename K, typename V> class Entry {
     }
 
   public:
-    /**
-     * @brief Empty default constructor.
-     */
     Entry() = default;
 
   public:

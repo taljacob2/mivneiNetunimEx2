@@ -19,14 +19,14 @@ class Constants {
   public:
     /**
      * The minimum letter which is valid to be inputted.
-     * @see Input::Input::predicateIsValidLetter(std::string &)
+     * @see Input::predicateIsValidLetter(std::string &)
      */
     static constexpr char MINIMUM_LETTER = 'a';
 
   public:
     /**
      * The maximum letter which is valid to be inputted.
-     * @see Input::Input::predicateIsValidLetter(std::string &)
+     * @see Input::predicateIsValidLetter(std::string &)
      */
     static constexpr char MAXIMUM_LETTER = 'g';
 };
