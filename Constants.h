@@ -36,7 +36,7 @@ class Constants {
      * the testArray.
      * @see Input::validateTestArray(std::string *, int)s
      */
-    static constexpr char FIRST_LETTER = 'f';
+    static constexpr char FIRST_LETTER = 'e';
 
   public:
     /**
