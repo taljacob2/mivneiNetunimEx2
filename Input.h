@@ -29,20 +29,49 @@ class Input {
   private:
     static void validateTestArray(std::string *testArray, int numberOfTests) {
         for (int i = 0; i < numberOfTests; i++) {
-            // TODO: debug:
+
+            // Split the current line by ' ' delimiters.
             int          splitArraySize;
             std::string *splitArray = nullptr;
             split(testArray[i], ' ', splitArray, splitArraySize);
 
-            //
-            // // Validate first letter.
-            // std::istringstream is(testArray[i]);
-            // std::string stringUntilFirstSpace = getLineUntilEndingChar(is, ' ');
-            // if (!predicateIsValidLetter(stringUntilFirstSpace)) {
-            //     throw std::runtime_error(Constants::WRONG_INPUT);
-            // }
-            //
-            // // Validate parameters after first letter.
+            // Validate first letter.
+            if (i == 0) {
+                if (!((testArray[i].length() == 1) &&
+                      testArray[i][0] == Constants::FIRST_LETTER)) {
+                    throw std::runtime_error(Constants::WRONG_INPUT);
+                }
+            } else {
+                if (!predicateIsValidLetter(splitArray[0])) {
+                    throw std::runtime_error(Constants::WRONG_INPUT);
+                }
+            }
+
+            // Validate parameters after first letter.
+            if (splitArraySize > 1) {
+                assertAllowedTwoParameters(splitArray, splitArraySize);
+            }
+        }
+    }
+
+  private:
+    static void assertAllowedTwoParameters(const std::string *splitArray,
+                                           int                splitArraySize) {
+
+        // Allow only the letter `Constants::ALLOWED_TWO_PARAMETERS_LETTER`.
+        if (splitArray[0].c_str() !=
+            (const char *) Constants::ALLOWED_TWO_PARAMETERS_LETTER) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+
+        // Assert having exactly two parameters after the allowed letter.
+        if (splitArraySize != 3) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+
+        // First parameter must be a positive number.
+        if (!predicateIsPositive<int>(std::stoi(splitArray[1]))) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
 

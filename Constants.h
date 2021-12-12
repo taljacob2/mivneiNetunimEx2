@@ -29,6 +29,21 @@ class Constants {
      * @see Input::predicateIsValidLetter(std::string &)
      */
     static constexpr char MAXIMUM_LETTER = 'g';
+
+  public:
+    /**
+     * The letter which must be the presented at first, when validating
+     * the testArray.
+     * @see Input::validateTestArray(std::string *, int)s
+     */
+    static constexpr char FIRST_LETTER = 'f';
+
+  public:
+    /**
+     * The letter which after it the user needs to provide 2 parameters.
+     * @see Input::validateTestArray(std::string *, int)
+     */
+    static constexpr char ALLOWED_TWO_PARAMETERS_LETTER = 'f';
 };
 
 #endif // CONSTANTS_H
