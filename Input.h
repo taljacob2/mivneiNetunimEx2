@@ -108,7 +108,7 @@ class Input {
     static void assertAllowedTwoParameters(const std::string *splitArray,
                                            int                splitArraySize) {
 
-        // Allow only the letter `Constants::ALLOWED_TWO_PARAMETERS_LETTER`.
+        // Allow only the letter `ALLOWED_TWO_PARAMETERS_LETTER`.
         if (splitArray[0].c_str()[0] != ALLOWED_TWO_PARAMETERS_LETTER) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
@@ -167,10 +167,10 @@ class Input {
     /**
      * @param str element to check.
      * @return `true` if the @p str given was found as a `char` between
-     *         `Constants::MINIMUM_LETTER` and `Constants::MAXIMUM_LETTER`.
+     *         `MINIMUM_LETTER` and `MAXIMUM_LETTER`.
      *         Else, `false`.
-     * @see Constants::MINIMUM_LETTER
-     * @see Constants::MAXIMUM_LETTER
+     * @see MINIMUM_LETTER
+     * @see MAXIMUM_LETTER
      */
     static bool predicateIsValidLetter(std::string &str) {
         return (str.length() == 1) && (MINIMUM_LETTER <= str[0]) &&
