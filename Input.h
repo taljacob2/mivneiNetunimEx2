@@ -3,9 +3,11 @@
 #define INPUT_H
 
 #include "Constants.h"
+#include <cstring>
 #include <exception>
 #include <functional>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 /**
@@ -20,13 +22,34 @@ class Input {
         int   numberOfTests = getValidNumberOfTests();
         auto *testArray     = new std::string[numberOfTests];
         initializeTestArray(testArray, numberOfTests);
+        validateTestArray(testArray, numberOfTests);
         return testArray;
+    }
+
+  private:
+    static void validateTestArray(std::string *testArray, int numberOfTests) {
+        for (int i = 0; i < numberOfTests; i++) {
+            // TODO: debug:
+            int          splitArraySize;
+            std::string *splitArray = nullptr;
+            split(testArray[i], ' ', splitArray, splitArraySize);
+
+            //
+            // // Validate first letter.
+            // std::istringstream is(testArray[i]);
+            // std::string stringUntilFirstSpace = getLineUntilEndingChar(is, ' ');
+            // if (!predicateIsValidLetter(stringUntilFirstSpace)) {
+            //     throw std::runtime_error(Constants::WRONG_INPUT);
+            // }
+            //
+            // // Validate parameters after first letter.
+        }
     }
 
   private:
     /**
      * @return numberOfTests gotten.
-     * @throws runtime_error in case of `numberOfTests < 1`.
+     * @throws std::runtime_error in case of `numberOfTests < 1`.
      */
     static int getValidNumberOfTests() {
         int numberOfTests;
@@ -82,21 +105,72 @@ class Input {
      *        line until the `Constants::NEW_LINE` char (not included).
      * @param istream the input-stream to get a line from.
      * @return a `std::string` that contains represents the line gotten from
-     * the given @p istream input-stream.
+     *         the given @p istream input-stream.
      * @see Constants::NEW_LINE
+     * @see getLineUntilEndingChar(std::istream &, char)
      */
     static std::string getLine(std::istream &istream) {
+        return getLineUntilEndingChar(istream, Constants::NEW_LINE);
+    }
+
+  private:
+    /**
+     * @brief Gets a whole line from an input-stream - from the start of the
+     *        line until the @p endingChar char (not included).
+     * @param istream the input-stream to get a line from.
+     * @return a `std::string` that contains represents the line gotten from
+     *         the given @p istream input-stream.
+     */
+    static std::string getLineUntilEndingChar(std::istream &istream,
+                                              char          endingChar) {
         char        input;
         std::string returnValue;
 
-        // Ignore the first char if it is a `Constants::NEW_LINE`.
+        // Ignore the first char if it is an `endingChar`.
         istream.get(input);
-        if (input != Constants::NEW_LINE) { istream.unget(); }
+        if (input != endingChar) { istream.unget(); }
 
         istream.get(input);
-        while (input != Constants::NEW_LINE) {
+        while (input != endingChar) {
             returnValue += input;
             istream.get(input);
+        }
+        return returnValue;
+    }
+
+  private:
+    /**
+     * @brief splits a given string by a given delimiter.
+     *
+     * @note requires `#include <cstring>`.
+     * @param str the `std::string` to split by the given @p delimiter.
+     * @param delimiter a `std::string` that the given @p str will be
+     *                  split by.
+     * @param outputSplitArray an array of `std::string`s after split.
+     * @param outputSplitArraySize the size of the @p outputSplitArray.
+     * @todo delete @p outputSplitArray afterwards.
+     */
+    static void split(std::string &str, char delimiter,
+                      std::string *&outputSplitArray,
+                      int &         outputSplitArraySize) {
+        outputSplitArraySize =
+                countNumberOfDelimiterInString(str, delimiter) + 1;
+        outputSplitArray = new std::string[outputSplitArraySize];
+        char *token      = std::strtok((char *) str.c_str(), &delimiter);
+        for (int i = 0; (i < outputSplitArraySize) && (token); i++) {
+            outputSplitArray[i] = token;
+            token               = std::strtok(nullptr, &delimiter);
+        }
+    }
+
+  private:
+    static int countNumberOfDelimiterInString(std::string &str,
+                                              char         delimiter) {
+        int returnValue = 0;
+        for (int i = 1; i < str.length(); i++) {
+            if ((str[i] == delimiter) && (str[i - 1] != delimiter)) {
+                returnValue++;
+            }
         }
         return returnValue;
     }
