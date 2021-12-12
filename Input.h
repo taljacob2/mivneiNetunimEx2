@@ -79,8 +79,8 @@ class Input {
         for (int i = 0; i < testArraySize; i++) {
 
             // Split the current line by ' ' delimiter.
-            int          splitArraySize;
-            std::string *splitArray = nullptr;
+            int          splitArraySize = 0;
+            std::string *splitArray     = nullptr;
             split(testArray[i], ' ', splitArray, splitArraySize);
 
             // Validate first letter.
@@ -248,7 +248,7 @@ class Input {
     static int countNumberOfDelimiterInString(std::string &str,
                                               char         delimiter) {
         int returnValue = 0;
-        for (int i = 1; i < str.length(); i++) {
+        for (long unsigned int i = 1; i < str.length(); i++) {
             if ((str[i] == delimiter) && (str[i - 1] != delimiter)) {
                 returnValue++;
             }

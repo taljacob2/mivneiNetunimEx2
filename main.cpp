@@ -11,8 +11,8 @@
 int main() {
     std::string *testArray = nullptr;
     try {
-        int testArraySize;
-        testArray = Input::getTestArray(testArraySize);
+        int testArraySize = 0;
+        testArray         = Input::getTestArray(testArraySize);
 
         delete[] testArray;
     } catch (std::exception &e) {
