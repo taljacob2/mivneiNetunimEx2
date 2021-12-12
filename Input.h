@@ -75,8 +75,8 @@ class Input {
     }
 
   private:
-    static void validateTestArray(std::string *testArray, int numberOfTests) {
-        for (int i = 0; i < numberOfTests; i++) {
+    static void validateTestArray(std::string *testArray, int testArraySize) {
+        for (int i = 0; i < testArraySize; i++) {
 
             // Split the current line by ' ' delimiter.
             int          splitArraySize;
@@ -109,8 +109,7 @@ class Input {
                                            int                splitArraySize) {
 
         // Allow only the letter `Constants::ALLOWED_TWO_PARAMETERS_LETTER`.
-        if (splitArray[0].c_str() !=
-            (const char *) ALLOWED_TWO_PARAMETERS_LETTER) {
+        if (splitArray[0].c_str()[0] != ALLOWED_TWO_PARAMETERS_LETTER) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
@@ -235,7 +234,10 @@ class Input {
         outputSplitArraySize =
                 countNumberOfDelimiterInString(str, delimiter) + 1;
         outputSplitArray = new std::string[outputSplitArraySize];
-        char *token      = std::strtok((char *) str.c_str(), &delimiter);
+
+        // Manipulate a deep-copy of `str` when using `strtok`.
+        std::string strCopy = str;
+        char *      token   = std::strtok((char *) strCopy.c_str(), &delimiter);
         for (int i = 0; (i < outputSplitArraySize) && (token); i++) {
             outputSplitArray[i] = token;
             token               = std::strtok(nullptr, &delimiter);

@@ -13,9 +13,6 @@ int main() {
     try {
         int testArraySize;
         testArray = Input::getTestArray(testArraySize);
-        for (int i = 0; i < testArraySize; i++){
-            std::cout << testArray[i] << std::endl;
-        }
 
         delete[] testArray;
     } catch (std::exception &e) {
