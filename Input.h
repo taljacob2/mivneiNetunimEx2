@@ -66,11 +66,11 @@ class Input {
      * @return an array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static std::string *getTestArray() {
-        int   numberOfTests = getValidNumberOfTests();
-        auto *testArray     = new std::string[numberOfTests];
-        initializeTestArray(testArray, numberOfTests);
-        validateTestArray(testArray, numberOfTests);
+    static std::string *getTestArray(int &testArraySize) {
+        testArraySize   = getValidNumberOfTests();
+        auto *testArray = new std::string[testArraySize];
+        initializeTestArray(testArray, testArraySize);
+        validateTestArray(testArray, testArraySize);
         return testArray;
     }
 
@@ -99,6 +99,8 @@ class Input {
             if (splitArraySize > 1) {
                 assertAllowedTwoParameters(splitArray, splitArraySize);
             }
+
+            delete[] splitArray;
         }
     }
 
