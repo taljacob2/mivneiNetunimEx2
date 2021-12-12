@@ -1,4 +1,5 @@
 #include "Constants.h"
+#include "Input.h"
 #include <iostream>
 
 /**
@@ -8,10 +9,16 @@
  * @version 1.0
  */
 int main() {
+    std::string *testArray = nullptr;
     try {
-        std::cout << "Hello, World!" << std::endl;
+        testArray = Input::getTestArray();
+
+
+        std::cout << "Hello, World!" << std::endl; // TODO: remove.
+        delete[] testArray;
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
+        delete[] testArray;
         return Constants::MAIN_ERROR;
     }
 
