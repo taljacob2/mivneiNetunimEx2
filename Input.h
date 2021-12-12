@@ -17,7 +17,55 @@
  */
 class Input {
 
+  private:
+    /**
+     * The minimum letter which is valid to be inputted.
+     * @see predicateIsValidLetter(std::string &)
+     */
+    static constexpr char MINIMUM_LETTER = 'a';
+
+  private:
+    /**
+     * The maximum letter which is valid to be inputted.
+     * @see predicateIsValidLetter(std::string &)
+     */
+    static constexpr char MAXIMUM_LETTER = 'g';
+
+  private:
+    /**
+     * The letter which must be the presented at first, when validating
+     * the testArray.
+     * @see validateTestArray(std::string *, int)s
+     */
+    static constexpr char FIRST_LETTER = 'e';
+
+  private:
+    /**
+     * The letter which after it the user needs to provide 2 parameters.
+     * @see validateTestArray(std::string *, int)
+     */
+    static constexpr char ALLOWED_TWO_PARAMETERS_LETTER = 'f';
+
   public:
+    /**
+     * @brief Gets the an array of tests from the input-stream, and assert the
+     *        validity of it.
+     *
+     * For example:
+     * a valid input would be:
+     * @code
+     * 6
+     * e
+     * f 3 hi
+     * f 2 why
+     * f 9 bye
+     * f 7 day
+     * g
+     * @endcode
+     *
+     * @return an array that each element of it is a line inputted.
+     * @todo delete[] testArray.
+     */
     static std::string *getTestArray() {
         int   numberOfTests = getValidNumberOfTests();
         auto *testArray     = new std::string[numberOfTests];
@@ -38,7 +86,7 @@ class Input {
             // Validate first letter.
             if (i == 0) {
                 if (!((testArray[i].length() == 1) &&
-                      testArray[i][0] == Constants::FIRST_LETTER)) {
+                      testArray[i][0] == FIRST_LETTER)) {
                     throw std::runtime_error(Constants::WRONG_INPUT);
                 }
             } else {
@@ -60,7 +108,7 @@ class Input {
 
         // Allow only the letter `Constants::ALLOWED_TWO_PARAMETERS_LETTER`.
         if (splitArray[0].c_str() !=
-            (const char *) Constants::ALLOWED_TWO_PARAMETERS_LETTER) {
+            (const char *) ALLOWED_TWO_PARAMETERS_LETTER) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
@@ -124,8 +172,8 @@ class Input {
      * @see Constants::MAXIMUM_LETTER
      */
     static bool predicateIsValidLetter(std::string &str) {
-        return (str.length() == 1) && (Constants::MINIMUM_LETTER <= str[0]) &&
-               (str[0] <= Constants::MAXIMUM_LETTER);
+        return (str.length() == 1) && (MINIMUM_LETTER <= str[0]) &&
+               (str[0] <= MAXIMUM_LETTER);
     }
 
   private:
@@ -177,7 +225,7 @@ class Input {
      *                  split by.
      * @param outputSplitArray an array of `std::string`s after split.
      * @param outputSplitArraySize the size of the @p outputSplitArray.
-     * @todo delete @p outputSplitArray afterwards.
+     * @todo delete[] @p outputSplitArray.
      */
     static void split(std::string &str, char delimiter,
                       std::string *&outputSplitArray,

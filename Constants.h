@@ -15,35 +15,6 @@ class Constants {
   public:
     /// The text to be presented when there is a wrong input.
     static constexpr char *WRONG_INPUT = (char *) "wrong input";
-
-  public:
-    /**
-     * The minimum letter which is valid to be inputted.
-     * @see Input::predicateIsValidLetter(std::string &)
-     */
-    static constexpr char MINIMUM_LETTER = 'a';
-
-  public:
-    /**
-     * The maximum letter which is valid to be inputted.
-     * @see Input::predicateIsValidLetter(std::string &)
-     */
-    static constexpr char MAXIMUM_LETTER = 'g';
-
-  public:
-    /**
-     * The letter which must be the presented at first, when validating
-     * the testArray.
-     * @see Input::validateTestArray(std::string *, int)s
-     */
-    static constexpr char FIRST_LETTER = 'e';
-
-  public:
-    /**
-     * The letter which after it the user needs to provide 2 parameters.
-     * @see Input::validateTestArray(std::string *, int)
-     */
-    static constexpr char ALLOWED_TWO_PARAMETERS_LETTER = 'f';
 };
 
 #endif // CONSTANTS_H
