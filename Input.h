@@ -76,12 +76,13 @@ class Input {
 
   private:
     static void validateTestArray(std::string *testArray, int testArraySize) {
+        char delimiter = ' ';
         for (int i = 0; i < testArraySize; i++) {
 
             // Split the current line by ' ' delimiter.
             int          splitArraySize = 0;
             std::string *splitArray     = nullptr;
-            split(testArray[i], ' ', splitArray, splitArraySize);
+            split(testArray[i], delimiter, splitArray, splitArraySize);
 
             // Validate first letter.
             if (i == 0) {
@@ -228,7 +229,7 @@ class Input {
      * @param outputSplitArraySize the size of the @p outputSplitArray.
      * @todo delete[] @p outputSplitArray.
      */
-    static void split(std::string &str, char delimiter,
+    static void split(std::string &str, char &delimiter,
                       std::string *&outputSplitArray,
                       int &         outputSplitArraySize) {
         outputSplitArraySize =
