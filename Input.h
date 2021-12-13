@@ -59,7 +59,7 @@ class Input {
      * f 3 hi
      * f 2 why
      * f 9 bye
-     * f 7 day
+     * f 7 day hello hey
      * g
      * @endcode
      *
@@ -155,8 +155,14 @@ class Input {
 
   public:
     /**
-     * @brief this method validates a test string (of `testArray[i]`),
-     *        and returns it.
+     * @brief this method validates a test string which is an element of @p
+     *        testArray ( = `testArray[i]`), splits it by a given @p delimiter
+     *        char and returns the split-array of those strings.
+     *
+     * @param testArray an array that contains multiple test strings.
+     * @param delimiter the delimiter char to split the extracted test with.
+     * @param i the index of the current test in the @p testArray given, you
+     *          wish to extract.
      * @throws std::runtime_error in case the `testArray[i]` is not valid.
      * @see validateTest(std::string *&, char &, int)
      * @todo delete [] splitArray.
