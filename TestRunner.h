@@ -7,11 +7,6 @@
 
 class TestRunner {
 
-  private:
-    static void runTest(std::string *&test) {
-        // TODO: do something with `test` here...
-    }
-
   public:
     static void runAllTests(std::string *&testArray, int testArraySize) {
         char delimiter = ' ';
@@ -20,6 +15,11 @@ class TestRunner {
             runTest(test);
             delete[] test;
         }
+    }
+
+  private:
+    static void runTest(std::string *&test) {
+        // TODO: do something with `test` here...
     }
 };
 
