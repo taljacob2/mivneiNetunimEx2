@@ -237,8 +237,8 @@ class Input {
 
   private:
     /**
-     * @brief If the last parameter has the ' ' char within it, merge the split
-     *        strings of it to one.
+     * @brief If the *last parameter* has the ' ' char within it, merge the
+     *        split strings of it to one.
      */
     static void mergeLastParameterWhenThereAreMoreThanThreeElements(
             std::string *&splitArray, int &splitArraySize) {
