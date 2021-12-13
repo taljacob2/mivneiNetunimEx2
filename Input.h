@@ -174,12 +174,6 @@ class Input {
             int splitArraySize = 0;
             split(testArray[i], delimiter, splitArray, splitArraySize);
 
-            // TODO: check split ok.
-            std::cout << "size: " << splitArraySize << std::endl;
-            for (int j = 0; j < splitArraySize; j++) {
-                std::cout << splitArray[j] << std::endl;
-            }
-
             assertSplit(i, splitArraySize, testArray, splitArray);
 
             // delete[] splitArray;
