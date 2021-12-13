@@ -98,8 +98,8 @@ class Input {
     }
 
   private:
-    static void assertFirstLetter(int i, std::string *testArray,
-                                  std::string *splitArray) {
+    static void assertFirstLetter(int i, std::string *&testArray,
+                                  std::string *&splitArray) {
         if (i == 0) {
             if (!((testArray[i].length() == 1) &&
                   testArray[i][0] == FIRST_LETTER)) {
