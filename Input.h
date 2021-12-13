@@ -77,16 +77,24 @@ class Input {
      * @brief Gets the number of tests for the user to input.
      * @return `numberOfTests` gotten. This value serves as the size of
      *         `testArray` in the system.
-     * @throws std::runtime_error in case of `numberOfTests < 1`.
+     * @throws std::runtime_error in case the size gotten is not a number, or
+     *         in case the number gotten is non-positive.
      * @see getTestArray(int &)
      */
     static int getValidTestArraySize() {
-        int numberOfTests;
-        std::cin >> numberOfTests;
-        if (numberOfTests < 1) {
+        std::string numberOfTestsString;
+        std::cin >> numberOfTestsString;
+
+        if (!predicateIsStringAnInt(numberOfTestsString)) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
-        return numberOfTests;
+
+        int numberOfTestsInt = stoi(numberOfTestsString);
+        if (numberOfTestsInt < 1) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+
+        return numberOfTestsInt;
     }
 
   private:
