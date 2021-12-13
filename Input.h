@@ -93,6 +93,28 @@ class Input {
 
   private:
     /**
+     * @brief Gets all the tests inputted, and places them as elements in
+     *        `testArray` with the type of `std::string`s.
+     * @param testArray an empty array of `std::string`s, to be initialized
+     *                  with all the tests the user inputted.
+     * @param testArraySize the size of the given @p testArray.
+     */
+    static void initializeTestArray(std::string *&testArray,
+                                    int           testArraySize) {
+        int sizeCounter = 0;
+
+        for (int i = 0; i < testArraySize; i++) {
+            testArray[i] = getLine(std::cin);
+            sizeCounter++;
+        }
+
+        if (sizeCounter != testArraySize) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+    }
+
+  private:
+    /**
      * @brief Checks the given @p testArray for its validity.
      * @param testArray the array of strings the user inputted.
      * @param testArraySize the size of the given @p testArray.
@@ -122,28 +144,6 @@ class Input {
         } catch (std::exception &e) {
             delete[] splitArray;
             throw;
-        }
-    }
-
-  private:
-    /**
-     * @brief Gets all the tests inputted, and places them as elements in
-     *        `testArray` with the type of `std::string`s.
-     * @param testArray an empty array of `std::string`s, to be initialized
-     *                  with all the tests the user inputted.
-     * @param testArraySize the size of the given @p testArray.
-     */
-    static void initializeTestArray(std::string *&testArray,
-                                    int           testArraySize) {
-        int sizeCounter = 0;
-
-        for (int i = 0; i < testArraySize; i++) {
-            testArray[i] = getLine(std::cin);
-            sizeCounter++;
-        }
-
-        if (sizeCounter != testArraySize) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
 
