@@ -184,10 +184,10 @@ class Input {
     static void assertSplit(int i, int splitArraySize, std::string *&testArray,
                             std::string *&splitArray) {
 
-        // Validate first letter.
+        // Assert first letter.
         assertFirstLetter(i, testArray, splitArray);
 
-        // Validate parameters after first letter.
+        // Assert parameters after first letter.
         if (splitArraySize > 1) {
             assertAllowedTwoParameters(splitArray, splitArraySize);
         }
@@ -218,7 +218,13 @@ class Input {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
-        // Assert having exactly two parameters after the allowed letter.
+        mergeLastParameterWhenThereAreMoreThanThreeElements(splitArray,
+                                                            splitArraySize);
+
+        /*
+         * Assert having exactly two parameters after the allowed letter,
+         * while allowing the last parameter to contain ' ' chars within it.
+         */
         if (splitArraySize != 3) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
@@ -226,6 +232,21 @@ class Input {
         // First parameter must be a positive number.
         if (!predicateIsPositive<int>(std::stoi(splitArray[1]))) {
             throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+    }
+
+  private:
+    /**
+     * @brief If the last parameter has the ' ' char within it, merge the split
+     *        strings of it to one.
+     */
+    static void mergeLastParameterWhenThereAreMoreThanThreeElements(
+            std::string *&splitArray, int &splitArraySize) {
+        if (splitArraySize > 3) {
+            for (int i = 3; i < splitArraySize; i++) {
+                splitArray[2] += splitArray[i];
+            }
+            splitArraySize = 3;
         }
     }
 
