@@ -103,20 +103,25 @@ class Input {
     static void validateTestArray(std::string *testArray, int testArraySize) {
         char delimiter = ' ';
         for (int i = 0; i < testArraySize; i++) {
-            std::string *splitArray = nullptr;
-            try {
+            validateTest(testArray, delimiter, i);
+        }
+    }
 
-                // Split the current line by ' ' delimiter.
-                int splitArraySize = 0;
-                split(testArray[i], delimiter, splitArray, splitArraySize);
+  private:
+    static void validateTest(std::string *&testArray, char delimiter, int i) {
+        std::string *splitArray = nullptr;
+        try {
 
-                assertSplit(i, splitArraySize, testArray, splitArray);
+            // Split the current line by ' ' delimiter.
+            int splitArraySize = 0;
+            split(testArray[i], delimiter, splitArray, splitArraySize);
 
-                delete[] splitArray;
-            } catch (std::exception &e) {
-                delete[] splitArray;
-                throw;
-            }
+            assertSplit(i, splitArraySize, testArray, splitArray);
+
+            delete[] splitArray;
+        } catch (std::exception &e) {
+            delete[] splitArray;
+            throw;
         }
     }
 
