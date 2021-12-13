@@ -108,7 +108,7 @@ class Input {
     }
 
   private:
-    static void validateTest(std::string *&testArray, char delimiter, int i) {
+    static void validateTest(std::string *&testArray, char &delimiter, int i) {
         std::string *splitArray = nullptr;
         try {
 
