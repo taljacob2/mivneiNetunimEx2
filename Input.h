@@ -84,16 +84,23 @@ class Input {
                 int splitArraySize = 0;
                 split(testArray[i], delimiter, splitArray, splitArraySize);
 
-                // Validate first letter.
-                assertFirstLetter(i, testArray, splitArray);
-
-                // Validate parameters after first letter.
-                if (splitArraySize > 1) {
-                    assertAllowedTwoParameters(splitArray, splitArraySize);
-                }
+                assertSplit(i, splitArraySize, testArray, splitArray);
 
                 delete[] splitArray;
             } catch (std::exception &e) { delete[] splitArray; }
+        }
+    }
+
+  private:
+    static void assertSplit(int i, int splitArraySize, std::string *&testArray,
+                            std::string *&splitArray) {
+
+        // Validate first letter.
+        assertFirstLetter(i, testArray, splitArray);
+
+        // Validate parameters after first letter.
+        if (splitArraySize > 1) {
+            assertAllowedTwoParameters(splitArray, splitArraySize);
         }
     }
 
@@ -114,8 +121,8 @@ class Input {
     }
 
   private:
-    static void assertAllowedTwoParameters(const std::string *splitArray,
-                                           int                splitArraySize) {
+    static void assertAllowedTwoParameters(std::string *&splitArray,
+                                           int           splitArraySize) {
 
         // Allow only the letter `ALLOWED_TWO_PARAMETERS_LETTER`.
         if (splitArray[0].c_str()[0] != ALLOWED_TWO_PARAMETERS_LETTER) {
