@@ -75,6 +75,28 @@ class Input {
     }
 
   private:
+    /**
+     * @return numberOfTests gotten.
+     * @throws std::runtime_error in case of `numberOfTests < 1`.
+     */
+    static int getValidNumberOfTests() {
+        int numberOfTests;
+        std::cin >> numberOfTests;
+        if (numberOfTests < 1) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+        return numberOfTests;
+    }
+
+  private:
+    /**
+     * @brief Checks the given @p testArray for its validity.
+     * @param testArray the array of strings the user inputted.
+     * @param testArraySize the size of the given @p testArray.
+     * @throws std::runtime_error in case the given @p testArray is not valid.
+     * @see initializeTestArray(std::string *&, int)
+     * @see assertSplit(int, int, std::string *&, std::string *&)
+     */
     static void validateTestArray(std::string *testArray, int testArraySize) {
         char delimiter = ' ';
         for (int i = 0; i < testArraySize; i++) {
@@ -88,7 +110,25 @@ class Input {
                 assertSplit(i, splitArraySize, testArray, splitArray);
 
                 delete[] splitArray;
-            } catch (std::exception &e) { delete[] splitArray; }
+            } catch (std::exception &e) {
+                delete[] splitArray;
+                throw;
+            }
+        }
+    }
+
+  private:
+    static void initializeTestArray(std::string *&testArray,
+                                    int           numberOfTests) {
+        int sizeCounter = 0;
+
+        for (int i = 0; i < numberOfTests; i++) {
+            testArray[i] = getLine(std::cin);
+            sizeCounter++;
+        }
+
+        if (sizeCounter != numberOfTests) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
 
@@ -137,35 +177,6 @@ class Input {
 
         // First parameter must be a positive number.
         if (!predicateIsPositive<int>(std::stoi(splitArray[1]))) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
-        }
-    }
-
-  private:
-    /**
-     * @return numberOfTests gotten.
-     * @throws std::runtime_error in case of `numberOfTests < 1`.
-     */
-    static int getValidNumberOfTests() {
-        int numberOfTests;
-        std::cin >> numberOfTests;
-        if (numberOfTests < 1) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
-        }
-        return numberOfTests;
-    }
-
-  private:
-    static void initializeTestArray(std::string *&testArray,
-                                    int           numberOfTests) {
-        int sizeCounter = 0;
-
-        for (int i = 0; i < numberOfTests; i++) {
-            testArray[i] = getLine(std::cin);
-            sizeCounter++;
-        }
-
-        if (sizeCounter != numberOfTests) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
