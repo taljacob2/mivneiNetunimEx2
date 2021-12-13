@@ -80,6 +80,7 @@ class Input {
         for (int i = 0; i < testArraySize; i++) {
             std::string *splitArray = nullptr;
             try {
+
                 // Split the current line by ' ' delimiter.
                 int splitArraySize = 0;
                 split(testArray[i], delimiter, splitArray, splitArraySize);
