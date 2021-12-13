@@ -3,7 +3,6 @@
 #define INPUT_H
 
 #include "Constants.h"
-#include <cstring>
 #include <exception>
 #include <functional>
 #include <iostream>
