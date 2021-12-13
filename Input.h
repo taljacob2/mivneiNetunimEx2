@@ -366,6 +366,23 @@ class Input {
     }
 
   private:
+    static void splitPrivate(std::string &stringToSplit, char delimiter,
+                                std::string *&splitArray) {
+        for (long unsigned int stringToSplitIndex = 1, splitArrayIndex = 0,
+                               startIndex = 0;
+             stringToSplitIndex < stringToSplit.length();
+             stringToSplitIndex++) {
+            if ((stringToSplit[stringToSplitIndex] == delimiter) &&
+                (stringToSplit[stringToSplitIndex - 1] != delimiter)) {
+                splitArray[splitArrayIndex] = stringToSplit.substr(
+                        startIndex, stringToSplitIndex - startIndex);
+                splitArrayIndex++;
+                startIndex = stringToSplitIndex + 1;
+            }
+        }
+    }
+
+  private:
     static int countNumberOfDelimiterInString(std::string &str,
                                               char         delimiter) {
         int returnValue = 0;
