@@ -9,9 +9,8 @@ class TestRunner {
 
   public:
     static void runAllTests(std::string *&testArray, int testArraySize) {
-        char delimiter = ' ';
         for (int i = 0; i < testArraySize; i++) {
-            std::string *test = Input::getTest(testArray, delimiter, i);
+            std::string *test = Input::getTest(testArray, ' ', i);
             runTest(test);
             delete[] test;
         }

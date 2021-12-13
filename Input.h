@@ -122,9 +122,8 @@ class Input {
      * @see assertSplit(int, int, std::string *&, std::string *&)
      */
     static void validateTestArray(std::string *testArray, int testArraySize) {
-        char delimiter = ' ';
         for (int i = 0; i < testArraySize; i++) {
-            validateTest(testArray, delimiter, i);
+            validateTest(testArray, ' ', i);
         }
     }
 
@@ -135,7 +134,7 @@ class Input {
      * @throws std::runtime_error in case the `testArray[i]` is not valid.
      * @see getTest(std::string *&, char &, int)
      */
-    static void validateTest(std::string *&testArray, char &delimiter, int i) {
+    static void validateTest(std::string *&testArray, char delimiter, int i) {
         std::string *splitArray = nullptr;
         try {
 
@@ -166,7 +165,7 @@ class Input {
      * @see validateTest(std::string *&, char &, int)
      * @todo delete [] splitArray.
      */
-    static std::string *getTest(std::string *&testArray, char &delimiter,
+    static std::string *getTest(std::string *&testArray, char delimiter,
                                 int i) {
         std::string *splitArray = nullptr;
         try {
@@ -174,6 +173,12 @@ class Input {
             // Split the current line by ' ' delimiter.
             int splitArraySize = 0;
             split(testArray[i], delimiter, splitArray, splitArraySize);
+
+            // TODO: check split ok.
+            std::cout << "size: " << splitArraySize << std::endl;
+            for (int j = 0; j < splitArraySize; j++) {
+                std::cout << splitArray[j] << std::endl;
+            }
 
             assertSplit(i, splitArraySize, testArray, splitArray);
 
@@ -348,29 +353,26 @@ class Input {
      * @param outputSplitArraySize the size of the @p outputSplitArray.
      * @todo delete[] @p outputSplitArray.
      */
-    static void split(std::string &str, char &delimiter,
+    static void split(std::string &str, char delimiter,
                       std::string *&outputSplitArray,
                       int &         outputSplitArraySize) {
         outputSplitArraySize =
                 countNumberOfDelimiterInString(str, delimiter) + 1;
         outputSplitArray = new std::string[outputSplitArraySize];
 
-        // Create a deep-copy of `str` for using `strtok`.
-        std::string strCopy = str;
-        char *      token =
-                std::strtok(const_cast<char *>(strCopy.c_str()), &delimiter);
-        for (int i = 0; (i < outputSplitArraySize) && (token); i++) {
-            outputSplitArray[i] = token;
-            token               = std::strtok(nullptr, &delimiter);
-        }
+        splitPrivate(str, delimiter, outputSplitArray);
     }
 
   private:
+    /**
+     * @see split(std::string &, char, std::string *&, int &)
+     */
     static void splitPrivate(std::string &stringToSplit, char delimiter,
-                                std::string *&splitArray) {
-        for (long unsigned int stringToSplitIndex = 1, splitArrayIndex = 0,
-                               startIndex = 0;
-             stringToSplitIndex < stringToSplit.length();
+                             std::string *&splitArray) {
+        long unsigned int stringToSplitIndex = 1;
+        long unsigned int splitArrayIndex    = 0;
+        long unsigned int startIndex         = 0;
+        for (; stringToSplitIndex < stringToSplit.length();
              stringToSplitIndex++) {
             if ((stringToSplit[stringToSplitIndex] == delimiter) &&
                 (stringToSplit[stringToSplitIndex - 1] != delimiter)) {
@@ -379,6 +381,12 @@ class Input {
                 splitArrayIndex++;
                 startIndex = stringToSplitIndex + 1;
             }
+        }
+
+        // There is no delimiter after the last string, so create a special case
+        if (stringToSplit[stringToSplitIndex - 1] != delimiter) {
+            splitArray[splitArrayIndex] = stringToSplit.substr(
+                    startIndex, stringToSplitIndex - startIndex);
         }
     }
 
