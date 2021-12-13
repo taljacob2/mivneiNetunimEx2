@@ -67,7 +67,7 @@ class Input {
      * @todo delete[] testArray.
      */
     static std::string *getTestArray(int &testArraySize) {
-        testArraySize   = getValidNumberOfTests();
+        testArraySize   = getValidTestArraySize();
         auto *testArray = new std::string[testArraySize];
         initializeTestArray(testArray, testArraySize);
         validateTestArray(testArray, testArraySize);
@@ -76,10 +76,13 @@ class Input {
 
   private:
     /**
-     * @return numberOfTests gotten.
+     * @brief Gets the number of tests for the user to input.
+     * @return `numberOfTests` gotten. This value serves as the size of
+     *         `testArray` in the system.
      * @throws std::runtime_error in case of `numberOfTests < 1`.
+     * @see getTestArray(int &)
      */
-    static int getValidNumberOfTests() {
+    static int getValidTestArraySize() {
         int numberOfTests;
         std::cin >> numberOfTests;
         if (numberOfTests < 1) {
@@ -118,16 +121,23 @@ class Input {
     }
 
   private:
+    /**
+     * @brief Gets all the tests inputted, and places them as elements in
+     *        `testArray` with the type of `std::string`s.
+     * @param testArray an empty array of `std::string`s, to be initialized
+     *                  with all the tests the user inputted.
+     * @param testArraySize the size of the given @p testArray.
+     */
     static void initializeTestArray(std::string *&testArray,
-                                    int           numberOfTests) {
+                                    int           testArraySize) {
         int sizeCounter = 0;
 
-        for (int i = 0; i < numberOfTests; i++) {
+        for (int i = 0; i < testArraySize; i++) {
             testArray[i] = getLine(std::cin);
             sizeCounter++;
         }
 
-        if (sizeCounter != numberOfTests) {
+        if (sizeCounter != testArraySize) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
