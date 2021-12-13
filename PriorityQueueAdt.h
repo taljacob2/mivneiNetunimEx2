@@ -16,45 +16,52 @@
  */
 template<typename K, typename V> class PriorityQueueAdt {
 
+  public:
     /**
      * @return the highest priority element, *without removing it* from the
      *         data-structure.
      */
-    Entry<K, V> max() = 0;
+    virtual Entry<K, V> max() = 0;
 
+  public:
     /**
      * @return the highest priority element, *and removes it* from the
      *         data-structure.
      */
-    Entry<K, V> deleteMax() = 0;
+    virtual Entry<K, V> deleteMax() = 0;
 
+  public:
     /**
      * @return the lowest priority element, *without removing it* from the
      *         data-structure.
      */
-    Entry<K, V> min() = 0;
+    virtual Entry<K, V> min() = 0;
 
+  public:
     /**
      * @return the lowest priority element, *and removes it* from the
      *         data-structure.
      */
-    Entry<K, V> deleteMin() = 0;
+    virtual Entry<K, V> deleteMin() = 0;
 
+  public:
     /**
      * @brief creates this new empty data-structure.
      */
-    void createEmpty() = 0;
+    virtual void createEmpty() = 0;
 
+  public:
     /**
      * @brief inserts an element to the data-structure.
      * @param element the element to insert.
      */
-    void insert(Entry<K, V> &element) = 0;
+    virtual void insert(Entry<K, V> &element) = 0;
 
+  public:
     /**
      * @return the median priority element.
      */
-    Entry<K, V> median() = 0;
+    virtual Entry<K, V> median() = 0;
 };
 
 #endif // PRIORITY_QUEUE_ADT_H
