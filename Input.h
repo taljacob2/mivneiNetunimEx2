@@ -229,6 +229,11 @@ class Input {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
+        // First parameter must be an `int` number.
+        if (!predicateIsStringAnInt(splitArray[1])) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+
         // First parameter must be a positive number.
         if (!predicateIsPositive<int>(std::stoi(splitArray[1]))) {
             throw std::runtime_error(Constants::WRONG_INPUT);
@@ -272,6 +277,19 @@ class Input {
     static bool predicateIsValidLetter(std::string &str) {
         return (str.length() == 1) && (MINIMUM_LETTER <= str[0]) &&
                (str[0] <= MAXIMUM_LETTER);
+    }
+
+  private:
+    /**
+     * @param str the `std::string` to check if it represents an `int` number.
+     * @return `true` if the @p str given represents an `int` number. Else,
+     *         `false`.
+     */
+    static bool predicateIsStringAnInt(std::string &str) {
+        for (char c : str) {
+            if (!(('0' <= c) && (c <= '9'))) { return false; }
+        }
+        return true;
     }
 
   private:
