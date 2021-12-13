@@ -85,7 +85,7 @@ class Input {
         std::string numberOfTestsString;
         std::cin >> numberOfTestsString;
 
-        if (!predicateIsStringAnInt(numberOfTestsString)) {
+        if (!predicateIsStringAnUnsignedInt(numberOfTestsString)) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
@@ -241,7 +241,7 @@ class Input {
         }
 
         // First parameter must be an `int` number.
-        if (!predicateIsStringAnInt(splitArray[1])) {
+        if (!predicateIsStringAnUnsignedInt(splitArray[1])) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
@@ -292,11 +292,12 @@ class Input {
 
   private:
     /**
-     * @param str the `std::string` to check if it represents an `int` number.
-     * @return `true` if the @p str given represents an `int` number. Else,
-     *         `false`.
+     * @param str the `std::string` to check if it represents an `unsigned int`
+     *            number.
+     * @return `true` if the @p str given represents an `unsigned int` number.
+     *          Else, `false`.
      */
-    static bool predicateIsStringAnInt(std::string &str) {
+    static bool predicateIsStringAnUnsignedInt(std::string &str) {
         for (char c : str) {
             if (!(('0' <= c) && (c <= '9'))) { return false; }
         }
