@@ -48,8 +48,8 @@ class Input {
 
   public:
     /**
-     * @brief Gets the an array of tests from the input-stream, and assert the
-     *        validity of it.
+     * @brief Gets the an array of tests from the input-stream, and asserts
+     *        only its size validity.
      *
      * For example:
      * a valid input would be:
@@ -70,7 +70,7 @@ class Input {
         testArraySize   = getValidTestArraySize();
         auto *testArray = new std::string[testArraySize];
         initializeTestArray(testArray, testArraySize);
-        validateTestArray(testArray, testArraySize);
+        // validateTestArray(testArray, testArraySize);
         return testArray;
     }
 
@@ -130,6 +130,12 @@ class Input {
     }
 
   private:
+    /**
+     * @deprecated this implementation validates a test string (of `testArray[i]`),
+     *             without returning it.
+     * @throws std::runtime_error in case the `testArray[i]` is not valid.
+     * @see getTest(std::string *&, char &, int)
+     */
     static void validateTest(std::string *&testArray, char &delimiter, int i) {
         std::string *splitArray = nullptr;
         try {
@@ -141,6 +147,33 @@ class Input {
             assertSplit(i, splitArraySize, testArray, splitArray);
 
             delete[] splitArray;
+        } catch (std::exception &e) {
+            delete[] splitArray;
+            throw;
+        }
+    }
+
+  public:
+    /**
+     * @brief this method validates a test string (of `testArray[i]`),
+     *        and returns it.
+     * @throws std::runtime_error in case the `testArray[i]` is not valid.
+     * @see validateTest(std::string *&, char &, int)
+     * @todo delete [] splitArray.
+     */
+    static std::string *getTest(std::string *&testArray, char &delimiter,
+                                int i) {
+        std::string *splitArray = nullptr;
+        try {
+
+            // Split the current line by ' ' delimiter.
+            int splitArraySize = 0;
+            split(testArray[i], delimiter, splitArray, splitArraySize);
+
+            assertSplit(i, splitArraySize, testArray, splitArray);
+
+            // delete[] splitArray;
+            return splitArray;
         } catch (std::exception &e) {
             delete[] splitArray;
             throw;
