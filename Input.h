@@ -85,17 +85,7 @@ class Input {
                 split(testArray[i], delimiter, splitArray, splitArraySize);
 
                 // Validate first letter.
-                if (i == 0) {
-                    if (!((testArray[i].length() == 1) &&
-                          testArray[i][0] == FIRST_LETTER)) {
-                        throw std::runtime_error(Constants::WRONG_INPUT);
-                    }
-                } else {
-                    if (!predicateIsValidLetter(splitArray[0]) ||
-                        testArray[i][0] == FIRST_LETTER) {
-                        throw std::runtime_error(Constants::WRONG_INPUT);
-                    }
-                }
+                assertFirstLetter(i, testArray, splitArray);
 
                 // Validate parameters after first letter.
                 if (splitArraySize > 1) {
@@ -104,6 +94,22 @@ class Input {
 
                 delete[] splitArray;
             } catch (std::exception &e) { delete[] splitArray; }
+        }
+    }
+
+  private:
+    static void assertFirstLetter(int i, std::string *testArray,
+                                  std::string *splitArray) {
+        if (i == 0) {
+            if (!((testArray[i].length() == 1) &&
+                  testArray[i][0] == FIRST_LETTER)) {
+                throw std::runtime_error(Constants::WRONG_INPUT);
+            }
+        } else {
+            if (!predicateIsValidLetter(splitArray[0]) ||
+                testArray[i][0] == FIRST_LETTER) {
+                throw std::runtime_error(Constants::WRONG_INPUT);
+            }
         }
     }
 
