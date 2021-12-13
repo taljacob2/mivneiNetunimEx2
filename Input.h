@@ -78,30 +78,32 @@ class Input {
     static void validateTestArray(std::string *testArray, int testArraySize) {
         char delimiter = ' ';
         for (int i = 0; i < testArraySize; i++) {
+            std::string *splitArray = nullptr;
+            try {
+                // Split the current line by ' ' delimiter.
+                int splitArraySize = 0;
+                split(testArray[i], delimiter, splitArray, splitArraySize);
 
-            // Split the current line by ' ' delimiter.
-            int          splitArraySize = 0;
-            std::string *splitArray     = nullptr;
-            split(testArray[i], delimiter, splitArray, splitArraySize);
-
-            // Validate first letter.
-            if (i == 0) {
-                if (!((testArray[i].length() == 1) &&
-                      testArray[i][0] == FIRST_LETTER)) {
-                    throw std::runtime_error(Constants::WRONG_INPUT);
+                // Validate first letter.
+                if (i == 0) {
+                    if (!((testArray[i].length() == 1) &&
+                          testArray[i][0] == FIRST_LETTER)) {
+                        throw std::runtime_error(Constants::WRONG_INPUT);
+                    }
+                } else {
+                    if (!predicateIsValidLetter(splitArray[0]) ||
+                        testArray[i][0] == FIRST_LETTER) {
+                        throw std::runtime_error(Constants::WRONG_INPUT);
+                    }
                 }
-            } else {
-                if (!predicateIsValidLetter(splitArray[0])) {
-                    throw std::runtime_error(Constants::WRONG_INPUT);
+
+                // Validate parameters after first letter.
+                if (splitArraySize > 1) {
+                    assertAllowedTwoParameters(splitArray, splitArraySize);
                 }
-            }
 
-            // Validate parameters after first letter.
-            if (splitArraySize > 1) {
-                assertAllowedTwoParameters(splitArray, splitArraySize);
-            }
-
-            delete[] splitArray;
+                delete[] splitArray;
+            } catch (std::exception &e) { delete[] splitArray; }
         }
     }
 
