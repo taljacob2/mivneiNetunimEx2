@@ -58,7 +58,8 @@ template<typename K, typename V> class Entry {
 
   public:
     friend std::ostream &operator<<(std::ostream &os, const Entry &entry) {
-        os << "(key: " << entry._key << ", value: " << entry._value << ")";
+        // os << "(key: " << entry._key << ", value: " << entry._value << ")";
+        os << entry._key << " " << entry._value;
         return os;
     }
 
