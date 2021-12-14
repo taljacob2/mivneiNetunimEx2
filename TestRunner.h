@@ -23,29 +23,30 @@ class TestRunner {
     static void runTest(std::string *&                   test,
                         PriorityQueue<int, std::string> &priorityQueue) {
         // TODO: do something with `test` here...
-        invokeMethodInPriorityQueueBySwitch(test, priorityQueue);
+        invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
+                test, priorityQueue);
     }
 
   private:
-    static void invokeMethodInPriorityQueueBySwitch(
+    static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
             std::string *&                   test,
             PriorityQueue<int, std::string> &priorityQueue) {
         char methodLetterToInvokeInPriorityQueue = test[0][0];
         if (methodLetterToInvokeInPriorityQueue == 'a') {
-            priorityQueue.max();
+            std::cout << priorityQueue.max();
         } else if (methodLetterToInvokeInPriorityQueue == 'b') {
-            priorityQueue.deleteMax();
+            std::cout << priorityQueue.deleteMax();
         } else if (methodLetterToInvokeInPriorityQueue == 'c') {
-            priorityQueue.min();
+            std::cout << priorityQueue.min();
         } else if (methodLetterToInvokeInPriorityQueue == 'd') {
-            priorityQueue.deleteMin();
+            std::cout << priorityQueue.deleteMin();
         } else if (methodLetterToInvokeInPriorityQueue == 'e') {
             priorityQueue.createEmpty();
         } else if (methodLetterToInvokeInPriorityQueue == 'f') {
             Entry<int, std::string> entry(stoi(test[1]), test[2]);
             priorityQueue.insert(entry);
         } else if (methodLetterToInvokeInPriorityQueue == 'g') {
-            priorityQueue.median();
+            std::cout << priorityQueue.median();
         }
     }
 };
