@@ -31,22 +31,32 @@ class TestRunner {
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
             std::string *&                   test,
             PriorityQueue<int, std::string> &priorityQueue) {
-        char methodLetterToInvokeInPriorityQueue = test[0][0];
-        if (methodLetterToInvokeInPriorityQueue == 'a') {
-            std::cout << priorityQueue.max();
-        } else if (methodLetterToInvokeInPriorityQueue == 'b') {
-            std::cout << priorityQueue.deleteMax();
-        } else if (methodLetterToInvokeInPriorityQueue == 'c') {
-            std::cout << priorityQueue.min();
-        } else if (methodLetterToInvokeInPriorityQueue == 'd') {
-            std::cout << priorityQueue.deleteMin();
-        } else if (methodLetterToInvokeInPriorityQueue == 'e') {
-            priorityQueue.createEmpty();
-        } else if (methodLetterToInvokeInPriorityQueue == 'f') {
-            Entry<int, std::string> entry(stoi(test[1]), test[2]);
-            priorityQueue.insert(entry);
-        } else if (methodLetterToInvokeInPriorityQueue == 'g') {
-            std::cout << priorityQueue.median();
+        try {
+            char methodLetterToInvokeInPriorityQueue = test[0][0];
+            if (methodLetterToInvokeInPriorityQueue == 'a') {
+                std::cout << priorityQueue.max();
+            } else if (methodLetterToInvokeInPriorityQueue == 'b') {
+                std::cout << priorityQueue.deleteMax();
+            } else if (methodLetterToInvokeInPriorityQueue == 'c') {
+                std::cout << priorityQueue.min();
+            } else if (methodLetterToInvokeInPriorityQueue == 'd') {
+                std::cout << priorityQueue.deleteMin();
+            } else if (methodLetterToInvokeInPriorityQueue == 'e') {
+                priorityQueue.createEmpty();
+            } else if (methodLetterToInvokeInPriorityQueue == 'f') {
+                Entry<int, std::string> entry(stoi(test[1]), test[2]);
+                priorityQueue.insert(entry);
+            } else if (methodLetterToInvokeInPriorityQueue == 'g') {
+                std::cout << priorityQueue.median();
+            }
+        } catch (std::exception &e) {
+
+            // TODO: remember to throw inside PriorityQueue.
+            /*
+             * Should occur when trying to delete and the priority-queue is
+             * already empty.
+             */
+            std::cout << Constants::WRONG_INPUT << std::endl;
         }
     }
 };
