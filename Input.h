@@ -160,9 +160,9 @@ class Input {
 
   public:
     /**
-     * @brief this method validates a test string which is an element of @p
-     *        testArray ( = `testArray[i]`), splits it by a given @p delimiter
-     *        char and returns the split-array of those strings.
+     * @brief this method returns a test string, which is an element of @p
+     *        testArray ( = `testArray[i]`), that is split by a given @p
+     *        delimiter char to multiple strings.
      *
      * @param testArray an array that contains multiple test strings.
      * @param delimiter the delimiter char to split the extracted test with.

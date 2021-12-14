@@ -24,6 +24,12 @@ class TestRunner {
                         PriorityQueue<int, std::string> &priorityQueue) {
         // TODO: do something with `test` here...
     }
+
+  private:
+    static void invokeMethodInPriorityQueueBySwitch(
+            PriorityQueue<int, std::string> &priorityQueue) {
+
+    }
 };
 
 #endif // TEST_RUNNER_H
