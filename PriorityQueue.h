@@ -8,6 +8,11 @@ template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
+    explicit PriorityQueue(bool invokeCreateEmpty) {
+        if (invokeCreateEmpty) { this->createEmpty(); }
+    }
+
+  public:
     Entry<K, V> max() override {}
 
   public:
