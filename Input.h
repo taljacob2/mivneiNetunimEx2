@@ -241,12 +241,7 @@ class Input {
         }
 
         // First parameter must be an `int` number.
-        if (!predicateIsStringAnUnsignedInt(splitArray[1])) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
-        }
-
-        // First parameter must be a positive number.
-        if (!predicateIsPositive<int>(std::stoi(splitArray[1]))) {
+        if (!predicateIsStringAnInt(splitArray[1])) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
@@ -300,6 +295,24 @@ class Input {
     static bool predicateIsStringAnUnsignedInt(std::string &str) {
         for (char c : str) {
             if (!(('0' <= c) && (c <= '9'))) { return false; }
+        }
+        return true;
+    }
+
+  private:
+    /**
+     * @param str the `std::string` to check if it represents an `int`
+     *            number.
+     * @return `true` if the @p str given represents an `int` number.
+     *          Else, `false`.
+     */
+    static bool predicateIsStringAnInt(std::string &str) {
+        if ((!(('0' <= str[0]) && (str[0] <= '9'))) &&
+            (!((str[0] == '+') || str[0] == '-'))) {
+            return false;
+        }
+        for (unsigned long int i = 1; i < str.length(); i++) {
+            if (!(('0' <= str[i]) && (str[i] <= '9'))) { return false; }
         }
         return true;
     }
