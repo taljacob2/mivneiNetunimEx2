@@ -23,12 +23,30 @@ class TestRunner {
     static void runTest(std::string *&                   test,
                         PriorityQueue<int, std::string> &priorityQueue) {
         // TODO: do something with `test` here...
+        invokeMethodInPriorityQueueBySwitch(test, priorityQueue);
     }
 
   private:
     static void invokeMethodInPriorityQueueBySwitch(
+            std::string *&                   test,
             PriorityQueue<int, std::string> &priorityQueue) {
-
+        char methodLetterToInvokeInPriorityQueue = test[0][0];
+        if (methodLetterToInvokeInPriorityQueue == 'a') {
+            priorityQueue.max();
+        } else if (methodLetterToInvokeInPriorityQueue == 'b') {
+            priorityQueue.deleteMax();
+        } else if (methodLetterToInvokeInPriorityQueue == 'c') {
+            priorityQueue.min();
+        } else if (methodLetterToInvokeInPriorityQueue == 'd') {
+            priorityQueue.deleteMin();
+        } else if (methodLetterToInvokeInPriorityQueue == 'e') {
+            priorityQueue.createEmpty();
+        } else if (methodLetterToInvokeInPriorityQueue == 'f') {
+            Entry<int, std::string> entry(stoi(test[1]), test[2]);
+            priorityQueue.insert(entry);
+        } else if (methodLetterToInvokeInPriorityQueue == 'g') {
+            priorityQueue.median();
+        }
     }
 };
 
