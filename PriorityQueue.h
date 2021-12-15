@@ -18,20 +18,23 @@ template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   private:
-    HeapAdt<K, V> *_greaterThanMedianMaxHeap = new MaxHeap<K, V>();
+    HeapAdt<K, V> *_greaterThanMedianMaxHeap = nullptr;
 
   private:
-    HeapAdt<K, V> *_greaterThanMedianMinHeap = new MinHeap<K, V>();
+    HeapAdt<K, V> *_greaterThanMedianMinHeap = nullptr;
 
   private:
-    HeapAdt<K, V> *_lowerOrEqualToMedianMaxHeap = new MaxHeap<K, V>();
+    HeapAdt<K, V> *_lessOrEqualToMedianMaxHeap = nullptr;
 
   private:
-    HeapAdt<K, V> *_lowerOrEqualToMedianMinHeap = new MinHeap<K, V>();
+    HeapAdt<K, V> *_lessOrEqualToMedianMinHeap = nullptr;
 
   public:
-    explicit PriorityQueue(bool invokeCreateEmpty) {
-        if (invokeCreateEmpty) { this->createEmpty(); }
+    explicit PriorityQueue(int physicalSizeOfEachHeap) {
+        _greaterThanMedianMaxHeap   = new MaxHeap<K, V>(physicalSizeOfEachHeap);
+        _greaterThanMedianMinHeap   = new MinHeap<K, V>(physicalSizeOfEachHeap);
+        _lessOrEqualToMedianMaxHeap = new MaxHeap<K, V>(physicalSizeOfEachHeap);
+        _lessOrEqualToMedianMinHeap = new MinHeap<K, V>(physicalSizeOfEachHeap);
     }
 
   public:
@@ -41,13 +44,13 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     virtual ~PriorityQueue() {
         delete _greaterThanMedianMaxHeap;
         delete _greaterThanMedianMinHeap;
-        delete _lowerOrEqualToMedianMaxHeap;
-        delete _lowerOrEqualToMedianMinHeap;
+        delete _lessOrEqualToMedianMaxHeap;
+        delete _lessOrEqualToMedianMinHeap;
     }
 
   public:
     Entry<K, V> max() override {
-        return *this->_greaterThanMedianMaxHeap->root(); // FIXME: check
+        return *_greaterThanMedianMaxHeap->root(); // FIXME: check
     }
 
   public:
@@ -55,14 +58,19 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     Entry<K, V> min() override {
-        return *this->_lowerOrEqualToMedianMinHeap->root(); // FIXME: check
+        return *_lessOrEqualToMedianMinHeap->root(); // FIXME: check
     }
 
   public:
     Entry<K, V> deleteMin() override {}
 
   public:
-    void createEmpty() override {}
+    void createEmpty() override {
+        _greaterThanMedianMaxHeap   = new MaxHeap<K, V>();
+        _greaterThanMedianMinHeap   = new MaxHeap<K, V>();
+        _lessOrEqualToMedianMaxHeap = new MaxHeap<K, V>();
+        _lessOrEqualToMedianMinHeap = new MaxHeap<K, V>();
+    }
 
   public:
     void insert(Entry<K, V> &element) override {}
@@ -72,7 +80,9 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
      * @return the median priority element - defining the median as the
      *         element that its priority is `ceil (n / 2)`
      */
-    Entry<K, V> median() override {}
+    Entry<K, V> median() override {
+        return *_lessOrEqualToMedianMaxHeap->root(); // FIXME: check
+    }
 
   public:
     friend std::ostream &operator<<(std::ostream &       os,
@@ -105,16 +115,16 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
                 std::cout, *priorityQueue._greaterThanMedianMinHeap);
 
         os << "---------------------------- ";
-        os << "_lowerOrEqualToMedianMaxHeap:";
+        os << "_lessOrEqualToMedianMaxHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._lowerOrEqualToMedianMaxHeap->print(
-                std::cout, *priorityQueue._lowerOrEqualToMedianMaxHeap);
+        priorityQueue._lessOrEqualToMedianMaxHeap->print(
+                std::cout, *priorityQueue._lessOrEqualToMedianMaxHeap);
 
         os << "---------------------------- ";
-        os << "_lowerOrEqualToMedianMinHeap:";
+        os << "_lessOrEqualToMedianMinHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._lowerOrEqualToMedianMinHeap->print(
-                std::cout, *priorityQueue._lowerOrEqualToMedianMinHeap);
+        priorityQueue._lessOrEqualToMedianMinHeap->print(
+                std::cout, *priorityQueue._lessOrEqualToMedianMinHeap);
         os << "---------------------------- ";
 
         return os;
