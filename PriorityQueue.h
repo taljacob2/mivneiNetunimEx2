@@ -74,8 +74,13 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     void insert(Entry<K, V> &element) override {
-        if (element > median()) {}
-        if (_greaterThanMedianMaxHeap->getLogicalSize()) }
+        if (element > median()) {
+            if (isLogicalSizeOfHeapAdtEven(_greaterThanMedianMaxHeap)){
+
+            }
+        }
+
+    }
 
   private:
     bool isLogicalSizeOfHeapAdtEven(HeapAdt<K, V> heapAdt) {
