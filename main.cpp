@@ -1,7 +1,7 @@
 #include "Constants.h"
 #include "Input.h"
-#include "MinHeap.h"
 #include "MaxHeap.h"
+#include "MinHeap.h"
 #include "TestRunner.h"
 #include <iostream>
 
@@ -20,15 +20,15 @@ int main() {
         TestRunner::runAllTests(testArray, testArraySize);
 
         // TODO: testing heaps:
-        MaxHeap<int, std::string> heap;
-        heap.insert(new Entry<int, std::string>(3, "hello"));
-        heap.insert(new Entry<int, std::string>(4, "yes"));
-        heap.insert(new Entry<int, std::string>(5, "hi"));
-        heap.insert(new Entry<int, std::string>(2, "hey"));
-        heap.insert(new Entry<int, std::string>(1, "no"));
-        heap.insert(new Entry<int, std::string>(7, "oye"));
-        std::cout <<"root is: " << *heap.deleteRoot();
-        std::cout << heap;
+        HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>();
+        heap->insert(new Entry<int, std::string>(3, "hello"));
+        heap->insert(new Entry<int, std::string>(4, "yes"));
+        heap->insert(new Entry<int, std::string>(5, "hi"));
+        heap->insert(new Entry<int, std::string>(2, "hey"));
+        heap->insert(new Entry<int, std::string>(1, "no"));
+        heap->insert(new Entry<int, std::string>(7, "oye"));
+        std::cout << "root is: " << *(heap->root());
+        heap->print(std::cout, *heap);
 
 
         delete[] testArray;

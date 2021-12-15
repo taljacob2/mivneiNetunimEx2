@@ -17,10 +17,17 @@
 template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
 
-    HeapAdt<K, V> greaterThanMedianMinHeap    = MinHeap<K, V>();
-    HeapAdt<K, V> greaterThanMedianMaxHeap    = MaxHeap<K, V>();
-    HeapAdt<K, V> lowerOrEqualToMedianMinHeap = MinHeap<K, V>();
-    HeapAdt<K, V> lowerOrEqualToMedianMaxHeap = MaxHeap<K, V>();
+  private:
+    HeapAdt<K, V> *_greaterThanMedianMinHeap = new MinHeap<K, V>();
+
+  private:
+    HeapAdt<K, V> *_greaterThanMedianMaxHeap = new MaxHeap<K, V>();
+
+  private:
+    HeapAdt<K, V> *_lowerOrEqualToMedianMinHeap = new MinHeap<K, V>();
+
+  private:
+    HeapAdt<K, V> *_lowerOrEqualToMedianMaxHeap = new MaxHeap<K, V>();
 
   public:
     explicit PriorityQueue(bool invokeCreateEmpty) {
@@ -28,13 +35,25 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   public:
-    Entry<K, V> max() override {}
+    virtual ~PriorityQueue() {
+        delete _greaterThanMedianMinHeap;
+        delete _greaterThanMedianMaxHeap;
+        delete _lowerOrEqualToMedianMinHeap;
+        delete _lowerOrEqualToMedianMaxHeap;
+    }
+
+  public:
+    Entry<K, V> max() override {
+        return *this->_greaterThanMedianMaxHeap->root(); // FIXME: check
+    }
 
   public:
     Entry<K, V> deleteMax() override {}
 
   public:
-    Entry<K, V> min() override {}
+    Entry<K, V> min() override {
+        return *this->_lowerOrEqualToMedianMinHeap->root(); // FIXME: check
+    }
 
   public:
     Entry<K, V> deleteMin() override {}

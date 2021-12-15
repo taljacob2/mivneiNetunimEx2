@@ -501,6 +501,18 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   public:
     friend std::ostream &operator<<(std::ostream &os, const Heap &heap) {
+        return printHeap(os, heap);
+    }
+
+  private:
+    std::ostream &print(std::ostream &       os,
+                        const HeapAdt<K, V> &heapAdt) const override {
+        Heap &heap = (Heap &) heapAdt; // Force cast.
+        return printHeap(os, heap);
+    }
+
+  private:
+    static std::ostream &printHeap(std::ostream &os, const Heap<K, V> &heap) {
         os << "_array{\n";
 
         /* In case the _array is empty, print a message instead of elements. */
@@ -517,7 +529,6 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
         os << "_logicalSize: " << heap._logicalSize
            << ", _physicalSize: " << heap._physicalSize << ";"
            << "\n";
-        return os;
     }
 };
 

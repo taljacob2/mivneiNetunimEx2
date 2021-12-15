@@ -19,9 +19,6 @@
  */
 template<typename K, typename V> class HeapAdt {
 
-  private:
-    HeapAdt() = default;
-
   public:
     /**
      * @brief Returns the *root element* of the heap, without removing it
@@ -97,6 +94,57 @@ template<typename K, typename V> class HeapAdt {
      * @brief clears the heap from elements.
      */
     virtual void makeEmpty() = 0;
+
+  public:
+    /**
+     * @brief Force the sub-classes of this class to implement the `print`
+     *        method, so others could print this class.
+     *
+     * Tip:
+     *
+     * Define the `print` method like so (for example):
+     *
+     * @code
+     *   public:
+     *     friend std::ostream &operator<<(std::ostream &os, const Heap &heap) {
+     *         return printHeap(os, heap);
+     *     }
+     *
+     *   private:
+     *     std::ostream &print(std::ostream &       os,
+     *                         const HeapAdt<K, V> &heapAdt) const override {
+     *         Heap &heap = (Heap &) heapAdt; // Force cast.
+     *         return printHeap(os, heap);
+     *     }
+     *
+     *   private:
+     *     static std::ostream &printHeap(std::ostream &os, const Heap<K, V>
+     *    &heap) {
+     *                os << "_array{\n";
+     *
+     *                  // In case the _array is empty, print a message instead of elements.
+     *              if (heap._logicalSize == 0) {
+     *                  os << "The _array is empty."
+     *                     << "\n";
+     *              }
+     *              for (long int i = 0; i < heap._logicalSize; i++) {
+     *                  os << *heap._array[i] << ";";
+     *                  os << "\n";
+     *              }
+     *              os << "}; ";
+     *
+     *              os << "_logicalSize: " << heap._logicalSize
+     *              << ", _physicalSize: " << heap._physicalSize << ";"
+     *              << "\n";
+     *           }
+     * @endcode
+     *
+     * @param os output-stream.
+     * @param heapAdt a `HeapAdt`.
+     * @return the given @p os.
+     */
+    virtual std::ostream &print(std::ostream & os,
+                                const HeapAdt &heapAdt) const = 0;
 };
 
 
