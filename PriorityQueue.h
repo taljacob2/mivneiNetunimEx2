@@ -8,6 +8,9 @@
  * @brief This *priority-queue* is implemented b y four *Heaps*, and each of
  *        these Heaps' elements are *Entries* that are composed by a *key* and a *value*.
  *
+ * @attention the `median()` is defined as the element that its priority is
+ *            `ceil (n / 2)`.
+ *
  * @tparam K The `key` type of each entry. **Must** be `comparable`.
  *           The *priority* of each entry is based on this `key`.
  * @tparam V the type of *value* of each entry.
@@ -74,12 +77,22 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     void insert(Entry<K, V> &element) override {
-        if (getLogicalSize()) {
+        if (getLogicalSize() > 1) {
+            if (isLogicalSizeEven()) {
+                if (median() < element) {
+                    _greaterThanMedianMaxHeap->insert(element);
+                } else {
 
-            // May retreive `median()`.
-            if (element > median()) {
-                if (isLogicalSizeOfHeapAdtEven(_greaterThanMedianMaxHeap)) {}
+                    // Transfer the maximum from `_lessOrEqualToMedianMaxHeap` to `_greaterThanMedianMaxHeap`
+                    _greaterThanMedianMaxHeap->insert(
+                            _lessOrEqualToMedianMaxHeap->deleteRoot());
+                    _lessOrEqualToMedianMaxHeap->insert(element);
+                }
+            } else if (isLogicalSizeOdd()) {
+                _lessOrEqualToMedianMaxHeap->insert(element);
             }
+        } else {
+            _lessOrEqualToMedianMaxHeap->insert(element);
         }
     }
 
@@ -88,6 +101,12 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
         return _greaterThanMedianMinHeap->getLogicalSize() +
                _greaterThanMedianMaxHeap->getLogicalSize();
     }
+
+  private:
+    bool isLogicalSizeEven() { return getLogicalSize() % 2 == 0; }
+
+  private:
+    bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
   private:
     bool isLogicalSizeOfHeapAdtEven(HeapAdt<K, V> heapAdt) {
