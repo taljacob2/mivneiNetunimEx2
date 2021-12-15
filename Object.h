@@ -16,17 +16,6 @@
  */
 class Object {
 
-  protected:
-    /**
-     * @brief Right after `createdOnHeap` is set to `createdOnHeapStatic`,
-     *        set `createdOnHeapStatic` immediately to `false`.
-     */
-    Object() {
-
-        // TODO: debug print
-        std::cout << "createdOnHeap = " << createdOnHeap;
-    }
-
   private:
     bool onInitArbitraryField = onInit();
 
