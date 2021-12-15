@@ -69,17 +69,18 @@ template<typename K, typename V> class PriorityQueueAdt {
      */
     virtual Entry<K, V> median() = 0;
 
-  public:
-    /**
-     * @brief Force the sub-classes of this class to implement the `print`
-     *        method, so others could print this class.
-
-     * @param os output-stream.
-     * @param heapAdt a `PriorityQueueAdt`.
-     * @return the given @p os.
-     */
-    virtual std::ostream &
-    print(std::ostream &os, const PriorityQueueAdt &priorityQueueAdt) const = 0;
+    // FIXME:
+  // public:
+  //   /**
+  //    * @brief Force the sub-classes of this class to implement the `print`
+  //    *        method, so others could print this class.
+  //
+  //    * @param os output-stream.
+  //    * @param heapAdt a `PriorityQueueAdt`.
+  //    * @return the given @p os.
+  //    */
+  //   virtual std::ostream &
+  //   print(std::ostream &os, const PriorityQueueAdt &priorityQueueAdt) const = 0;
 };
 
 #endif // PRIORITY_QUEUE_ADT_H

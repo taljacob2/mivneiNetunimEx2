@@ -536,6 +536,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
         os << "_logicalSize: " << heap._logicalSize
            << ", _physicalSize: " << heap._physicalSize << ";"
            << "\n";
+        return os;
     }
 };
 

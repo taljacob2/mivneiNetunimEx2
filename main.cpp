@@ -33,7 +33,7 @@ int main() {
         // priorityQueue->insert(new Entry<int, std::string>(1, "no"));
         // priorityQueue->insert(new Entry<int, std::string>(7, "oye"));
         // std::cout << "root is: " << *(priorityQueue->root());
-        priorityQueue->print(std::cout, *priorityQueue);
+        // priorityQueue->print(std::cout, *priorityQueue);
         // std::cout << priorityQueue;
         delete priorityQueue;
 

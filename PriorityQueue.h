@@ -77,7 +77,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
   private:
     std::ostream &
     print(std::ostream &                os,
-          const PriorityQueueAdt<K, V> &priorityQueueAdt) const override {
+          const PriorityQueueAdt<K, V> &priorityQueueAdt) const {
         PriorityQueue &priorityQueue =
                 (PriorityQueue &) priorityQueueAdt; // Force cast.
         return printThis(os, priorityQueue);
@@ -86,6 +86,9 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
   private:
     static std::ostream &printThis(std::ostream &             os,
                                    const PriorityQueue<K, V> &priorityQueue) {
+
+        os << priorityQueue._greaterThanMedianMaxHeap->print(
+                std::cout, *priorityQueue._greaterThanMedianMaxHeap);
 
         os << "_greaterThanMedianMaxHeap: " << std::endl
            << *(priorityQueue._greaterThanMedianMaxHeap) << std::endl;
@@ -98,6 +101,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
         os << "_lowerOrEqualToMedianMinHeap: " << std::endl
            << *(priorityQueue._lowerOrEqualToMedianMinHeap) << std::endl;
+        return os;
     }
 };
 
