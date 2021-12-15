@@ -4,8 +4,17 @@
 
 #include "HeapAdt.h"
 #include "my_algorithms.h"
+#include <cmath>
 
 template<typename K, typename V> class Heap : public HeapAdt<K, V> {
+
+  private:
+    /**
+     * @see fixHeap(long int)
+     * @see fixHeapUpwards(long int)
+     * @see fixHeapWhile(long int)
+     */
+    enum class Direction { UPWARDS, DOWNWARDS };
 
   protected:
     /**
@@ -200,6 +209,28 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
+     * @brief Fixes the heap from a given @p indexToFixFrom and downwards.
+     * @param indexToFixFrom an index of an element in the heap, that the
+     *                       user wishes to fix the heap from.
+     * @see fixHeap(long int, Direction)
+     */
+    void fixHeap(long int indexToFixFrom) override {
+        fixHeap(indexToFixFrom, Direction::DOWNWARDS);
+    }
+
+  protected:
+    /**
+     * @brief Fixes the heap from a given @p indexToFixFrom and upwards.
+     * @param indexToFixFrom an index of an element in the heap, that the
+     *                       user wishes to fix the heap from.
+     * @see fixHeap(long int, Direction)
+     */
+    void fixHeapUpwards(long int indexToFixFrom) override {
+        fixHeap(indexToFixFrom, Direction::UPWARDS);
+    }
+
+  private:
+    /**
      * @brief This method handles a heap that is *valid* from the root downwards
      *        until the `indexToFixFrom`, which from there and on downwards,
      *        the heap is *invalid* - means: that the `node` in the
@@ -214,13 +245,16 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @note this method will continue to run until the root is no longer
      *       `<<predicate-resulted>>` than both of its children,
      *       or when the root is a leaf.
-     * @attention there is no use to give @p indexToFixFrom that is larger
+     * @attention there is no use to give @p indexToFixFrom that is `<<predicate-resulted>>`
      *            than `(_logicalSize / 2)`, because indexes larger than
      *            `(_logicalSize / 2)` point to leaf `node`s, thus the method
      *            will have no effect, as explained earlier.
      * @throws std::out_of_range in case the index provided is out of range.
+     * @see Direction
+     * @see fixHeap(long int)
+     * @see fixHeapUpwards(long int)
      */
-    void fixHeap(long int indexToFixFrom) override {
+    void fixHeap(long int indexToFixFrom, Direction direction) {
 
         /* Check that `indexToFixFrom` is a legal index. */
         if ((indexToFixFrom < 0) || (this->_logicalSize <= indexToFixFrom)) {
@@ -233,7 +267,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
             throw std::out_of_range(Constants::WRONG_INPUT);
         }
-        fixHeapLegalIndex(indexToFixFrom);
+        fixHeapLegalIndex(indexToFixFrom, direction);
     }
 
   private:
@@ -246,9 +280,13 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @param currentIndex has been checked as a legal index. should be
      *                     in between `0` and `(_logicalSize / 2)`.
      *                     Represents the index to *fixHeap* from.
+     * @param direction tells the `Direction` of which the `fixHeap` would
+     *                  iterate.
      * @see fixHeap(long int)
+     * @see fixHeapUpwards(long int)
+     * @see Direction
      */
-    void fixHeapLegalIndex(long int indexToFixFrom) {
+    void fixHeapLegalIndex(long int indexToFixFrom, Direction direction) {
 
         /*
          * `currentIndex` should be in between `0` and `(_logicalSize / 2)`.
@@ -274,7 +312,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
         }
 
         /* _array[currentIndex] is not `nullptr`. Thus, comparable. */
-        fixHeapWhile(currentIndex);
+        fixHeapWhile(currentIndex, direction);
     }
 
   private:
@@ -290,8 +328,10 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @param currentIndex should be in between `0` and `(_logicalSize / 2)`.
      *                     Represents the index to *fixHeap* from.
      * @see fixHeap(long int)
+     * @see fixHeapUpwards(long int)
+     * @see Direction
      */
-    void fixHeapWhile(long int currentIndex) {
+    void fixHeapWhile(long int currentIndex, Direction direction) {
 
         /* _array[currentIndex] is not `nullptr`. Thus, comparable. */
         while ((0 <= currentIndex) && (currentIndex < (_logicalSize / 2))) {
@@ -319,7 +359,11 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
                      * Set the updated iterator index to the replaced index.
                      * Note: this enlarges the index.
                      */
-                    currentIndex = indexOfSwappableChildOfCurrentRoot;
+                    if (direction == Direction::DOWNWARDS) {
+                        currentIndex = indexOfSwappableChildOfCurrentRoot;
+                    } else if (direction == Direction::UPWARDS) {
+                        currentIndex = getParentIndex(currentIndex);
+                    }
                 } else {
                     /*
                      * Second stop condition:
@@ -337,6 +381,18 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
                 break;
             }
         }
+    }
+
+  private:
+    /**
+     * @note in case @p currentIndex is `0`, then the result will be `-1`.
+     * @param currentIndex the index of the element to get its parent element
+     *                     index.
+     * @return the index of the parent element of the element which its index
+     *         is the given @p currentIndex.
+     */
+    static long int getParentIndex(long int currentIndex) {
+        return floor((double) (currentIndex - 1) / 2);
     }
 
   protected:

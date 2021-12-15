@@ -48,12 +48,26 @@ template<typename K, typename V> class HeapAdt {
     /**
      * @brief Inserts the @p elementToInsert to the heap.
      *
-     * @param indexToFixFrom fixes the heap from this index downwards until the
-     *                       leaves of the heap.
+     * @param indexToFixFrom fixes the heap from this index **downwards** until
+     *                       the leaves of the heap.
      * @note this method will continue to run until the root is no longer
-     *       larger than one of his children, or when the root is a leaf.
+     *       `<<predicate-resulted>>` than one of his children,
+     *       or when the root is a leaf.
+     * @see fixHeapUpwards(long int)
      */
     virtual void fixHeap(long int indexToFixFrom) = 0;
+
+  public:
+    /**
+     * @brief Inserts the @p elementToInsert to the heap.
+     *
+     * @param indexToFixFrom fixes the heap from this index **upwards** until
+     *                       the root of the heap.
+     * @note this method will continue to run until the root is no longer
+     *       `predicated` than one of his children, or when the root is a leaf.
+     * @see fixHeap(long int)
+     */
+    virtual void fixHeapUpwards(long int indexToFixFrom) = 0;
 
   public:
     /**
