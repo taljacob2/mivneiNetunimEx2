@@ -12,17 +12,34 @@
  * `Invalid free() / delete / delete[] / realloc()`.
  *
  * @author Tal Yacob.
- * @version 1.0
+ * @version 1.0.1
  */
 class Object {
 
   protected:
-
     /**
      * @brief Right after `createdOnHeap` is set to `createdOnHeapStatic`,
      *        set `createdOnHeapStatic` immediately to `false`.
      */
     Object() {
+
+        // TODO: debug print
+        std::cout << "createdOnHeap = " << createdOnHeap;
+    }
+
+  private:
+    bool onInitArbitraryField = onInit();
+
+  private:
+    bool onInit() {
+        setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse();
+        return false;
+    }
+
+  private:
+    void
+    setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse() {
+        createdOnHeap       = createdOnHeapStatic;
         createdOnHeapStatic = false;
     }
 
@@ -30,7 +47,7 @@ class Object {
     /**
      * @attention Initialized at the beginning of the constructor invocation.
      */
-    bool createdOnHeap = createdOnHeapStatic;
+    bool createdOnHeap;
 
   private:
     static bool createdOnHeapStatic;
