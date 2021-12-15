@@ -4,8 +4,23 @@
 
 #include "PriorityQueueAdt.h"
 
+/**
+ * @brief This *priority-queue* is implemented b y four *Heaps*, and each of
+ *        these Heaps' elements are *Entries* that are composed by a *key* and a *value*.
+ *
+ * @tparam K The `key` type of each entry. **Must** be `comparable`.
+ *           The *priority* of each entry is based on this `key`.
+ * @tparam V the type of *value* of each entry.
+ * @see MinHeap
+ * @see MaxHeap
+ */
 template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
+
+    HeapAdt<K, V> greaterThanMedianMinHeap    = MinHeap<K, V>();
+    HeapAdt<K, V> greaterThanMedianMaxHeap    = MaxHeap<K, V>();
+    HeapAdt<K, V> lowerOrEqualToMedianMinHeap = MinHeap<K, V>();
+    HeapAdt<K, V> lowerOrEqualToMedianMaxHeap = MaxHeap<K, V>();
 
   public:
     explicit PriorityQueue(bool invokeCreateEmpty) {

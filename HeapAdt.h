@@ -19,6 +19,9 @@
  */
 template<typename K, typename V> class HeapAdt {
 
+  private:
+    HeapAdt() = default;
+
   public:
     /**
      * @brief Returns the *root element* of the heap, without removing it
