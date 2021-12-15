@@ -49,9 +49,9 @@ template<typename K, typename V> class MinHeap : public MinHeapADT<K, V> {
      * Builds a **Minimum-Heap** by giving an @p arrayToBuildFrom of
      * **lvalue `Entries`** as a parameter. Done by invoking the
      * @link buildHeap @endlink method.
-     * @param arrayToBuildFrom the given _array of elements to build the
+     * @param arrayToBuildFrom the given array of elements to build the
      *                         heap from.
-     * @param sizeOfArrayToBuildFrom the size of the _array to build the
+     * @param sizeOfArrayToBuildFrom the size of the array to build the
      *                               heap from.
      * @see buildHeap
      */
