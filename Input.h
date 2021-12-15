@@ -46,7 +46,7 @@ class Input {
 
   public:
     /**
-     * @brief Gets the an array of tests from the input-stream, and asserts
+     * @brief Gets the an _array of tests from the input-stream, and asserts
      *        only its size validity.
      *
      * For example:
@@ -61,7 +61,7 @@ class Input {
      * g
      * @endcode
      *
-     * @return an array that each element of it is a line inputted.
+     * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
     static std::string *getTestArray(int &testArraySize) {
@@ -101,7 +101,7 @@ class Input {
     /**
      * @brief Gets all the tests inputted, and places them as elements in
      *        `testArray` with the type of `std::string`s.
-     * @param testArray an empty array of `std::string`s, to be initialized
+     * @param testArray an empty _array of `std::string`s, to be initialized
      *                  with all the tests the user inputted.
      * @param testArraySize the size of the given @p testArray.
      */
@@ -122,7 +122,7 @@ class Input {
   private:
     /**
      * @brief Checks the given @p testArray for its validity.
-     * @param testArray the array of strings the user inputted.
+     * @param testArray the _array of strings the user inputted.
      * @param testArraySize the size of the given @p testArray.
      * @throws std::runtime_error in case the given @p testArray is not valid.
      * @see initializeTestArray(std::string *&, int)
@@ -164,7 +164,7 @@ class Input {
      *        testArray ( = `testArray[i]`), that is split by a given @p
      *        delimiter char to multiple strings.
      *
-     * @param testArray an array that contains multiple test strings.
+     * @param testArray an _array that contains multiple test strings.
      * @param delimiter the delimiter char to split the extracted test with.
      * @param i the index of the current test in the @p testArray given, you
      *          wish to extract.
@@ -364,7 +364,7 @@ class Input {
      * @param str the `std::string` to split by the given @p delimiter.
      * @param delimiter a `std::string` that the given @p str will be
      *                  split by.
-     * @param outputSplitArray an array of `std::string`s after split.
+     * @param outputSplitArray an _array of `std::string`s after split.
      * @param outputSplitArraySize the size of the @p outputSplitArray.
      * @todo delete[] @p outputSplitArray.
      */

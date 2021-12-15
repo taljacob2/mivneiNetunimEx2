@@ -33,7 +33,7 @@ class my_algorithms {
      * @attention if @p indexToElement2 is out fo range, but @p
      *            indexToElement1 is not out of range, the method returns the
      *            @p indexToElement1.
-     * @param array an array of pointers to elements.
+     * @param array an _array of pointers to elements.
      * @param indexToElement1 index of pointer to first element to compare.
      * @param indexToElement2 index of pointer to second element to compare.
      * @return the index of the pointer that points to the larger element.
@@ -78,7 +78,7 @@ class my_algorithms {
         // message.append("Both of the indexes provided are out of range. "
         //                "There are ");
         // message.append(std::to_string(size));
-        // message.append(" elements in the array.\n");
+        // message.append(" elements in the _array.\n");
 
         throw std::out_of_range(Constants::WRONG_INPUT);
     }
@@ -102,7 +102,7 @@ class my_algorithms {
      * @attention if @p indexToElement2 is out fo range, but @p
      *            indexToElement1 is not out of range, the method returns the
      *            @p indexToElement1.
-     * @param array an array of pointers to elements.
+     * @param array an _array of pointers to elements.
      * @param indexToElement1 index of pointer to first element to compare.
      * @param indexToElement2 index of pointer to second element to compare.
      * @return the index of the pointer that points to the smaller element.
@@ -147,17 +147,17 @@ class my_algorithms {
         // message.append("Both of the indexes provided are out of range. "
         //                "There are ");
         // message.append(std::to_string(size));
-        // message.append(" elements in the array.\n");
+        // message.append(" elements in the _array.\n");
 
         throw std::out_of_range(Constants::WRONG_INPUT);
     }
 
   public:
     /**
-     * @brief generic `swap` algorithm of two elements in an array.
+     * @brief generic `swap` algorithm of two elements in an _array.
      *
      * @tparam T elements to be swapped.
-     * @param array the array which contains the elements.
+     * @param array the _array which contains the elements.
      * @param index1 the first element index to be swapped.
      * @param index2 the second element index to be swapped.
      */

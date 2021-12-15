@@ -50,7 +50,7 @@ template<typename K, typename V> class MinHeapADT {
      * @brief Builds a **Minimum-Heap** by giving an arrayToBuildFrom of
      *        elements as a parameter.
      *
-     * @param arrayToBuildFrom the given array of elements to build the
+     * @param arrayToBuildFrom the given _array of elements to build the
      *                         heap from.
      */
     virtual void buildHeap(Entry<K, V> *arrayToBuildFrom,
