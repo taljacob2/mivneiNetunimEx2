@@ -20,6 +20,12 @@
 template<typename K, typename V> class HeapAdt {
 
   public:
+    HeapAdt() = default;
+
+  public:
+    virtual ~HeapAdt() = default;
+
+  public:
     /**
      * @brief Returns the *root element* of the heap, without removing it
      *        from the heap.

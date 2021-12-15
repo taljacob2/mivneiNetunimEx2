@@ -21,15 +21,16 @@ int main() {
 
         // TODO: testing heaps:
         HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>();
-        heap->insert(new Entry<int, std::string>(3, "hello"));
-        heap->insert(new Entry<int, std::string>(4, "yes"));
-        heap->insert(new Entry<int, std::string>(5, "hi"));
-        heap->insert(new Entry<int, std::string>(2, "hey"));
-        heap->insert(new Entry<int, std::string>(1, "no"));
-        heap->insert(new Entry<int, std::string>(7, "oye"));
+        Entry<int, std::string>entry(3, "hello");
+        heap->insert(&entry);
+        // heap->insert(new Entry<int, std::string>(4, "yes"));
+        // heap->insert(new Entry<int, std::string>(5, "hi"));
+        // heap->insert(new Entry<int, std::string>(2, "hey"));
+        // heap->insert(new Entry<int, std::string>(1, "no"));
+        // heap->insert(new Entry<int, std::string>(7, "oye"));
         std::cout << "root is: " << *(heap->root());
         heap->print(std::cout, *heap);
-
+        delete heap;
 
         delete[] testArray;
     } catch (std::exception &e) {

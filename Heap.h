@@ -59,6 +59,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     explicit Heap(long int physicalSize) {
         this->_physicalSize = physicalSize;
         this->_array        = new Entry<K, V> *[physicalSize];
+        for (int i = 0; i < _physicalSize; i++) { _array[i] = nullptr; }
     }
 
   public:
@@ -68,7 +69,13 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     Heap() : Heap(100) {}
 
   public:
-    virtual ~Heap() { delete[] _array; }
+    virtual ~Heap() { deleteThis(); }
+
+  private:
+    void deleteThis() {
+        for (int i = 0; i < _physicalSize; i++) { delete _array[i]; }
+        delete[] _array;
+    }
 
   public:
     Entry<K, V> *root() override { return this->_array[0]; }
@@ -186,7 +193,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
                    long int     sizeOfArrayToBuildFrom) override {
 
         /* Delete the old _array if there is any. */
-        delete[] this->_array;
+        deleteThis();
 
         /* Initialize a `new` empty _array of pointers to elements given. */
         this->_physicalSize = sizeOfArrayToBuildFrom;

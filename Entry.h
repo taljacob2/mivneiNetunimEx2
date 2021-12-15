@@ -15,7 +15,7 @@
  * @attention the `key` **must** be `comparable`.
  * @tparam K the type of *key* in the entry.
  * @tparam V the type of *value* in the entry.
- * @version 1.0.1
+ * @version 1.0.2
  */
 template<typename K, typename V> class Entry {
   private:
@@ -34,12 +34,13 @@ template<typename K, typename V> class Entry {
      * @param value the value to set the entry with.
      */
     Entry(K key, V value) {
-        this->_key   = key;
-        this->_value = value;
+        this->_key          = key;
+        this->_value        = value;
+        createdOnHeapStatic = false;
     }
 
   public:
-    Entry() = default;
+    Entry() { createdOnHeapStatic = false; }
 
   public:
     virtual ~Entry() = default;
@@ -74,7 +75,30 @@ template<typename K, typename V> class Entry {
     bool operator==(const Entry &other) const { return _key == other._key; }
 
     bool operator!=(const Entry &other) const { return !(other == *this); }
+
+  private:
+    /**
+     * @attention Initialized at the beginning of the constructor invocation.
+     */
+    bool createdOnHeap = createdOnHeapStatic;
+
+  private:
+    static bool createdOnHeapStatic;
+
+  public:
+    bool  isCreatedOnHeap() const { return createdOnHeap; }
+    void *operator new(size_t sz) {
+        createdOnHeapStatic = true;
+        return ::operator new(sz);
+    }
+
+  public:
+    void operator delete(void *ptrToDelete) {
+        auto entry = (Entry<K, V> *) ptrToDelete;
+        if (entry->isCreatedOnHeap()) { ::operator delete(ptrToDelete); }
+    }
 };
 
+template<typename K, typename V> bool Entry<K, V>::createdOnHeapStatic = false;
 
 #endif // ENTRY_H
