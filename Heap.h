@@ -158,7 +158,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   public:
     /**
-     * @brief Builds a **Minimum-Heap** by giving an @p arrayToBuildFrom of
+     * @brief Builds a **Heap** by giving an @p arrayToBuildFrom of
      *        **lvalue `Entries`** as a parameter.
      *
      * Done by making an _array of pointers to the elements given in the @p
@@ -198,7 +198,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
         }
     }
 
-  public:
+  protected:
     /**
      * @brief This method handles a heap that is *valid* from the root downwards
      *        until the `indexToFixFrom`, which from there and on downwards,

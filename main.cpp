@@ -1,6 +1,7 @@
 #include "Constants.h"
 #include "Input.h"
 #include "MinHeap.h"
+#include "MaxHeap.h"
 #include "TestRunner.h"
 #include <iostream>
 
@@ -19,9 +20,16 @@ int main() {
         TestRunner::runAllTests(testArray, testArraySize);
 
         // TODO: testing heaps:
-        MinHeap<int, std::string> minHeap;
-        minHeap.insert(new Entry<int, std::string>(3, "hello"));
-        std::cout << minHeap;
+        MaxHeap<int, std::string> heap;
+        heap.insert(new Entry<int, std::string>(3, "hello"));
+        heap.insert(new Entry<int, std::string>(4, "yes"));
+        heap.insert(new Entry<int, std::string>(5, "hi"));
+        heap.insert(new Entry<int, std::string>(2, "hey"));
+        heap.insert(new Entry<int, std::string>(1, "no"));
+        heap.insert(new Entry<int, std::string>(7, "oye"));
+        std::cout <<"root is: " << *heap.deleteRoot();
+        std::cout << heap;
+
 
         delete[] testArray;
     } catch (std::exception &e) {
