@@ -158,5 +158,4 @@ template<typename K, typename V> class HeapAdt {
                                 const HeapAdt &heapAdt) const = 0;
 };
 
-
 #endif // HEAP_ADT_H
