@@ -1,11 +1,12 @@
 
-#ifndef MIN_HEAP_ADT_H
-#define MIN_HEAP_ADT_H
+#ifndef HEAP_ADT_H
+#define HEAP_ADT_H
+
 
 #include "Entry.h"
 
 /**
- * @brief This class represents an *abstract* **Minimum-Heap**,
+ * @brief This class represents an *abstract* **Heap**,
  *        which its elements are *Entries* that are composed by a
  *        *key* and a *value*.
  *
@@ -16,15 +17,15 @@
  * @note The terms `element`, `node` and 'entry' are synonyms.
  * @see Entry
  */
-template<typename K, typename V> class MinHeapADT {
+template<typename K, typename V> class HeapAdt {
 
-  public:
+  protected:
     /**
-     * @brief Deletes the *minimal element* from the heap, and returns it.
+     * @brief Deletes the *root element* from the heap, and returns it.
      *
-     * @return the *minimal element* removed from the heap.
+     * @return the *root element* removed from the heap.
      */
-    virtual Entry<K, V> *deleteMin() = 0;
+    virtual Entry<K, V> *deleteRoot() = 0;
 
   public:
     /**
@@ -47,10 +48,10 @@ template<typename K, typename V> class MinHeapADT {
 
   public:
     /**
-     * @brief Builds a **Minimum-Heap** by giving an arrayToBuildFrom of
+     * @brief Builds a **Heap** by giving an arrayToBuildFrom of
      *        elements as a parameter.
      *
-     * @param arrayToBuildFrom the given _array of elements to build the
+     * @param arrayToBuildFrom the given array of elements to build the
      *                         heap from.
      */
     virtual void buildHeap(Entry<K, V> *arrayToBuildFrom,
@@ -73,4 +74,4 @@ template<typename K, typename V> class MinHeapADT {
 };
 
 
-#endif // MIN_HEAP_ADT_H
+#endif // HEAP_ADT_H
