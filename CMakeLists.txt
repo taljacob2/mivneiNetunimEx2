@@ -3,4 +3,4 @@ project(mivneiNetunimEx2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(mivneiNetunimEx2 main.cpp Constants.h Entry.h Input.h PriorityQueue.h PriorityQueueAdt.h TestRunner.h)
+add_executable(mivneiNetunimEx2 main.cpp Constants.h Entry.h Input.h PriorityQueue.h PriorityQueueAdt.h TestRunner.h MinHeapADT.h MinHeap.h my_algorithms.h)
