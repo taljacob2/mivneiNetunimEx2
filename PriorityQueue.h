@@ -74,12 +74,19 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     void insert(Entry<K, V> &element) override {
-        if (element > median()) {
-            if (isLogicalSizeOfHeapAdtEven(_greaterThanMedianMaxHeap)){
+        if (getLogicalSize()) {
 
+            // May retreive `median()`.
+            if (element > median()) {
+                if (isLogicalSizeOfHeapAdtEven(_greaterThanMedianMaxHeap)) {}
             }
         }
+    }
 
+  private:
+    long int getLogicalSize() {
+        return _greaterThanMedianMinHeap->getLogicalSize() +
+               _greaterThanMedianMaxHeap->getLogicalSize();
     }
 
   private:
@@ -96,6 +103,9 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     /**
      * @return the median priority element - defining the median as the
      *         element that its priority is `ceil (n / 2)`
+     * @throws std::runtime_error in case there are no elements in the
+     *         `_lessOrEqualToMedianMaxHeap` heap, and the user requested to
+     *         retrieve the root.
      */
     Entry<K, V> median() override {
         return *_lessOrEqualToMedianMaxHeap->root(); // FIXME: check

@@ -81,7 +81,18 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     }
 
   public:
-    Entry<K, V> *root() override { return this->_array[0]; }
+    /**
+     * @return the root element, which is the top element in the heap.
+     * @throws std::runtime_error in case there are no elements in the heap,
+     *         and the user requested to retrieve the root.
+     */
+    Entry<K, V> *root() override {
+        if (!_logicalSize) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        } else {
+            return this->_array[0];
+        }
+    }
 
   public:
     /**
