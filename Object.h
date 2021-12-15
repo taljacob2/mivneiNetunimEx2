@@ -67,7 +67,7 @@ class Object {
      *        the `new` and `delete` operators.
      *
      * @li This method sets `createdOnHeap` to `createdOnHeapStatic`, so that
-     * `createdOnHeap` would be updated for the current status of wether
+     * `createdOnHeap` would be updated for the current status of whether
      * `this` object was created with the `new` operator or not.
      * @li Afterwards, this method resets `createdOnHeapStatic` to `false`,
      * so that it will be ready for the next creation of `this` type of object.
