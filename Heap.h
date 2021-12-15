@@ -35,8 +35,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      *                               heap from.
      * @see buildHeap
      */
-    explicit Heap(Entry<K, V> *arrayToBuildFrom,
-                  long int     sizeOfArrayToBuildFrom) {
+    Heap(Entry<K, V> *arrayToBuildFrom, long int sizeOfArrayToBuildFrom) {
         buildHeap(arrayToBuildFrom, sizeOfArrayToBuildFrom);
     }
 

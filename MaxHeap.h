@@ -1,16 +1,16 @@
 
-#ifndef MIN_HEAP_H
-#define MIN_HEAP_H
+#ifndef MAX_HEAP_H
+#define MAX_HEAP_H
 
 #include "Heap.h"
 #include "my_algorithms.h"
 
 /**
- * @brief This class implements a **Minimum-Heap** which its elements are
+ * @brief This class implements a **Maximum-Heap** which its elements are
  *        pointers to **lvalue `Entries`** that are composed of a *key* and a *value*.
  *
  * @li Once the heap has been built by @link buildHeap @endlink or
- * @link MinHeap(Entry<K, V> *, long int) @endlink, its *physical-size* is
+ * @link MaxHeap(Entry<K, V> *, long int) @endlink, its *physical-size* is
  * treated as a constant - thus unchangeable. In case the user wishes to
  * change the *physical-size* of the heap, there is a *must* to invoke @link
  * buildHeap @endlink again.
@@ -23,34 +23,34 @@
  * @see Entry
  * @see Heap
  */
-template<typename K, typename V> class MinHeap : public Heap<K, V> {
+template<typename K, typename V> class MaxHeap : public Heap<K, V> {
 
   public:
-    MinHeap(Entry<K, V> *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
+    MaxHeap(Entry<K, V> *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
         : Heap<K, V>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   public:
-    explicit MinHeap(long physicalSize) : Heap<K, V>(physicalSize) {}
+    explicit MaxHeap(long physicalSize) : Heap<K, V>(physicalSize) {}
 
   public:
-    MinHeap() : Heap<K, V>() {}
+    MaxHeap() : Heap<K, V>() {}
 
   public:
-    virtual ~MinHeap() = default;
+    virtual ~MaxHeap() = default;
 
   private:
     long getIndexOfChildToSwapWithParent(Entry<K, V> **array, long size,
                                          long indexToElement1,
                                          long indexToElement2) override {
-        return my_algorithms::min(array, size, indexToElement1,
+        return my_algorithms::max(array, size, indexToElement1,
                                   indexToElement2);
     }
 
   private:
     bool predicateIsSwapNeeded(Entry<K, V> element1,
                                Entry<K, V> element2) override {
-        return element1 > element2;
+        return element1 < element2;
     }
 };
 
-#endif // MIN_HEAP_H
+#endif // MAX_HEAP_H
