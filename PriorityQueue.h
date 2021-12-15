@@ -18,16 +18,16 @@ template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   private:
-    HeapAdt<K, V> *_greaterThanMedianMinHeap = new MinHeap<K, V>();
-
-  private:
     HeapAdt<K, V> *_greaterThanMedianMaxHeap = new MaxHeap<K, V>();
 
   private:
-    HeapAdt<K, V> *_lowerOrEqualToMedianMinHeap = new MinHeap<K, V>();
+    HeapAdt<K, V> *_greaterThanMedianMinHeap = new MinHeap<K, V>();
 
   private:
     HeapAdt<K, V> *_lowerOrEqualToMedianMaxHeap = new MaxHeap<K, V>();
+
+  private:
+    HeapAdt<K, V> *_lowerOrEqualToMedianMinHeap = new MinHeap<K, V>();
 
   public:
     explicit PriorityQueue(bool invokeCreateEmpty) {
@@ -35,11 +35,14 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   public:
+    PriorityQueue() = default;
+
+  public:
     virtual ~PriorityQueue() {
-        delete _greaterThanMedianMinHeap;
         delete _greaterThanMedianMaxHeap;
-        delete _lowerOrEqualToMedianMinHeap;
+        delete _greaterThanMedianMinHeap;
         delete _lowerOrEqualToMedianMaxHeap;
+        delete _lowerOrEqualToMedianMinHeap;
     }
 
   public:
@@ -70,6 +73,32 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
      *         element that its priority is `ceil (n / 2)`
      */
     Entry<K, V> median() override {}
+
+  private:
+    std::ostream &
+    print(std::ostream &                os,
+          const PriorityQueueAdt<K, V> &priorityQueueAdt) const override {
+        PriorityQueue &priorityQueue =
+                (PriorityQueue &) priorityQueueAdt; // Force cast.
+        return printThis(os, priorityQueue);
+    }
+
+  private:
+    static std::ostream &printThis(std::ostream &             os,
+                                   const PriorityQueue<K, V> &priorityQueue) {
+
+        os << "_greaterThanMedianMaxHeap: " << std::endl
+           << *(priorityQueue._greaterThanMedianMaxHeap) << std::endl;
+
+        os << "_greaterThanMedianMinHeap: " << std::endl
+           << *(priorityQueue._greaterThanMedianMinHeap) << std::endl;
+
+        os << "_lowerOrEqualToMedianMaxHeap: " << std::endl
+           << *(priorityQueue._lowerOrEqualToMedianMaxHeap) << std::endl;
+
+        os << "_lowerOrEqualToMedianMinHeap: " << std::endl
+           << *(priorityQueue._lowerOrEqualToMedianMinHeap) << std::endl;
+    }
 };
 
 #endif // PRIORITY_QUEUE_H

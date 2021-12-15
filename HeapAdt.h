@@ -118,18 +118,18 @@ template<typename K, typename V> class HeapAdt {
      * @code
      *   public:
      *     friend std::ostream &operator<<(std::ostream &os, const Heap &heap) {
-     *         return printHeap(os, heap);
+     *         return printThis(os, heap);
      *     }
      *
      *   private:
      *     std::ostream &print(std::ostream &       os,
      *                         const HeapAdt<K, V> &heapAdt) const override {
      *         Heap &heap = (Heap &) heapAdt; // Force cast.
-     *         return printHeap(os, heap);
+     *         return printThis(os, heap);
      *     }
      *
      *   private:
-     *     static std::ostream &printHeap(std::ostream &os, const Heap<K, V>
+     *     static std::ostream &printThis(std::ostream &os, const Heap<K, V>
      *    &heap) {
      *                os << "_array{\n";
      *

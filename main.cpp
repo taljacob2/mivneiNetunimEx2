@@ -20,17 +20,22 @@ int main() {
         TestRunner::runAllTests(testArray, testArraySize);
 
         // TODO: testing heaps:
-        HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>();
-        Entry<int, std::string>entry(3, "hello");
-        heap->insert(&entry);
-        heap->insert(new Entry<int, std::string>(4, "yes"));
-        heap->insert(new Entry<int, std::string>(5, "hi"));
-        heap->insert(new Entry<int, std::string>(2, "hey"));
-        heap->insert(new Entry<int, std::string>(1, "no"));
-        heap->insert(new Entry<int, std::string>(7, "oye"));
-        std::cout << "root is: " << *(heap->root());
-        heap->print(std::cout, *heap);
-        delete heap;
+        PriorityQueueAdt<int, std::string> *priorityQueue =
+                new PriorityQueue<int, std::string>();
+
+        Entry<int, std::string> entry(3, "hello");
+        priorityQueue->insert(entry);
+        // std::cout << "min is: " << (priorityQueue->min());
+        // priorityQueue->insert(&entry);
+        // priorityQueue->insert(new Entry<int, std::string>(4, "yes"));
+        // priorityQueue->insert(new Entry<int, std::string>(5, "hi"));
+        // priorityQueue->insert(new Entry<int, std::string>(2, "hey"));
+        // priorityQueue->insert(new Entry<int, std::string>(1, "no"));
+        // priorityQueue->insert(new Entry<int, std::string>(7, "oye"));
+        // std::cout << "root is: " << *(priorityQueue->root());
+        priorityQueue->print(std::cout, *priorityQueue);
+        // std::cout << priorityQueue;
+        delete priorityQueue;
 
         delete[] testArray;
     } catch (std::exception &e) {

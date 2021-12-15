@@ -119,7 +119,7 @@ class Object {
      * @see operatorNewPrivate(size_t)
      * @see invokeOperatorNew(size_t)
      */
-    void *operator new(size_t sz) { operatorNewPrivate(sz); }
+    void *operator new(size_t sz) { return operatorNewPrivate(sz); }
 
   private:
     /**
@@ -142,7 +142,8 @@ class Object {
      *
      * @see operatorNewPrivate(size_t)
      */
-    virtual void *invokeOperatorNew(size_t sz) { operatorNewPrivate(sz); }
+    virtual void *invokeOperatorNew(size_t sz) { return operatorNewPrivate
+                                                 (sz); }
 
     /* --------------- operator `delete` --------------- */
 
@@ -169,7 +170,7 @@ class Object {
      *
      * @see invokeOperatorDelete(void *)
      */
-    static void *operatorDeletePrivate(void *ptrToDelete) {
+    static void operatorDeletePrivate(void *ptrToDelete) {
         auto *obj = (Object *) ptrToDelete;
         if (obj->isCreatedOnHeap()) { ::operator delete(ptrToDelete); }
     }
