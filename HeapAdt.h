@@ -46,7 +46,7 @@ template<typename K, typename V> class HeapAdt {
 
   public:
     /**
-     * @brief Inserts the @p elementToInsert to the heap.
+     * @brief Fixes the heap from a given @p indexToFixFrom and **downwards**.
      *
      * @param indexToFixFrom fixes the heap from this index **downwards** until
      *                       the leaves of the heap.
@@ -59,7 +59,7 @@ template<typename K, typename V> class HeapAdt {
 
   public:
     /**
-     * @brief Inserts the @p elementToInsert to the heap.
+     * @brief Fixes the heap from a given @p indexToFixFrom and **upwards**.
      *
      * @param indexToFixFrom fixes the heap from this index **upwards** until
      *                       the root of the heap.

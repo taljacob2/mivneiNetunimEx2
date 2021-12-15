@@ -209,7 +209,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
-     * @brief Fixes the heap from a given @p indexToFixFrom and downwards.
+     * @brief Fixes the heap from a given @p indexToFixFrom and **downwards**.
      * @param indexToFixFrom an index of an element in the heap, that the
      *                       user wishes to fix the heap from.
      * @see fixHeap(long int, Direction)
@@ -220,7 +220,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
-     * @brief Fixes the heap from a given @p indexToFixFrom and upwards.
+     * @brief Fixes the heap from a given @p indexToFixFrom and **upwards**.
      * @param indexToFixFrom an index of an element in the heap, that the
      *                       user wishes to fix the heap from.
      * @see fixHeap(long int, Direction)
