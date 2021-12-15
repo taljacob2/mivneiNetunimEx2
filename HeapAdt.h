@@ -106,6 +106,11 @@ template<typename K, typename V> class HeapAdt {
      * @brief Force the sub-classes of this class to implement the `print`
      *        method, so others could print this class.
      *
+     * For example, you could print this class like so:
+     * @code
+     * heapAdt->print(std::cout, *heapAdt);
+     * @endcode
+     *
      * Tip:
      *
      * Define the `print` method like so (for example):
