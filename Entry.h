@@ -19,6 +19,7 @@
  * @version 1.0.2
  */
 template<typename K, typename V> class Entry : public Object {
+
   private:
     /// The *key* of the entry. @attention **Must** be `comparable`.
     K _key;
@@ -34,13 +35,13 @@ template<typename K, typename V> class Entry : public Object {
      * @param key the key to set the entry with.
      * @param value the value to set the entry with.
      */
-    Entry(K key, V value) : Object() {
+    Entry(K key, V value) {
         this->_key   = key;
         this->_value = value;
     }
 
   public:
-    Entry() : Object() {}
+    Entry() = default;
 
   public:
     virtual ~Entry() = default;
