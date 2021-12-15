@@ -53,12 +53,18 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     }
 
   public:
-    Heap() = default;
+    /**
+     * @brief Default constructor creates an arbitrary physicalSize of 100.
+     */
+    Heap() : Heap(100) {}
 
   public:
     virtual ~Heap() { delete[] _array; }
 
-  protected:
+  public:
+    Entry<K, V> *root() override { return this->_array[0]; }
+
+  public:
     /**
      * @brief Deletes the *root element* from the heap, and returns it.
      *
@@ -72,7 +78,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      */
     Entry<K, V> *deleteRoot() override { return deleteRoot(true); }
 
-  protected:
+  private:
     /**
      * @brief Deletes the *root element* from the heap, and returns it.
      * @deprecated Caution when setting @p fixHeapAfterDeletion to `false`.
@@ -91,8 +97,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      */
     Entry<K, V> *deleteRoot(bool fixHeapAfterDeletion) {
 
-        /* Save the value of `_array[0]` to return in the end of the method. */
-        Entry<K, V> *returnElement = this->_array[0];
+        /* Save the value of `root` to return in the end of the method. */
+        Entry<K, V> *returnElement = root();
 
         if (this->_logicalSize >= 2) {
             deleteRootWhenThereAreTwoOrMoreElements(fixHeapAfterDeletion);

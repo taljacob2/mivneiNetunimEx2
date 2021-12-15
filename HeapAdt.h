@@ -19,7 +19,16 @@
  */
 template<typename K, typename V> class HeapAdt {
 
-  protected:
+  public:
+    /**
+     * @brief Returns the *root element* of the heap, without removing it
+     *        from the heap.
+     *
+     * @return the *root element* of the heap.
+     */
+    virtual Entry<K, V> *root() = 0;
+
+  public:
     /**
      * @brief Deletes the *root element* from the heap, and returns it.
      *
