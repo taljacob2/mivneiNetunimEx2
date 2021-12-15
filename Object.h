@@ -5,12 +5,13 @@
 #include <string>
 
 /**
- * @brief This class serves as the root of all classes.
+ * @brief This class may serve as the root of all classes, because it gives
+ *        them more functionalities and stability.
  *
  * @li This class enables the use of the `onInit()` method, which is being
  * invoked **before the constructor** and enables *lifecycle* to `this` object.
- * @li This class enables its sub-classes to use the `delete` operator when
- * they are *stack-allocated*, *without* causing a crash of
+ * @li This class enables its sub-classes to use the `delete` operator
+ * even-though they are *stack-allocated*, *without* causing a crash of
  * `Invalid free() / delete / delete[] / realloc()`.
  *
  * @author Tal Yacob.
