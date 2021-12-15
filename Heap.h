@@ -32,6 +32,9 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     long int _logicalSize = 0;
 
   public:
+    long int getLogicalSize() const override { return _logicalSize; }
+
+  public:
     /**
      * @brief Constructor, initializes the *_array*.
      *

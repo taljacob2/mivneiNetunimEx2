@@ -103,8 +103,17 @@ template<typename K, typename V> class HeapAdt {
 
   public:
     /**
+     * @note This is an extension method - made for convenience.
+     * @return The logicalSize of the data-structure.
+     */
+    virtual long int getLogicalSize() const = 0;
+
+  public:
+    /**
      * @brief Force the sub-classes of this class to implement the `print`
      *        method, so others could print this class.
+     *
+     * @note This is an extension method - made for convenience.
      *
      * For example, you could print this class like so:
      * @code
