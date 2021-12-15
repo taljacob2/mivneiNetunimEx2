@@ -2,6 +2,7 @@
 #ifndef ENTRY_H
 #define ENTRY_H
 
+#include "Object.h"
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -17,7 +18,7 @@
  * @tparam V the type of *value* in the entry.
  * @version 1.0.2
  */
-template<typename K, typename V> class Entry {
+template<typename K, typename V> class Entry : public Object {
   private:
     /// The *key* of the entry. @attention **Must** be `comparable`.
     K _key;
@@ -33,14 +34,13 @@ template<typename K, typename V> class Entry {
      * @param key the key to set the entry with.
      * @param value the value to set the entry with.
      */
-    Entry(K key, V value) {
-        this->_key          = key;
-        this->_value        = value;
-        createdOnHeapStatic = false;
+    Entry(K key, V value) : Object() {
+        this->_key   = key;
+        this->_value = value;
     }
 
   public:
-    Entry() { createdOnHeapStatic = false; }
+    Entry() : Object() {}
 
   public:
     virtual ~Entry() = default;
@@ -75,30 +75,6 @@ template<typename K, typename V> class Entry {
     bool operator==(const Entry &other) const { return _key == other._key; }
 
     bool operator!=(const Entry &other) const { return !(other == *this); }
-
-  private:
-    /**
-     * @attention Initialized at the beginning of the constructor invocation.
-     */
-    bool createdOnHeap = createdOnHeapStatic;
-
-  private:
-    static bool createdOnHeapStatic;
-
-  public:
-    bool  isCreatedOnHeap() const { return createdOnHeap; }
-    void *operator new(size_t sz) {
-        createdOnHeapStatic = true;
-        return ::operator new(sz);
-    }
-
-  public:
-    void operator delete(void *ptrToDelete) {
-        auto entry = (Entry<K, V> *) ptrToDelete;
-        if (entry->isCreatedOnHeap()) { ::operator delete(ptrToDelete); }
-    }
 };
-
-template<typename K, typename V> bool Entry<K, V>::createdOnHeapStatic = false;
 
 #endif // ENTRY_H
