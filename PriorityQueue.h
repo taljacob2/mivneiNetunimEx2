@@ -74,10 +74,15 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
      */
     Entry<K, V> median() override {}
 
+  public:
+    friend std::ostream &operator<<(std::ostream &       os,
+                                    const PriorityQueue &priorityQueue) {
+        return printThis(os, priorityQueue);
+    }
+
   private:
-    std::ostream &
-    print(std::ostream &                os,
-          const PriorityQueueAdt<K, V> &priorityQueueAdt) const {
+    std::ostream &print(std::ostream &                os,
+                        const PriorityQueueAdt<K, V> &priorityQueueAdt) const {
         PriorityQueue &priorityQueue =
                 (PriorityQueue &) priorityQueueAdt; // Force cast.
         return printThis(os, priorityQueue);
@@ -87,20 +92,31 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     static std::ostream &printThis(std::ostream &             os,
                                    const PriorityQueue<K, V> &priorityQueue) {
 
-        os << priorityQueue._greaterThanMedianMaxHeap->print(
+        os << "---------------------------- ";
+        os << "_greaterThanMedianMaxHeap:";
+        os << " ----------------------------" << std::endl;
+        priorityQueue._greaterThanMedianMaxHeap->print(
                 std::cout, *priorityQueue._greaterThanMedianMaxHeap);
 
-        os << "_greaterThanMedianMaxHeap: " << std::endl
-           << *(priorityQueue._greaterThanMedianMaxHeap) << std::endl;
+        os << "---------------------------- ";
+        os << "_greaterThanMedianMinHeap:";
+        os << " ----------------------------" << std::endl;
+        priorityQueue._greaterThanMedianMinHeap->print(
+                std::cout, *priorityQueue._greaterThanMedianMinHeap);
 
-        os << "_greaterThanMedianMinHeap: " << std::endl
-           << *(priorityQueue._greaterThanMedianMinHeap) << std::endl;
+        os << "---------------------------- ";
+        os << "_lowerOrEqualToMedianMaxHeap:";
+        os << " ----------------------------" << std::endl;
+        priorityQueue._lowerOrEqualToMedianMaxHeap->print(
+                std::cout, *priorityQueue._lowerOrEqualToMedianMaxHeap);
 
-        os << "_lowerOrEqualToMedianMaxHeap: " << std::endl
-           << *(priorityQueue._lowerOrEqualToMedianMaxHeap) << std::endl;
+        os << "---------------------------- ";
+        os << "_lowerOrEqualToMedianMinHeap:";
+        os << " ----------------------------" << std::endl;
+        priorityQueue._lowerOrEqualToMedianMinHeap->print(
+                std::cout, *priorityQueue._lowerOrEqualToMedianMinHeap);
+        os << "---------------------------- ";
 
-        os << "_lowerOrEqualToMedianMinHeap: " << std::endl
-           << *(priorityQueue._lowerOrEqualToMedianMinHeap) << std::endl;
         return os;
     }
 };
