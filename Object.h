@@ -19,7 +19,6 @@
 class Object {
 
   private:
-
     /**
      * This arbitrary field is the responsible of the invocation of the
      * `onInit()` method. Because fields are being initialized **before** the
@@ -109,7 +108,6 @@ class Object {
     /* --------------- operator `new` --------------- */
 
   public:
-
     /**
      * @brief This `public static` `new` operator is using a `private static`
      *        method for its body.
