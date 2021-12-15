@@ -62,7 +62,6 @@ class Object {
     }
 
   private:
-    void
     /**
      * @brief This method is invoked in the `onInit()` method, and serves for
      *        the `new` and `delete` operators.
@@ -73,6 +72,7 @@ class Object {
      * @li Afterwards, this method resets `createdOnHeapStatic` to `false`,
      * so that it will be ready for the next creation of `this` type of object.
      */
+    void
     setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse() {
         createdOnHeap       = createdOnHeapStatic;
         createdOnHeapStatic = false;
