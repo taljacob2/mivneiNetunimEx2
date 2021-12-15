@@ -9,7 +9,7 @@
 
 
 /**
- * @brief this class bundles together all the algorithm
+ * @brief this class bundles together all the generic algorithms
  *        methods in the program.
  */
 class my_algorithms {
