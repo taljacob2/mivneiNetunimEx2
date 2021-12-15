@@ -2,7 +2,7 @@
 #ifndef MIN_HEAP_H
 #define MIN_HEAP_H
 
-#include "MinHeapAdt.h"
+#include "Heap.h"
 #include "my_algorithms.h"
 #include <exception>
 #include <ostream>
@@ -27,21 +27,8 @@
  * @see Entry
  * @see MinHeapAdt
  */
-template<typename K, typename V> class MinHeap : public MinHeapAdt<K, V> {
+template<typename K, typename V> class MinHeap : public Heap<K, V> {
 
-  public:
-    /**
-     * @brief Deletes the *minimal element* from the heap, and returns it.
-     *
-     * @note After removing the *minimal element* from the heap, this method
-     *       calls the *fixHeap(0)* method, in order to fix the heap afterwards.
-     * @attention in case the `_logicalSize` of the *_array* is 0,
-     *            this method returns `null_ptr`.
-     * @return the *minimal element* removed from the heap.
-     * @throws std::logic_error in case the heap is already empty.
-     * @see deleteRoot()
-     */
-    Entry<K, V> *deleteMin() override { return this->deleteRoot(true); }
 
 };
 
