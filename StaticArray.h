@@ -25,6 +25,9 @@ template<typename E> class StaticArray : public ArrayBase<E> {
     unsigned long _logicalSize = 0;
 
   public:
+    unsigned long getLogicalSize() const { return _logicalSize; }
+
+  public:
     void push(E &element) {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
