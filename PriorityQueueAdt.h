@@ -69,7 +69,6 @@ template<typename K, typename V> class PriorityQueueAdt {
      */
     virtual Entry<K, V> median() = 0;
 
-    // FIXME:
   public:
     /**
      * @brief Force the sub-classes of this class to implement the `print`
