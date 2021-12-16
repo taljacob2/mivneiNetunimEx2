@@ -61,7 +61,7 @@ template<typename E> class Array {
   public:
     /**
      * @brief This method will *filter* out from the array the elements that
-     *        do not return `true` the the given @p predicate function.
+     *        do not return `true` the given @p predicate function.
      *
      * @param predicate a `bool` function such that only the elements that
      *                  are returning `true` to this @p predicate function
@@ -74,9 +74,10 @@ template<typename E> class Array {
      *                        for you to use this method.
      * @param deleteFilteredElements set this parameter to `true` if the
      *                               elements in `this` array are allocated
-     *                               via the heap. Else, it means
-     *                               you allocated the elements via the stack,
-     *                               and in this case set this
+     *                               via the heap, so that this method will
+     *                               `delete` them if they are filtered out.
+     *                               Else, it means you allocated the elements
+     *                               locally, and in this case set this
      *                               parameter to `false`.
      * @return `this` object. So that you can "chain" this method with another.
      */
@@ -117,6 +118,28 @@ template<typename E> class Array {
     }
 
   public:
+    /**
+     * @brief This method will *map* out another `Array` from `this` array.
+     *
+     * @tparam E2 the type of `element`s in the returned `Array`.
+     * @param mapFunction a `E2`-return-type function such that only the
+     *                    elements that are returning `true` to this @p
+     *                    predicate function would remain in the array. The
+     *                    others would be `deleted` from the array. And based
+     *                    on the given @p deleteFilteredElements parameter,
+     *                    they may also be `deleted` from the heap.
+     *                    @note You are suggested to use a "lambda" function
+     *                          for this @p predicate - so that it will be
+     *                          quicker for you to use this method.
+     * @param deleteFilteredElements set this parameter to `true` if the
+     *                               elements in `this` array are allocated
+     *                               via the heap, so that this method will
+     *                               `delete` them if they are filtered out.
+     *                               Else, it means you allocated the elements
+     *                               locally, and in this case set this
+     *                               parameter to `false`.
+     * @return
+     */
     template<typename E2>
     Array<E2> &map(const std::function<E2 &(E &)> &mapFunction,
                    bool deleteFilteredElements = false) {
