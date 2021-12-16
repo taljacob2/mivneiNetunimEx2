@@ -110,11 +110,12 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      *
      * @note After removing the *root element* from the heap, this method
      *       calls the *fixHeap(0)* method, in order to fix the heap afterwards.
-     * @attention in case the `_logicalSize` of the *_array* is 0,
+     * @attention in case the `_logicalSize` of the `_array` is `0`,
      *            this method returns `null_ptr`.
      * @return the *root element* removed from the heap.
      * @throws std::logic_error in case the heap is already empty.
      * @see fixHeap(long int)
+     * @see deleteRoot(bool)
      */
     Entry<K, V> *deleteRoot() override { return deleteRoot(true); }
 
