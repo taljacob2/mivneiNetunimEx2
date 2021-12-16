@@ -21,8 +21,20 @@ template<typename E> class Array {
   private:
     E *_array = nullptr;
 
+  private:
+    unsigned long _size = 0;
+
   public:
-    explicit Array(unsigned long size) { _array = new E[size]; }
+    unsigned long getSize() const { return _size; }
+
+  public:
+    E &operator[](unsigned long i) { return _array[i]; }
+
+  public:
+    explicit Array(unsigned long size) {
+        _size  = size;
+        _array = new E[_size];
+    }
 
   public:
     virtual ~Array() { delete[] _array; }

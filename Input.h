@@ -3,6 +3,7 @@
 #define INPUT_H
 
 #include "Constants.h"
+#include "Array.h"
 #include <exception>
 #include <functional>
 #include <iostream>
@@ -64,12 +65,13 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static std::string *getTestArray(int &testArraySize) {
+    static Array<std::string> *getTestArray(int &testArraySize) {
         testArraySize   = getValidTestArraySize();
-        auto *testArray = new std::string[testArraySize];
+        // auto *testArray = new std::string[testArraySize];
+        Array<std::string> testArray = Array<std::string>(testArraySize);
         initializeTestArray(testArray, testArraySize);
         // validateTestArray(testArray, testArraySize);
-        return testArray;
+        return &testArray;
     }
 
   private:
