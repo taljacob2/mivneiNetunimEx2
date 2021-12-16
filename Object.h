@@ -39,23 +39,23 @@ class Object {
      * And instead prefer implementing them only once.
      *
      * @attention You may `override` this method to **add** your custom
-     *            initializations *"onInit"* to this method, but make sure
-     *            to still call this `base` `onInit` method, and also make
+     *            initializations to this method, but make sure
+     *            to still call this `base` `onInit()` method, and also make
      *            sure to return an arbitrary `bool` value.
+     *            For example:
+     *            @code
+     *                protected:
+     *                  bool onInit() override {
+     *                      Object::onInit();
+     *
+     *                      // Add your implementation here...
+     *
+     *                      return false;
+     *                  }
+     *            @endcode
      *
      * @return an arbitrary value, just to force the invocation of this method.
      *         In this case, an arbitrary `bool` value.
-     *         For example:
-     *         @code
-     *             protected:
-     *               bool onInit() override {
-     *                   Object::onInit();
-     *
-     *                   // Add your implementation here...
-     *
-     *                   return false;
-     *               }
-     *         @endcode
      */
     virtual bool onInit() {
         setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse();
