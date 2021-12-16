@@ -46,7 +46,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   public:
     /**
-     * @brief Constructor, initializes the *_array*.
+     * @brief Constructor, initializes the `_array`.
      *
      * Builds a **Heap** by giving an @p arrayToBuildFrom of
      * **lvalue `Entries`** as a parameter. Done by invoking the
