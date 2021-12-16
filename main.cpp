@@ -20,11 +20,14 @@ int main() {
         TestRunner::runAllTests(testArray, testArraySize);
 
         // TODO: testing heaps:
-        PriorityQueueAdt<int, std::string> *priorityQueue =
-                new PriorityQueue<int, std::string>();
+        // PriorityQueueAdt<int, std::string> *priorityQueue =
+        //         new PriorityQueue<int, std::string>();
+
+        HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>();
 
         Entry<int, std::string> entry(3, "hello");
-        priorityQueue->insert(entry);
+        heap->insert(&entry);
+        // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
         // priorityQueue->insert(&entry);
         // priorityQueue->insert(new Entry<int, std::string>(4, "yes"));
@@ -33,9 +36,12 @@ int main() {
         // priorityQueue->insert(new Entry<int, std::string>(1, "no"));
         // priorityQueue->insert(new Entry<int, std::string>(7, "oye"));
         // std::cout << "root is: " << *(priorityQueue->root());
-        priorityQueue->print(std::cout, *priorityQueue);
+        std::cout << "root is: " << *(heap->getRoot());
+        // priorityQueue->print(std::cout, *priorityQueue);
+        heap->print(std::cout, *heap);
         // std::cout << priorityQueue;
-        delete priorityQueue;
+        // delete priorityQueue;
+        delete heap;
 
         delete[] testArray;
     } catch (std::exception &e) {

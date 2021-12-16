@@ -96,7 +96,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @throws std::runtime_error in case there are no elements in the heap,
      *         and the user requested to retrieve the root.
      */
-    Entry<K, V> *root() override {
+    Entry<K, V> *getRoot() override {
         if (!_logicalSize) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         } else {
@@ -139,7 +139,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     Entry<K, V> *deleteRoot(bool fixHeapAfterDeletion) {
 
         /* Save the value of `root` to return in the end of the method. */
-        Entry<K, V> *returnElement = root();
+        Entry<K, V> *returnElement = getRoot();
 
         if (this->_logicalSize >= 2) {
             deleteRootWhenThereAreTwoOrMoreElements(fixHeapAfterDeletion);
