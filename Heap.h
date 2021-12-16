@@ -63,11 +63,11 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   public:
     /**
-     * @brief Constructor, sets the `_physicalSize` of the *_array* to be @p
+     * @brief Constructor, sets the `_physicalSize` of the `_array` to be @p
      *        _physicalSize.
      *
-     * @note the content of the *_array* remains empty.
-     * @param physicalSize set the `_physicalSize` of the _array to be this size.
+     * @note the content of the `_array` remains empty.
+     * @param physicalSize set the `_physicalSize` of the `_array` to be this size.
      */
     explicit Heap(long int physicalSize) {
         this->_physicalSize = physicalSize;
