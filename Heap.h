@@ -460,11 +460,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @throws std::logic_error in case the heap is already full.
      */
     void insert(Entry<K, V> *elementToInsert) override {
-        if (this->_physicalSize > this->_logicalSize) {
-
-            /* If there is enough space in the _array. */
-            insertWhenThereIsEnoughSpace(elementToInsert);
-        } else {
+        if (this->_physicalSize <= this->_logicalSize) {
 
             /* The heap is already full. Throw a message. */
             // std::string message;
@@ -474,6 +470,9 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
             throw std::logic_error(Constants::WRONG_INPUT);
         }
+
+        /* If there is enough space in the _array. */
+        insertWhenThereIsEnoughSpace(elementToInsert);
     }
 
   private:
