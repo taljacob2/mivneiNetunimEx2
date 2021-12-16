@@ -11,7 +11,7 @@
  *       that returns `bool`, and tells whether a `node` should be *swapped*
  *       with its `parent` or not. In this implementation,
  *       `<<predicate-resulted>>` is defined to be the result of the
- *       `predicateIsSwapNeeded(Entry<K, V>, Entry<K, V>)` method.
+ *       @link predicateIsSwapNeeded(Entry<K, V>, Entry<K, V>) @endlink method.
  * @tparam K the type of *key* in the entry.
  * @tparam V the type of *value* in the entry.
  * @see HeapAdt
