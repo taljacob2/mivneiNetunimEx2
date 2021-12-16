@@ -34,11 +34,11 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     Entry<K, V> **_array = nullptr;
 
   protected:
-    /// The *physical-size* of the *_array*. Initialized to `0`.
+    /// The *physical-size* of the `_array`. Initialized to `0`.
     long int _physicalSize = 0;
 
   protected:
-    /// The *logical-size* of the *_array*. Initialized to `0`.
+    /// The *logical-size* of the `_array`. Initialized to `0`.
     long int _logicalSize = 0;
 
   public:
