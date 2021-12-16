@@ -97,6 +97,23 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   private:
+    void insertToLeftHeap(Entry<K, V> &element) {
+        _lessOrEqualToMedianMaxHeap->insert(element);
+        _lessOrEqualToMedianMinHeap->insert(element);
+    }
+
+  private:
+    void insertToRightHeap(Entry<K, V> &element) {
+        _greaterThanMedianMaxHeap->insert(element);
+        _greaterThanMedianMinHeap->insert(element);
+    }
+
+  private:
+    void deleteElement(Entry<K, V> &element){
+
+    }
+
+  private:
     long int getLogicalSize() {
         return _greaterThanMedianMinHeap->getLogicalSize() +
                _greaterThanMedianMaxHeap->getLogicalSize();

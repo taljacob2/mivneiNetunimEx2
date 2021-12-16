@@ -81,6 +81,9 @@ class Object {
 
   private:
     /**
+     * This field indicates whether `this` object was created via the `new`
+     * operator ( = on Heap), or via the stack.
+     *
      * @attention This field gets initialized before the constructor is being
      *            invoked, with the `onInit` method.
      * @see setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse()
