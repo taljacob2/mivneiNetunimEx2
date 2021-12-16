@@ -3,6 +3,7 @@
 #define ARRAY_H
 
 #include <functional>
+#include <iostream>
 
 /**
  * @brief This class wraps an array of a *constant size*, and `delete`s it on
@@ -115,9 +116,10 @@ template<typename E> class Array {
 
   public:
     friend std::ostream &operator<<(std::ostream &os, const Array &array) {
-        // TODO implement this method.
-
-        os << "_array: " << array._array << " _size: " << array._size;
+        os << '[';
+        if (array._size) { os << array[0]; }
+        for (int i = 0; i < array._size; i++) { os << " ," << array[i]; }
+        os << ']';
         return os;
     }
 };
