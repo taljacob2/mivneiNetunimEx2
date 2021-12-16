@@ -142,11 +142,10 @@ template<typename E> class Array {
             if (deleteFilteredElements) { delete element; }
         }
 
-        update(newArraySize, newArray);
-        return this;
-
-
-        deleteThis(); // TODO: check if this is required.
+        deleteThis();
+        Array<E2> e2Array(_size);
+        e2Array._array = newArray;
+        return e2Array;
     }
 
   private:
