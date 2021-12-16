@@ -118,7 +118,7 @@ template<typename E> class Array {
     friend std::ostream &operator<<(std::ostream &os, const Array &array) {
         os << '[';
         if (array._size) { os << array[0]; }
-        for (int i = 0; i < array._size; i++) { os << " ," << array[i]; }
+        for (int i = 1; i < array._size; i++) { os << " ," << array[i]; }
         os << ']';
         return os;
     }
