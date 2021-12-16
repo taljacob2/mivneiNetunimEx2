@@ -95,10 +95,8 @@ template<typename E> class Array {
         });
 
         E **newArray = new E *[newArraySize];
-
         for (int i = 0; i < _size; i++) {
             E &element = _array[i];
-
             if (predicate(element)) {
                 newArray[i] = element;
                 continue;
@@ -119,7 +117,6 @@ template<typename E> class Array {
     template<typename E2>
     Array<E2> &map(const std::function<E2&(E &)> &mapFunction,
                    bool deleteFilteredElements = false) {
-        // TODO: "map" method.
 
         /*
          * Must iterate over the array once.
@@ -129,10 +126,8 @@ template<typename E> class Array {
          */
 
         Array<E2> e2Array(_size);
-
         for (int i = 0; i < _size; i++) {
             E &element = _array[i];
-
             e2Array[i] = mapFunction(element);
 
             /**
