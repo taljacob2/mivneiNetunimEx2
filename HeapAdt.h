@@ -15,6 +15,7 @@
  * @tparam V the type of *value* in the entry.
  * @note The terms `element`, `node` and 'entry' are synonyms.
  * @note The terms `heap` and `tree` are synonyms.
+ * @note DEVELOPER NOTE: `long int` and `long` types are the same.
  * @see Entry
  */
 template<typename K, typename V> class HeapAdt {
