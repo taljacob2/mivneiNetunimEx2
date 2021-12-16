@@ -97,7 +97,7 @@ template<typename E> class Array {
         E **newArray = new E *[newArraySize];
 
         for (int i = 0; i < _size; i++) {
-            E *element = _array[i];
+            E &element = _array[i];
 
             if (predicate(element)) {
                 newArray[i] = element;
@@ -117,9 +117,33 @@ template<typename E> class Array {
 
   public:
     template<typename E2>
-    Array<E2> &map(const std::function<E2(E &)> &mapFunction,
+    Array<E2> &map(const std::function<E2&(E &)> &mapFunction,
                    bool deleteFilteredElements = false) {
         // TODO: "map" method.
+
+        /*
+         * Must iterate over the array once.
+         * The `for-loop`'s content is:
+         * - `insert` the new mapped-elements to `newArray`.
+         * - `delete` elements from `_array`.
+         */
+
+        E2 **newArray = new E2 *[_size];
+
+        for (int i = 0; i < _size; i++) {
+            E &element = _array[i];
+
+            newArray[i] = mapFunction(element);
+
+            /**
+             * This element should be filtered out from the array.
+             * `delete` the element if the user required to.
+             */
+            if (deleteFilteredElements) { delete element; }
+        }
+
+        update(newArraySize, newArray);
+        return this;
 
 
         deleteThis(); // TODO: check if this is required.
