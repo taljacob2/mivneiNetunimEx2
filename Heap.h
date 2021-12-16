@@ -233,7 +233,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
          * Note: the almost last level has `(_logicalSize / 2)` `nodes`.
          */
         long int lastIndex = this->_logicalSize - 1;
-        for (long int currentIndex = (lastIndex - 1) / 2; currentIndex >= 0;
+        for (long int currentIndex = getParentIndex(lastIndex); currentIndex >= 0;
              currentIndex--) {
             fixHeap(currentIndex);
         }
