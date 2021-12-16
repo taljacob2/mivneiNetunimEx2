@@ -78,7 +78,7 @@ template<typename E> class Array {
      * @return `this` object. So that you can "chain" this method with another.
      */
     Array<E> &filter(const std::function<bool(E &)> &predicate,
-                     bool                            deleteFilteredElements) {
+                     bool deleteFilteredElements = false) {
         unsigned long newArraySize = 0;
 
         /*
@@ -115,8 +115,15 @@ template<typename E> class Array {
         return this;
     }
 
-    // TODO: "map" method.
+  public:
+    template<typename E2>
+    Array<E2> &map(const std::function<E2(E &)> &mapFunction,
+                   bool deleteFilteredElements = false) {
+        // TODO: "map" method.
 
+
+        deleteThis(); // TODO: check if this is required.
+    }
 
   private:
     /**
