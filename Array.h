@@ -52,6 +52,17 @@ template<typename E> class Array {
     const E &operator[](unsigned long i) const { return _array[i]; }
 
   public:
+    /**
+     * @brief This method will *invoke* the given @p callBack function on
+     *        each element in the array.
+     *
+     * @param callBack a `void` function that each element in the array will
+     *                 be invoked with.
+     *                  @note You are suggested to use a "lambda" function
+     *                        for this function - so that it will be quicker
+     *                        for you to use this method.
+     * @return `this` object. So that you may "chain" this method with another.
+     */
     Array<E> &forEach(const std::function<void(E &)> &callBack) {
         for (int i = 0; i < _size; i++) { callBack(_array[i]); }
 
@@ -70,7 +81,7 @@ template<typename E> class Array {
      *                  deleteFilteredElements parameter, they may also be
      *                  `deleted` from the heap.
      *                  @note You are suggested to use a "lambda" function
-     *                        for this @p predicate - so that it will be quicker
+     *                        for this function - so that it will be quicker
      *                        for you to use this method.
      * @param deleteFilteredElements set this parameter to `true` if the
      *                               elements in `this` array are allocated
@@ -130,7 +141,7 @@ template<typename E> class Array {
      *                    deleteFilteredElements parameter,
      *                    they may also be `deleted` from the heap.
      *                    @note You are suggested to use a "lambda" function
-     *                          for this @p mapFunction - so that it will be
+     *                          for this function - so that it will be
      *                          quicker for you to use this method.
      * @param deleteFilteredElements set this parameter to `true` if the
      *                               elements in `this` array are allocated
