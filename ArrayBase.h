@@ -298,6 +298,7 @@ template<typename E> class ArrayBase {
         _physicalSize = newArraySize;
     }
 
+  public:
     ArrayBase &operator=(ArrayBase &&other) noexcept {
         if (this != &other) {
 
