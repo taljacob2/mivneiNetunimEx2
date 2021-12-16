@@ -41,6 +41,15 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   public:
+    /**
+     * @warning invoking this method does *not* initialize any field.
+     *          So, if you decide to use this method, *you may not* invoke any
+     *          of the methods in this class. Instead, you *must* invoke the
+     *          `createEmpty()` method beforehand, and only then you are
+     *          allowed to invoke the other methods in this class.
+     *          @li This kind of implementation is served only because of a
+     *          request given by the customer ( = the course lecturer).
+     */
     PriorityQueue() = default;
 
   public:
