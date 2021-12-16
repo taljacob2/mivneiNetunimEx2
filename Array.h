@@ -99,6 +99,8 @@ template<typename E> class Array {
         return this;
     }
 
+    // TODO: "map" method.
+
   private:
     /**
      * @brief Update the fields of `this` object.
