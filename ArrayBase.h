@@ -56,17 +56,7 @@ template<typename E> class ArrayBase {
 
   public:
     ArrayBase(ArrayBase &&other) noexcept : _physicalSize(0), _array(nullptr) {
-
-        // Copy the data pointer and its length from the source object.
-        _physicalSize = other._physicalSize;
-        _array        = other._array;
-
-        /*
-         * Release the data pointer from the source object so that
-         * the destructor does not free the memory multiple times.
-         */
-        other._physicalSize = 0;
-        other._array        = nullptr;
+        *this = std::move(other);
     }
 
   public:
