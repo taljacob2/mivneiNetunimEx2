@@ -32,7 +32,7 @@ template<typename K, typename V> class HeapAdt {
      *
      * @return the *root element* of the heap.
      */
-    virtual Entry<K, V> *root() = 0;
+    virtual Entry<K, V> *getRoot() = 0;
 
   public:
     /**

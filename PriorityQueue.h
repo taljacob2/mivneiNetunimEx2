@@ -53,7 +53,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     Entry<K, V> max() override {
-        return *_greaterThanMedianMaxHeap->root(); // FIXME: check
+        return *_greaterThanMedianMaxHeap->getRoot(); // FIXME: check
     }
 
   public:
@@ -61,7 +61,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     Entry<K, V> min() override {
-        return *_lessOrEqualToMedianMinHeap->root(); // FIXME: check
+        return *_lessOrEqualToMedianMinHeap->getRoot(); // FIXME: check
     }
 
   public:
@@ -144,7 +144,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
      *         retrieve the root.
      */
     Entry<K, V> median() override {
-        return *_lessOrEqualToMedianMaxHeap->root(); // FIXME: check
+        return *_lessOrEqualToMedianMaxHeap->getRoot(); // FIXME: check
     }
 
   public:
