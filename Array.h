@@ -79,7 +79,7 @@ template<typename E> class Array {
      *                               Else, it means you allocated the elements
      *                               locally, and in this case set this
      *                               parameter to `false`.
-     * @return `this` object. So that you can "chain" this method with another.
+     * @return `this` object. So that you may "chain" this method with another.
      */
     Array<E> &filter(const std::function<bool(E &)> &predicate,
                      bool deleteFilteredElements = false) {
@@ -139,7 +139,8 @@ template<typename E> class Array {
      *                               Else, it means you allocated the elements
      *                               locally, and in this case set this
      *                               parameter to `false`.
-     * @return the array of type `E2` mapped by `this` array.
+     * @return the array of type `E2` mapped by `this` array. This way, you
+     *         may also "chain" this method with another.
      */
     template<typename E2>
     Array<E2> &map(const std::function<E2 &(E &)> &mapFunction,
