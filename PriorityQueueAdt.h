@@ -72,7 +72,8 @@ template<typename K, typename V> class PriorityQueueAdt {
   public:
     /**
      * @brief Force the sub-classes of this class to implement the `print`
-     *        method, so others could print this class polymorphically.
+     *        method, so others could print this class' sub-classes
+     *        polymorphically.
      *
      * @note This is an extension method - made for convenience.
      *
