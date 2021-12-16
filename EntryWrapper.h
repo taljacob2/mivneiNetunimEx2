@@ -12,8 +12,11 @@
  */
 template<typename K, typename V> class EntryWrapper {
 
+  public:
+    EntryWrapper() = default;
+
   private:
-    Entry<K, V> _entry = nullptr;
+    Entry<K, V> *_entry = nullptr;
 
   private:
     long int _maxHeapIndex = 0;
@@ -22,26 +25,22 @@ template<typename K, typename V> class EntryWrapper {
     long int _minHeapIndex = 0;
 
   public:
-    const Entry<K, V> &getEntry() const { return _entry; }
+    Entry<K, V> *getEntry() const { return _entry; }
 
   public:
-    void setEntry(const Entry<K, V> &entry) { EntryWrapper::_entry = entry; }
+    void setEntry(Entry<K, V> *entry) { _entry = entry; }
 
   public:
     long getMaxHeapIndex() const { return _maxHeapIndex; }
 
   public:
-    void setMaxHeapIndex(long maxHeapIndex) {
-        EntryWrapper::_maxHeapIndex = maxHeapIndex;
-    }
+    void setMaxHeapIndex(long maxHeapIndex) { _maxHeapIndex = maxHeapIndex; }
 
   public:
     long getMinHeapIndex() const { return _minHeapIndex; }
 
   public:
-    void setMinHeapIndex(long minHeapIndex) {
-        EntryWrapper::_minHeapIndex = minHeapIndex;
-    }
+    void setMinHeapIndex(long minHeapIndex) { _minHeapIndex = minHeapIndex; }
 };
 
 #endif // ENTRY_WRAPPER_H
