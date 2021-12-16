@@ -16,9 +16,9 @@
  * That means, for example, that you may allocate the sub-class
  * dynamically with the `new` operator in an *inline-anonymous* way for
  * *inserting* it to a *data-structure* of some sort,
- * and then "trust" that *data-structure* to `delete` this sub-class by
- * itself with the `delete` operator - without that *data-structure* knowing
- * if the sub-class was allocated via the stack or via the heap.
+ * and then "trust" that *data-structure* to `delete` this sub-class when it
+ * decides to, with the `delete` operator - without that *data-structure*
+ * knowing if the sub-class was allocated via the stack or via the heap.
  *
  * @author Tal Yacob.
  * @version 1.0.1
