@@ -14,6 +14,7 @@
  * @tparam K the type of *key* in the entry.
  * @tparam V the type of *value* in the entry.
  * @note The terms `element`, `node` and 'entry' are synonyms.
+ * @note The terms `heap` and `tree` are synonyms.
  * @see Entry
  */
 template<typename K, typename V> class HeapAdt {
