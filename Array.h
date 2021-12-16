@@ -115,7 +115,7 @@ template<typename E> class Array {
 
   public:
     template<typename E2>
-    Array<E2> &map(const std::function<E2&(E &)> &mapFunction,
+    Array<E2> &map(const std::function<E2 &(E &)> &mapFunction,
                    bool deleteFilteredElements = false) {
 
         /*
@@ -142,7 +142,7 @@ template<typename E> class Array {
     }
 
   public:
-    Array<E> clone(){
+    Array<E> clone() {
         // TODO: need to implement.
     }
 
