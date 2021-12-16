@@ -86,6 +86,14 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   private:
     void deleteThis() {
+
+        /**
+         * The below "for-loop" is a special addition, only because `Entry`
+         * is a sub-class of `Object`. It enables the creation of anonymous
+         * `Entry`s to be inserted to `this` heap, and not to concern the
+         * user to the `delete` that entry or not. Instead, `this` class would
+         * handle that entry's destruction.
+         */
         for (int i = 0; i < _physicalSize; i++) { delete _array[i]; }
         delete[] _array;
     }
@@ -233,8 +241,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
          * Note: the almost last level has `(_logicalSize / 2)` `nodes`.
          */
         long int lastIndex = this->_logicalSize - 1;
-        for (long int currentIndex = getParentIndex(lastIndex); currentIndex >= 0;
-             currentIndex--) {
+        for (long int currentIndex = getParentIndex(lastIndex);
+             currentIndex >= 0; currentIndex--) {
             fixHeap(currentIndex);
         }
     }
@@ -504,8 +512,9 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
              * its parent, to check if there is a need to `swap` between
              * them, in order to ensure validity of the heap, as a `Heap`.
              */
-            if (predicateIsSwapNeeded(*this->_array[getParentIndex(currentIndex)],
-                                      *this->_array[currentIndex])) {
+            if (predicateIsSwapNeeded(
+                        *this->_array[getParentIndex(currentIndex)],
+                        *this->_array[currentIndex])) {
                 my_algorithms::swap(this->_array, currentIndex,
                                     getParentIndex(currentIndex));
 
