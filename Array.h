@@ -46,8 +46,10 @@ template<typename E> class Array {
     const E &operator[](unsigned long i) const { return _array[i]; }
 
   public:
-    void forEach(const std::function<void(E &)> &callBack) {
+    Array<E> &forEach(const std::function<void(E &)> &callBack) {
         for (int i = 0; i < _size; i++) { callBack(_array[i]); }
+
+        return this;
     }
 
   public:
@@ -111,6 +113,7 @@ template<typename E> class Array {
     }
 
     // TODO: "map" method.
+
 
   private:
     /**
