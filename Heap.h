@@ -502,8 +502,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
             /*
              * Beginning with the inserted element, compare each child to
              * its parent, to check if there is a need to `swap` between
-             * them, in order to ensure validity of the heap, as a
-             * `Heap`.
+             * them, in order to ensure validity of the heap, as a `Heap`.
              */
             if (predicateIsSwapNeeded(*this->_array[getParentIndex(currentIndex)],
                                       *this->_array[currentIndex])) {
