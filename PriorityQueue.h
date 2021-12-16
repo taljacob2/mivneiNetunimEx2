@@ -5,7 +5,7 @@
 #include "PriorityQueueAdt.h"
 
 /**
- * @brief This *priority-queue* is implemented b y four *Heaps*, and each of
+ * @brief This *priority-queue* is implemented by four *Heaps*, and each of
  *        these Heaps' elements are *Entries* that are composed by a *key* and a *value*.
  *
  * @attention the `median()` is defined as the element that its priority is
