@@ -141,6 +141,11 @@ template<typename E> class Array {
         return e2Array;
     }
 
+  public:
+    Array<E> clone(){
+        // TODO: need to implement.
+    }
+
   private:
     /**
      * @brief Update the fields of `this` object.
