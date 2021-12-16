@@ -1,6 +1,6 @@
 
-#ifndef ARRAY_H
-#define ARRAY_H
+#ifndef ARRAY_BASE_H
+#define ARRAY_BASE_H
 
 #include <functional>
 #include <iostream>
@@ -23,15 +23,15 @@ template<typename E> class ArrayBase {
 
   protected:
     static constexpr char *PHYSICAL_SIZE_MESSAGE =
-            (char *) "Array: `physicalSize` must be at least `1`.";
+            (char *) "ArrayBase: `physicalSize` must be at least `1`.";
 
   protected:
     static constexpr char *OUT_OF_RANGE_MESSAGE =
-            (char *) "Array: out of range.";
+            (char *) "ArrayBase: out of range.";
 
   protected:
     static constexpr char *ELEMENT_IS_NULL_MESSAGE =
-            (char *) "Array: Element is `nullptr`.";
+            (char *) "ArrayBase: Element is `nullptr`.";
 
   protected:
     E **_array = nullptr;
@@ -312,4 +312,4 @@ template<typename E> class ArrayBase {
     }
 };
 
-#endif // ARRAY_H
+#endif // ARRAY_BASE_H
