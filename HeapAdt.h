@@ -112,7 +112,7 @@ template<typename K, typename V> class HeapAdt {
   public:
     /**
      * @brief Force the sub-classes of this class to implement the `print`
-     *        method, so others could print this class.
+     *        method, so others could print this class polymorphic.
      *
      * @note This is an extension method - made for convenience.
      *
@@ -127,19 +127,19 @@ template<typename K, typename V> class HeapAdt {
      *
      * @code
      *   public:
-     *     friend std::ostream &operator<<(std::ostream &os, const Heap &heap) {
+     *     friend std::ostream &operator<<(std::ostream &os, const HeapAdtSubClass &heap) {
      *         return printThis(os, heap);
      *     }
      *
      *   private:
      *     std::ostream &print(std::ostream &       os,
      *                         const HeapAdt<K, V> &heapAdt) const override {
-     *         Heap &heap = (Heap &) heapAdt; // Force cast.
+     *         HeapAdtSubClass &heap = (HeapAdtSubClass &) heapAdt; // Force cast.
      *         return printThis(os, heap);
      *     }
      *
      *   private:
-     *     static std::ostream &printThis(std::ostream &os, const Heap<K, V>
+     *     static std::ostream &printThis(std::ostream &os, const HeapAdtSubClass<K, V>
      *    &heap) {
      *                os << "_array{\n";
      *

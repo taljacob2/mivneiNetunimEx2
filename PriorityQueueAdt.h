@@ -73,10 +73,40 @@ template<typename K, typename V> class PriorityQueueAdt {
   public:
     /**
      * @brief Force the sub-classes of this class to implement the `print`
-     *        method, so others could print this class.
-
+     *        method, so others could print this class polymorphic.
+     *
+     * @note This is an extension method - made for convenience.
+     *
+     * For example, you could print this class like so:
+     * @code
+     * priorityQueueAdt->print(std::cout, *priorityQueueAdt);
+     * @endcode
+     *
+     * Tip:
+     *
+     * Define the `print` method like so (for example):
+     *
+     * @code
+     *   public:
+     *     friend std::ostream &operator<<(std::ostream &os, const PriorityQueueAdtSubClass &priorityQueue) {
+     *         return printThis(os, priorityQueue);
+     *     }
+     *
+     *   private:
+     *     std::ostream &print(std::ostream &       os,
+     *                         const PriorityQueueAdt<K, V> &priorityQueueAdt) const override {
+     *         PriorityQueueAdtSubClass &priorityQueue = (PriorityQueueAdtSubClass &) priorityQueueAdt; // Force cast.
+     *         return printThis(os, priorityQueue);
+     *     }
+     *
+     *   private:
+     *     static std::ostream &printThis(std::ostream &os, const PriorityQueueAdtSubClass<K, V>
+     *    &priorityQueue) {
+     *              ...
+     *           }
+     * @endcode
      * @param os output-stream.
-     * @param heapAdt a `PriorityQueueAdt`.
+     * @param priorityQueueAdt a `PriorityQueueAdt`.
      * @return the given @p os.
      */
     virtual std::ostream &
