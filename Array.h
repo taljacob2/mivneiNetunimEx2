@@ -37,6 +37,9 @@ template<typename E> class Array {
     }
 
   public:
+    Array(Array &copyArray) { this = copyArray.copy(); }
+
+  public:
     virtual ~Array() { deleteThis(); }
 
   private:
@@ -141,9 +144,14 @@ template<typename E> class Array {
         return e2Array;
     }
 
-  public:
-    Array<E> clone() {
-        // TODO: need to implement.
+  private:
+    Array<E> copy() {
+        Array<E> copyArray(_size);
+        for (int i = 0; i < _size; i++) {
+            copyArray[i] = _array[i]; // Shallow-Copy the reference.
+        }
+
+        return copyArray;
     }
 
   private:
