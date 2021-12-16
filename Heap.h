@@ -126,7 +126,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @note After removing the *root element* from the heap, this method
      *       calls the *fixHeap(0)* method, in order to fix the heap
      *       afterwards - only if the @p fixHeapAfterDeletion parameter is `true`.
-     * @attention in case the `_logicalSize` of the *_array* is 0,
+     * @attention in case the `_logicalSize` of the `_array` is `0`,
      *            this method returns `null_ptr`.
      * @param fixHeapAfterDeletion determines if the method will call the
      *                             *fixHeap(0)* method, after deletion, to
