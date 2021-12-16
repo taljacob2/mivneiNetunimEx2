@@ -82,10 +82,10 @@ class Object {
   private:
     /**
      * This field indicates whether `this` object was created via the `new`
-     * operator ( = on Heap), or via the stack.
+     * operator ( = on heap), or via the stack.
      *
      * @attention This field gets initialized before the constructor is being
-     *            invoked, with the `onInit` method.
+     *            invoked, with the `onInit()` method.
      * @see setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse()
      * @see onInit()
      */
@@ -96,11 +96,11 @@ class Object {
      * This field tells if `this` objects was created by the `new` operator
      * or not. It is set to `true` by the `operatorNewPrivate` method when
      * the `new` operator was used to create `this` object, and it is set to
-     * `false` by the `onInit` method before the constructor when `this` object
-     * is created.
+     * `false` by the `onInit()` method before the constructor when `this`
+     * object is created.
      *
      * @attention This field gets initialized before the constructor is being
-     *            invoked, with the `onInit` method.
+     *            invoked, with the `onInit()` method.
      * @see setCreatedOnHeapToCreatedOnHeapStaticAndSetCreatedOnHeapStaticToFalse()
      * @see onInit()
      */
