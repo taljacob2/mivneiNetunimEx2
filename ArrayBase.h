@@ -19,7 +19,7 @@
  *
  * @version 1.0
  */
-template<typename E> class Array {
+template<typename E> class ArrayBase {
 
   protected:
     static constexpr char *PHYSICAL_SIZE_MESSAGE =
@@ -43,7 +43,7 @@ template<typename E> class Array {
     unsigned long getPhysicalSize() const { return _physicalSize; }
 
   public:
-    explicit Array(unsigned long physicalSize) {
+    explicit ArrayBase(unsigned long physicalSize) {
         if (physicalSize < 1) {
             throw std::invalid_argument(PHYSICAL_SIZE_MESSAGE);
         }
@@ -52,10 +52,10 @@ template<typename E> class Array {
     }
 
   public:
-    Array(Array &copyArray) { this = copyArray.copy(); }
+    ArrayBase(ArrayBase &copyArray) { this = copyArray.copy(); }
 
   public:
-    virtual ~Array() { deleteThis(); }
+    virtual ~ArrayBase() { deleteThis(); }
 
   protected:
     void deleteThis() { delete[] _array; }
@@ -112,7 +112,7 @@ template<typename E> class Array {
      *                        for you to use this method.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    Array<E> &forEach(const std::function<void(E &)> &callBack) {
+    ArrayBase<E> &forEach(const std::function<void(E &)> &callBack) {
         for (int i = 0; i < _physicalSize; i++) { callBack(_array[i]); }
 
         return this;
@@ -141,7 +141,7 @@ template<typename E> class Array {
      *                               parameter to `false`.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    Array<E> &filter(const std::function<bool(E &)> &predicate,
+    ArrayBase<E> &filter(const std::function<bool(E &)> &predicate,
                      bool deleteFilteredElements = false) {
         unsigned long newArraySize = 0;
 
@@ -203,7 +203,7 @@ template<typename E> class Array {
      *         may also "chain" this method with another.
      */
     template<typename E2>
-    Array<E2> &map(const std::function<E2 &(E &)> &mapFunction,
+    ArrayBase<E2> &map(const std::function<E2 &(E &)> &mapFunction,
                    bool deleteOriginalArrayElements = false) {
 
         /*
@@ -213,7 +213,7 @@ template<typename E> class Array {
          * - `delete` elements from `_array`.
          */
 
-        Array<E2> e2Array(_physicalSize);
+        ArrayBase<E2> e2Array(_physicalSize);
         for (int i = 0; i < _physicalSize; i++) {
             E &element = _array[i];
             e2Array[i] = mapFunction(element);
@@ -234,8 +234,8 @@ template<typename E> class Array {
      * @brief Shallow-Copying `this` object.
      * @return a shallow-copy of `this` object.
      */
-    Array<E> copy() {
-        Array<E> copyArray(_physicalSize);
+    ArrayBase<E> copy() {
+        ArrayBase<E> copyArray(_physicalSize);
         for (int i = 0; i < _physicalSize; i++) {
             copyArray[i] = _array[i]; // Shallow-Copy the reference.
         }
@@ -282,7 +282,7 @@ template<typename E> class Array {
     }
 
   public:
-    friend std::ostream &operator<<(std::ostream &os, const Array &array) {
+    friend std::ostream &operator<<(std::ostream &os, const ArrayBase &array) {
         return print(os, array);
     }
 
@@ -291,7 +291,7 @@ template<typename E> class Array {
      * @note This method is `nullptr` resistant - Instead of crashing, it prints
      *       "nullptr".
      */
-    static std::ostream &print(std::ostream &os, const Array &array) {
+    static std::ostream &print(std::ostream &os, const ArrayBase &array) {
         os << '[';
         if (array._physicalSize) { printElement(os, array._array[0]); }
         for (unsigned long i = 1; i < array._physicalSize; i++) {

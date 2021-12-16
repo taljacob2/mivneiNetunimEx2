@@ -2,8 +2,8 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include "ArrayBase.h"
 #include "Constants.h"
-#include "Array.h"
 #include <exception>
 #include <functional>
 #include <iostream>
@@ -65,10 +65,11 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static Array<std::string> &getTestArray(int &testArraySize) {
+    static ArrayBase<std::string> &getTestArray(int &testArraySize) {
         testArraySize   = getValidTestArraySize();
         // auto *testArray = new std::string[testArraySize];
-        Array<std::string> testArray = Array<std::string>(testArraySize);
+        ArrayBase<std::string> testArray =
+                ArrayBase<std::string>(testArraySize);
         initializeTestArray(testArray, testArraySize);
         // validateTestArray(testArray, testArraySize);
         return testArray;
@@ -107,7 +108,7 @@ class Input {
      *                  with all the tests the user inputted.
      * @param testArraySize the size of the given @p testArray.
      */
-    static void initializeTestArray(Array<std::string> &testArray,
+    static void initializeTestArray(ArrayBase<std::string> &testArray,
                                     int           testArraySize) {
         int sizeCounter = 0;
 

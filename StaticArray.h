@@ -2,13 +2,13 @@
 #ifndef STATIC_ARRAY_H
 #define STATIC_ARRAY_H
 
-#include "Array.h"
+#include "ArrayBase.h"
 
 /**
  * @tparam E the type of `element` in the array.
  * @version 1.0
  */
-template<typename E> class StaticArray : public Array<E> {
+template<typename E> class StaticArray : public ArrayBase<E> {
 
   protected:
     static constexpr char *IS_EMPTY_MESSAGE =
@@ -19,7 +19,7 @@ template<typename E> class StaticArray : public Array<E> {
             (char *) "StaticArray: array is full.";
 
   public:
-    explicit StaticArray(unsigned long physicalSize) : Array<E>(physicalSize) {}
+    explicit StaticArray(unsigned long physicalSize) : ArrayBase<E>(physicalSize) {}
 
   protected:
     unsigned long _logicalSize = 0;
