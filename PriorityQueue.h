@@ -76,10 +76,10 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   public:
-    void insert(Entry<K, V> &element) override {
+    void insert(Entry<K, V> *element) override {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
-                if (median() < element) {
+                if (median() < *element) {
                     _greaterThanMedianMaxHeap->insert(element);
                 } else {
 
@@ -97,19 +97,19 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   private:
-    void insertToLeftHeap(Entry<K, V> &element) {
+    void insertToLeftHeap(Entry<K, V> *element) {
         _lessOrEqualToMedianMaxHeap->insert(element);
         _lessOrEqualToMedianMinHeap->insert(element);
     }
 
   private:
-    void insertToRightHeap(Entry<K, V> &element) {
+    void insertToRightHeap(Entry<K, V> *element) {
         _greaterThanMedianMaxHeap->insert(element);
         _greaterThanMedianMinHeap->insert(element);
     }
 
   private:
-    void deleteElement(Entry<K, V> &element){
+    void deleteElement(Entry<K, V> *element){
 
     }
 
@@ -126,12 +126,12 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
   private:
-    bool isLogicalSizeOfHeapAdtEven(HeapAdt<K, V> heapAdt) {
-        return heapAdt.getLogicalSize() % 2 == 0;
+    bool isLogicalSizeOfHeapAdtEven(HeapAdt<K, V> *heapAdt) {
+        return heapAdt->getLogicalSize() % 2 == 0;
     }
 
   private:
-    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<K, V> heapAdt) {
+    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<K, V> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 

@@ -45,7 +45,7 @@ class TestRunner {
                 priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
                 Entry<int, std::string> entry(stoi(test[1]), test[2]);
-                priorityQueue.insert(entry);
+                priorityQueue.insert(&entry);
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
             }
