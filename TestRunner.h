@@ -10,7 +10,7 @@ class TestRunner {
 
   public:
     static void runAllTests(std::string *&testArray, int testArraySize) {
-        PriorityQueue<int, std::string> priorityQueue(false);
+        PriorityQueue<int, std::string> priorityQueue(3);
 
         for (int i = 0; i < testArraySize; i++) {
             std::string *test = Input::getTest(testArray, ' ', i);

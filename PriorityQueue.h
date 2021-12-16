@@ -44,7 +44,10 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     PriorityQueue() = default;
 
   public:
-    virtual ~PriorityQueue() {
+    virtual ~PriorityQueue() { deleteThis(); }
+
+  private:
+    void deleteThis() const {
         delete _greaterThanMedianMaxHeap;
         delete _greaterThanMedianMinHeap;
         delete _lessOrEqualToMedianMaxHeap;
@@ -69,6 +72,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   public:
     void createEmpty() override {
+        deleteThis();
         _greaterThanMedianMaxHeap   = new MaxHeap<K, V>();
         _greaterThanMedianMinHeap   = new MaxHeap<K, V>();
         _lessOrEqualToMedianMaxHeap = new MaxHeap<K, V>();
@@ -109,9 +113,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   private:
-    void deleteElement(Entry<K, V> *element){
-
-    }
+    void deleteElement(Entry<K, V> *element) {}
 
   private:
     long int getLogicalSize() {
