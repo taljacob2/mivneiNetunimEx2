@@ -50,6 +50,17 @@ template<typename E> class Array {
     }
 
   public:
+    /**
+     *
+     * @param predicate
+     * @param deleteFilteredElements set this parameter to `true` if the
+     *                               elements in `this` array are allocated
+     *                               via the heap. Else, it means
+     *                               you allocated the elements via the stack,
+     *                               and in this case set this
+     *                               parameter to `false`.
+     * @return
+     */
     Array<E> &filter(const std::function<bool(E &)> &predicate,
                      bool                            deleteFilteredElements) {
         unsigned long newArraySize = 0;
