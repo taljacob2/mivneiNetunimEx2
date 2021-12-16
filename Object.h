@@ -20,7 +20,6 @@
  * decides to, with the `delete` operator - without that *data-structure*
  * knowing whether the sub-class was allocated via the stack or via the heap.
  *
- * @author Tal Yacob.
  * @version 1.0.1
  */
 class Object {
