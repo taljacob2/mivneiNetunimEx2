@@ -65,13 +65,13 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static Array<std::string> *getTestArray(int &testArraySize) {
+    static Array<std::string> &getTestArray(int &testArraySize) {
         testArraySize   = getValidTestArraySize();
         // auto *testArray = new std::string[testArraySize];
         Array<std::string> testArray = Array<std::string>(testArraySize);
         initializeTestArray(testArray, testArraySize);
         // validateTestArray(testArray, testArraySize);
-        return &testArray;
+        return testArray;
     }
 
   private:
@@ -107,7 +107,7 @@ class Input {
      *                  with all the tests the user inputted.
      * @param testArraySize the size of the given @p testArray.
      */
-    static void initializeTestArray(std::string *&testArray,
+    static void initializeTestArray(Array<std::string> &testArray,
                                     int           testArraySize) {
         int sizeCounter = 0;
 
