@@ -2,11 +2,9 @@
 #ifndef MY_ALGORITHMS_H
 #define MY_ALGORITHMS_H
 
-
 #include "Constants.h"
 #include <exception>
 #include <iostream>
-
 
 /**
  * @brief this class bundles together all the generic algorithms

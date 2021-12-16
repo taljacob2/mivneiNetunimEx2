@@ -2,7 +2,6 @@
 #ifndef HEAP_ADT_H
 #define HEAP_ADT_H
 
-
 #include "Entry.h"
 
 /**
