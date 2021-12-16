@@ -13,7 +13,6 @@
  */
 int main() {
     try {
-        int testArraySize = 0;
         auto testArray         = Input::getTestArray();
 
         // TODO: print test

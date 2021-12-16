@@ -55,6 +55,21 @@ template<typename E> class ArrayBase {
     ArrayBase(ArrayBase &copyArray) { *this = copyArray.copy(); }
 
   public:
+    ArrayBase(ArrayBase &&other) noexcept : _physicalSize(0), _array(nullptr) {
+
+        // Copy the data pointer and its length from the source object.
+        _physicalSize = other._physicalSize;
+        _array        = other._array;
+
+        /*
+         * Release the data pointer from the source object so that
+         * the destructor does not free the memory multiple times.
+         */
+        other._physicalSize = 0;
+        other._array        = nullptr;
+    }
+
+  public:
     virtual ~ArrayBase() { deleteThis(); }
 
   protected:
@@ -283,8 +298,30 @@ template<typename E> class ArrayBase {
         _physicalSize = newArraySize;
     }
 
+    ArrayBase &operator=(ArrayBase &&other) noexcept {
+        if (this != &other) {
+
+            // Free the existing resource.
+            deleteThis();
+
+            // Copy the data pointer and its length from the source object.
+            this->_physicalSize = other._physicalSize;
+            for (unsigned long i = 0; i < _physicalSize; i++) {
+                _array[i] = other._array[i]; // Shallow-Copy the reference.
+            }
+
+            /**
+             * Release the data pointer from the source object so that
+             * the destructor does not free the memory multiple times.
+             */
+            other._physicalSize = 0;
+            other._array        = nullptr;
+        }
+        return *this;
+    }
+
   public:
-    ArrayBase<E> &operator=(const ArrayBase<E> &other) {
+    ArrayBase &operator=(const ArrayBase &other) {
         // Guard self assignment
         if (this == &other) { return *this; }
 
