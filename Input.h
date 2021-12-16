@@ -114,7 +114,7 @@ class Input {
             sizeCounter++;
         }
 
-        if (sizeCounter != testArray.size()) {
+        if (sizeCounter != (int)testArray.size()) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
