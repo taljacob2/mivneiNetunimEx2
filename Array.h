@@ -128,12 +128,12 @@ template<typename E> class Array {
          * - `delete` elements from `_array`.
          */
 
-        E2 **newArray = new E2 *[_size];
+        Array<E2> e2Array(_size);
 
         for (int i = 0; i < _size; i++) {
             E &element = _array[i];
 
-            newArray[i] = mapFunction(element);
+            e2Array[i] = mapFunction(element);
 
             /**
              * This element should be filtered out from the array.
@@ -143,8 +143,6 @@ template<typename E> class Array {
         }
 
         deleteThis();
-        Array<E2> e2Array(_size);
-        e2Array._array = newArray;
         return e2Array;
     }
 
