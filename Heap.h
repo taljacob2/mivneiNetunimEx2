@@ -22,7 +22,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     /**
      * @see fixHeap(long int)
      * @see fixHeapUpwards(long int)
-     * @see fixHeapWhile(long int)
+     * @see fixHeapWhile(long int, Direction)
      */
     enum class Direction { UPWARDS, DOWNWARDS };
 
@@ -437,10 +437,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
-     * @see fixHeapWhile(long int,
-     *                   const std::function<long int(Entry<K, V> **, long int,
-     *                   long int, long int)>&,
-     *                   const std::function<bool(Entry<K, V>, Entry<K, V>)>&)
+     * @see fixHeapWhile(long int, Direction)
      */
     virtual long int
     getIndexOfChildToSwapWithParent(Entry<K, V> **array, long int size,
@@ -449,10 +446,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
-     * @see fixHeapWhile(long int,
-     *                   const std::function<long int(Entry<K, V> **, long int,
-     *                   long int, long int)>&,
-     *                   const std::function<bool(Entry<K, V>, Entry<K, V>)>&)
+     * @see fixHeapWhile(long int, Direction)
      */
     virtual bool predicateIsSwapNeeded(Entry<K, V> element1,
                                        Entry<K, V> element2) = 0;
