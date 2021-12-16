@@ -113,7 +113,9 @@ template<typename E> class ArrayBase {
      * @return `this` object. So that you may "chain" this method with another.
      */
     ArrayBase<E> &forEach(const std::function<void(E &)> &callBack) {
-        for (int i = 0; i < _physicalSize; i++) { callBack(_array[i]); }
+        for (unsigned long i = 0; i < _physicalSize; i++) {
+            callBack(_array[i]);
+        }
 
         return this;
     }
@@ -142,7 +144,7 @@ template<typename E> class ArrayBase {
      * @return `this` object. So that you may "chain" this method with another.
      */
     ArrayBase<E> &filter(const std::function<bool(E &)> &predicate,
-                     bool deleteFilteredElements = false) {
+                         bool deleteFilteredElements = false) {
         unsigned long newArraySize = 0;
 
         /*
@@ -159,7 +161,7 @@ template<typename E> class ArrayBase {
         });
 
         E **newArray = new E *[newArraySize];
-        for (int i = 0; i < _physicalSize; i++) {
+        for (unsigned long i = 0; i < _physicalSize; i++) {
             E &element = _array[i];
             if (predicate(element)) {
                 newArray[i] = element;
@@ -204,7 +206,7 @@ template<typename E> class ArrayBase {
      */
     template<typename E2>
     ArrayBase<E2> &map(const std::function<E2 &(E &)> &mapFunction,
-                   bool deleteOriginalArrayElements = false) {
+                       bool deleteOriginalArrayElements = false) {
 
         /*
          * Must iterate over the array once.
@@ -214,7 +216,7 @@ template<typename E> class ArrayBase {
          */
 
         ArrayBase<E2> e2Array(_physicalSize);
-        for (int i = 0; i < _physicalSize; i++) {
+        for (unsigned long i = 0; i < _physicalSize; i++) {
             E &element = _array[i];
             e2Array[i] = mapFunction(element);
 
@@ -236,7 +238,7 @@ template<typename E> class ArrayBase {
      */
     ArrayBase<E> &copy() {
         ArrayBase<E> copyArray(_physicalSize);
-        for (int i = 0; i < _physicalSize; i++) {
+        for (unsigned long i = 0; i < _physicalSize; i++) {
             copyArray._array[i] = _array[i]; // Shallow-Copy the reference.
         }
 
@@ -282,14 +284,13 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase<E>& operator=(const ArrayBase<E>& other)
-    {
+    ArrayBase<E> &operator=(const ArrayBase<E> &other) {
         // Guard self assignment
         if (this == &other) { return *this; }
 
         deleteThis();
         this->_physicalSize = other._physicalSize;
-        for (int i = 0; i < _physicalSize; i++) {
+        for (unsigned long i = 0; i < _physicalSize; i++) {
             _array[i] = other._array[i]; // Shallow-Copy the reference.
         }
 
