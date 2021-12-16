@@ -138,7 +138,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
   public:
     /**
      * @return the median priority element - defining the median as the
-     *         element that its priority is `ceil (n / 2)`
+     *         element that its priority is `ceil(n / 2)`
      * @throws std::runtime_error in case there are no elements in the
      *         `_lessOrEqualToMedianMaxHeap` heap, and the user requested to
      *         retrieve the root.
