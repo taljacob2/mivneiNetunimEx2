@@ -145,6 +145,10 @@ template<typename E> class Array {
     }
 
   private:
+    /**
+     * @brief Shallow-Copying `this` object.
+     * @return a shallow-copy of `this` object.
+     */
     Array<E> copy() {
         Array<E> copyArray(_size);
         for (int i = 0; i < _size; i++) {
