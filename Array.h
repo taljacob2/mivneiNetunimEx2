@@ -52,15 +52,25 @@ template<typename E> class Array {
 
   public:
     /**
+     * @brief This method will *filter* out from the array the elements that
+     *        do not return `true` the the given @p predicate function.
      *
-     * @param predicate
+     * @param predicate a `bool` function such that only the elements that
+     *                  are returning `true` to this @p predicate function
+     *                  would remain in the array. The others would be
+     *                  `deleted` from the array. And based on the given @p
+     *                  deleteFilteredElements parameter, they may also be
+     *                  `deleted` from the heap.
+     *                  @note You are suggested to use a "lambda" function
+     *                        for this @p predicate - so that it will be quicker
+     *                        for you to use this method.
      * @param deleteFilteredElements set this parameter to `true` if the
      *                               elements in `this` array are allocated
      *                               via the heap. Else, it means
      *                               you allocated the elements via the stack,
      *                               and in this case set this
      *                               parameter to `false`.
-     * @return
+     * @return `this` object. So that you can "chain" this method with another.
      */
     Array<E> &filter(const std::function<bool(E &)> &predicate,
                      bool                            deleteFilteredElements) {
