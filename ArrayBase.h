@@ -261,12 +261,12 @@ template<typename E> class ArrayBase {
     /**
      * @warning Use with caution.
      */
-    virtual void setNull(unsigned long index) {
+    virtual void setElementAsPointer(std::basic_string<char> element, unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = nullptr;
+        this->_array[index] = element;
     }
 
   protected:

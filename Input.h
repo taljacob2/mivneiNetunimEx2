@@ -65,11 +65,9 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static StaticArray<std::string> &getTestArray(int &testArraySize) {
-        testArraySize = getValidTestArraySize();
-        // auto *testArray = new std::string[testArraySize];
-        StaticArray<std::string> testArray(testArraySize);
-        initializeTestArray(testArray, testArraySize);
+    static StaticArray<std::string> &getTestArray() {
+        StaticArray<std::string> testArray(getValidTestArraySize());
+        initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
         return testArray;
     }
@@ -107,16 +105,15 @@ class Input {
      *                  with all the tests the user inputted.
      * @param testArraySize the size of the given @p testArray.
      */
-    static void initializeTestArray(ArrayBase<std::string> &testArray,
-                                    int                     testArraySize) {
+    static void initializeTestArray(StaticArray<std::string> &testArray) {
         int sizeCounter = 0;
 
-        for (int i = 0; i < testArraySize; i++) {
-            testArray[i] = getLine(std::cin);
+        for (int i = 0; i < testArray.size(); i++){
+            testArray.setElementAsPointer(getLine(std::cin), i);
             sizeCounter++;
         }
 
-        if (sizeCounter != testArraySize) {
+        if (sizeCounter != testArray.size()) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
