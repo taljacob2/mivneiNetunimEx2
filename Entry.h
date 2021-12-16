@@ -2,7 +2,6 @@
 #ifndef ENTRY_H
 #define ENTRY_H
 
-#include "Object.h"
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -18,7 +17,7 @@
  * @tparam V the type of *value* in the entry.
  * @version 1.0.2
  */
-template<typename K, typename V> class Entry : public Object {
+template<typename K, typename V> class Entry {
 
   private:
     /// The *key* of the entry. @attention **Must** be `comparable`.

@@ -86,15 +86,6 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   private:
     void deleteThis() {
-
-        /**
-         * The below "for-loop" is a special addition, only because `Entry`
-         * is a sub-class of `Object`. It enables the creation of anonymous
-         * `Entry`s to be inserted to `this` heap, and not to concern the
-         * user to the `delete` that entry or not. Instead, `this` class would
-         * handle that entry's destruction.
-         */
-        for (int i = 0; i < _physicalSize; i++) { delete _array[i]; }
         delete[] _array;
     }
 

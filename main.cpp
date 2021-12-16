@@ -30,11 +30,12 @@ int main() {
         // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
         // priorityQueue->insert(&entry);
-        // priorityQueue->insert(new Entry<int, std::string>(4, "yes"));
-        // priorityQueue->insert(new Entry<int, std::string>(5, "hi"));
-        // priorityQueue->insert(new Entry<int, std::string>(2, "hey"));
-        // priorityQueue->insert(new Entry<int, std::string>(1, "no"));
-        // priorityQueue->insert(new Entry<int, std::string>(7, "oye"));
+        // heap->insert(new Entry<int, std::string>(4, "yes"));
+        // heap->insert(new Entry<int, std::string>(5, "hi"));
+        // heap->insert(new Entry<int, std::string>(2, "hey"));
+        // heap->insert(new Entry<int, std::string>(1, "no"));
+        // heap->insert(new Entry<int, std::string>(7, "oye"));
+        // heap->insert(&(Entry<int, std::string>(9, "yoyo")));
         // std::cout << "root is: " << *(priorityQueue->root());
         std::cout << "root is: " << *(heap->getRoot());
         // priorityQueue->print(std::cout, *priorityQueue);
