@@ -52,7 +52,7 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase(ArrayBase &copyArray) { this = copyArray.copy(); }
+    ArrayBase(ArrayBase &copyArray) { *this = copyArray.copy(); }
 
   public:
     virtual ~ArrayBase() { deleteThis(); }
@@ -229,15 +229,15 @@ template<typename E> class ArrayBase {
         return e2Array;
     }
 
-  protected:
+  public:
     /**
      * @brief Shallow-Copying `this` object.
      * @return a shallow-copy of `this` object.
      */
-    ArrayBase<E> copy() {
+    ArrayBase<E> &copy() {
         ArrayBase<E> copyArray(_physicalSize);
         for (int i = 0; i < _physicalSize; i++) {
-            copyArray[i] = _array[i]; // Shallow-Copy the reference.
+            copyArray._array[i] = _array[i]; // Shallow-Copy the reference.
         }
 
         return copyArray;
@@ -279,6 +279,21 @@ template<typename E> class ArrayBase {
         deleteThis();
         _array        = newArray;
         _physicalSize = newArraySize;
+    }
+
+  public:
+    ArrayBase<E>& operator=(const ArrayBase<E>& other)
+    {
+        // Guard self assignment
+        if (this == &other) { return *this; }
+
+        deleteThis();
+        this->_physicalSize = other._physicalSize;
+        for (int i = 0; i < _physicalSize; i++) {
+            _array[i] = other._array[i]; // Shallow-Copy the reference.
+        }
+
+        return *this;
     }
 
   public:
