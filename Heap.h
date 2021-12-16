@@ -433,7 +433,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      *         is the given @p currentIndex.
      */
     static long int getParentIndex(long int currentIndex) {
-        return floor((double) (currentIndex - 1) / 2);
+        return floor(((double) (currentIndex - 1)) / 2);
     }
 
   protected:
@@ -505,13 +505,13 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
              * them, in order to ensure validity of the heap, as a
              * `Heap`.
              */
-            if (predicateIsSwapNeeded(*this->_array[(currentIndex - 1) / 2],
+            if (predicateIsSwapNeeded(*this->_array[getParentIndex(currentIndex)],
                                       *this->_array[currentIndex])) {
                 my_algorithms::swap(this->_array, currentIndex,
-                                    (currentIndex - 1) / 2);
+                                    getParentIndex(currentIndex));
 
                 /* Step upwards to the parent of the element. */
-                currentIndex = (currentIndex - 1) / 2;
+                currentIndex = getParentIndex(currentIndex);
             } else {
 
                 /* There is no need to `swap`. Thus, the heap is valid. */
