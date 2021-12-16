@@ -122,14 +122,15 @@ template<typename E> class Array {
      * @brief This method will *map* out another `Array` from `this` array.
      *
      * @tparam E2 the type of `element`s in the returned `Array`.
-     * @param mapFunction a `E2`-return-type function such that only the
-     *                    elements that are returning `true` to this @p
-     *                    predicate function would remain in the array. The
-     *                    others would be `deleted` from the array. And based
-     *                    on the given @p deleteFilteredElements parameter,
+     * @param mapFunction a `E2`-return-type function that each element in
+     *                    the array will be invoked with, and *maps* that element
+     *                    to another object of type `E2`.
+     *                    Afterwards, the elements in `this` array would be
+     *                    `deleted` from the array. And based on the given @p
+     *                    deleteFilteredElements parameter,
      *                    they may also be `deleted` from the heap.
      *                    @note You are suggested to use a "lambda" function
-     *                          for this @p predicate - so that it will be
+     *                          for this @p mapFunction - so that it will be
      *                          quicker for you to use this method.
      * @param deleteFilteredElements set this parameter to `true` if the
      *                               elements in `this` array are allocated
@@ -138,7 +139,7 @@ template<typename E> class Array {
      *                               Else, it means you allocated the elements
      *                               locally, and in this case set this
      *                               parameter to `false`.
-     * @return
+     * @return the array of type `E2` mapped by `this` array.
      */
     template<typename E2>
     Array<E2> &map(const std::function<E2 &(E &)> &mapFunction,
