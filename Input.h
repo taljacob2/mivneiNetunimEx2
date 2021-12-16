@@ -108,8 +108,9 @@ class Input {
     static void initializeTestArray(StaticArray<std::string> &testArray) {
         int sizeCounter = 0;
 
-        for (int i = 0; i < testArray.size(); i++){
-            testArray.setElementAsPointer(getLine(std::cin), i);
+        for (int i = 0; i < testArray.size(); i++) {
+            std::string line = getLine(std::cin);
+            testArray.setElement(line, i);
             sizeCounter++;
         }
 
