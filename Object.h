@@ -19,6 +19,10 @@
  * and then "trust" that *data-structure* to `delete` this sub-class when it
  * decides to, with the `delete` operator - without that *data-structure*
  * knowing whether the sub-class was allocated via the stack or via the heap.
+ * For example:
+ * @code
+ * priorityQueue->insert(new Entry<int, std::string>(4, "yes"));
+ * @endcode
  *
  * @version 1.0.1
  */
