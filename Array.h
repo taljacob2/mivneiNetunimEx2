@@ -115,7 +115,7 @@ template<typename E> class Array {
 
   public:
     friend std::ostream &operator<<(std::ostream &os, const Array &array) {
-
+        // TODO implement this method.
 
         os << "_array: " << array._array << " _size: " << array._size;
         return os;
