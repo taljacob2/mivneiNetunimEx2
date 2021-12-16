@@ -6,6 +6,16 @@
 #include "my_algorithms.h"
 #include <cmath>
 
+/**
+ * @note The term `<<predicate-resulted>>` is a result of a predicate method
+ *       that returns `bool`, and tells whether a `node` should be *swapped*
+ *       with its `parent` or not. In this implementation,
+ *       `<<predicate-resulted>>` is defined to be the result of the
+ *       `predicateIsSwapNeeded(Entry<K, V>, Entry<K, V>)` method.
+ * @tparam K the type of *key* in the entry.
+ * @tparam V the type of *value* in the entry.
+ * @see HeapAdt
+ */
 template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   private:
@@ -252,14 +262,23 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   private:
     /**
-     * @brief This method handles a heap that is *valid* from the root downwards
-     *        until the `indexToFixFrom`, which from there and on downwards,
-     *        the heap is *invalid* - means: that the `node` in the
-     *        `indexToFixFrom` is no `<<predicate-resulted>>` than both of its
-     *        children.
-     *        The method ensures to *correct* the heap by *fixing* its
-     *        validity - means, checking that each `node` is smaller than
-     *        both of its children.
+     * @brief This method *fixes* the heap from a given @p indexToFixFrom till
+     *        the *end* of the heap. The *end* of the heap could be either the
+     *        *root* of the heap (the topmost element), or the rightmost leaf.
+     *        The *end* of the heap is determined by the given @p direction that the
+     *        user wishes to fix the heap to. This could be *downwards* or *upwards*.
+     *
+     * For example, if the user picks the `Direction::DOWNWARDS` direction
+     * then this method would handle a heap that is *valid* from the root
+     * downwards until the @p indexToFixFrom, and from there and on
+     * downwards the heap is *invalid* - means: that the `node` in the
+     * @p indexToFixFrom is no `<<predicate-resulted>>` than both of its
+     * children.
+     *
+     * The method ensures to *correct* the heap by *fixing* its
+     * validity - means, checking that each `node` is
+     * `NOT <<predicate-resulted>>` than
+     * both of its children.
      *
      * @param indexToFixFrom the method fixes the heap from this index
      *                       downwards until the leaves of the heap.
@@ -295,10 +314,10 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     /**
      * @brief This method is a *private* method, that represents the
      *        case when the provided @p currentIndex is a legal index.
-     *        This method is being invoked by the @link fixHeap(long int)
-     *        @endlink method.
+     *        This method is being invoked by the @link fixHeap(long int,
+     *        Direction) @endlink method.
      *
-     * @param currentIndex has been checked as a legal index. should be
+     * @param currentIndex has been checked as a legal index. Should be
      *                     in between `0` and `(_logicalSize / 2)`.
      *                     Represents the index to *fixHeap* from.
      * @param direction tells the `Direction` of which the `fixHeap` would

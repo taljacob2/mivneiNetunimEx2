@@ -15,6 +15,9 @@
  * @tparam V the type of *value* in the entry.
  * @note The terms `element`, `node` and 'entry' are synonyms.
  * @note The terms `heap` and `tree` are synonyms.
+ * @note The term `<<predicate-resulted>>` is a result of a predicate method
+ *       that returns `bool`, and tells whether a `node` should be *swapped*
+ *       with its `parent` or not.
  * @note DEVELOPER NOTE: `long int` and `long` types are the same.
  * @see Entry
  */
