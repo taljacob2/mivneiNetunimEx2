@@ -9,7 +9,7 @@
  *        these Heaps' elements are *Entries* that are composed by a *key* and a *value*.
  *
  * @attention the `median()` is defined as the element that its priority is
- *            `ceil (n / 2)`.
+ *            `ceil(n / 2)`.
  *
  * @tparam K The `key` type of each entry. **Must** be `comparable`.
  *           The *priority* of each entry is based on this `key`.
