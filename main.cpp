@@ -12,12 +12,14 @@
  * @version 1.0
  */
 int main() {
-    std::string *testArray = nullptr;
     try {
         int testArraySize = 0;
-        testArray         = Input::getTestArray(testArraySize);
+        auto testArray         = Input::getTestArray();
 
-        TestRunner::runAllTests(testArray, testArraySize);
+        // TODO: print test
+        std::cout << testArray;
+
+        // TestRunner::runAllTests(testArray);
 
         // TODO: testing heaps:
         // PriorityQueueAdt<int, std::string> *priorityQueue =
@@ -34,7 +36,7 @@ int main() {
         // heap->insert(new Entry<int, std::string>(1, "no"));
         // heap->insert(new Entry<int, std::string>(7, "oye"));
         // heap->insert(&(Entry<int, std::string>(9, "yoyo")));
-        heap->insert(&(Entry<int, std::string>(9, "yoyo")));
+        // heap->insert(&(Entry<int, std::string>(9, "yoyo")));
         // std::cout << "root is: " << *(priorityQueue->root());
         std::cout << "root is: " << *(heap->getRoot());
         // priorityQueue->print(std::cout, *priorityQueue);
@@ -42,11 +44,8 @@ int main() {
         // std::cout << priorityQueue;
         // delete priorityQueue;
         delete heap;
-
-        delete[] testArray;
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
-        delete[] testArray;
         return Constants::MAIN_ERROR;
     }
 
