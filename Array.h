@@ -37,7 +37,10 @@ template<typename E> class Array {
     }
 
   public:
-    virtual ~Array() { delete[] _array; }
+    virtual ~Array() { deleteThis(); }
+
+  private:
+    void deleteThis() { delete[] _array; }
 
   public:
     E &operator[](unsigned long i) { return _array[i]; }
@@ -122,7 +125,7 @@ template<typename E> class Array {
      * @param newArray .
      */
     void update(unsigned long newArraySize, E **newArray) {
-        delete[] _array;
+        deleteThis();
         _array = newArray;
         _size  = newArraySize;
     }
