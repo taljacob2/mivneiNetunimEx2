@@ -90,14 +90,22 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   public:
     void createEmpty() override {
-        MinHeap<EWrapper> lessMinHeapWhenAlsoHavingMaxHeapBase;
-        Polymorpher::polymorphLValue<MinHeap<EWrapper>, MinHeapWhenAlsoHavingMaxHeap<E>>()
-
         MinHeapWhenAlsoHavingMaxHeap<E> lessMinHeapWhenAlsoHavingMaxHeap;
+        MinHeap<EWrapper> &             lessMinHeapWhenAlsoHavingMaxHeapBase =
+                Polymorpher::polymorphLValue<MinHeap<EWrapper>,
+                                             MinHeapWhenAlsoHavingMaxHeap<E>>(
+                        lessMinHeapWhenAlsoHavingMaxHeap);
+
         MinHeapWhenAlsoHavingMaxHeap<E> lessMaxHeapWhenAlsoHavingMinHeap;
+        MinHeap<EWrapper> &             lessMaxHeapWhenAlsoHavingMinHeapBase =
+                Polymorpher::polymorphLValue<MinHeap<EWrapper>,
+                                             MinHeapWhenAlsoHavingMaxHeap<E>>(
+                        lessMaxHeapWhenAlsoHavingMinHeap);
+
         DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
-                &lessMinHeapWhenAlsoHavingMaxHeap,
-                &lessMaxHeapWhenAlsoHavingMinHeap);
+                &lessMinHeapWhenAlsoHavingMaxHeapBase,
+                &lessMaxHeapWhenAlsoHavingMinHeapBase);
+
         _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
 
         MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap;
