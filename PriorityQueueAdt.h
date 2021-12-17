@@ -109,8 +109,7 @@ template<typename K, typename V> class PriorityQueueAdt {
      * @param priorityQueueAdt a `PriorityQueueAdt`.
      * @return the given @p os.
      */
-    virtual std::ostream &
-    print(std::ostream &os, const PriorityQueueAdt &priorityQueueAdt) const = 0;
+    virtual std::ostream &print(std::ostream &os) const = 0;
 };
 
 #endif // PRIORITY_QUEUE_ADT_H

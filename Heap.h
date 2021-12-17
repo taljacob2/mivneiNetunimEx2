@@ -19,12 +19,10 @@
 template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
-    static constexpr char *IS_EMPTY_MESSAGE =
-            (char *) "Heap: heap is empty.";
+    static constexpr char *IS_EMPTY_MESSAGE = (char *) "Heap: heap is empty.";
 
   protected:
-    static constexpr char *IS_FULL_MESSAGE =
-            (char *) "Heap: array is full.";
+    static constexpr char *IS_FULL_MESSAGE = (char *) "Heap: array is full.";
 
   protected:
     static constexpr char *OUT_OF_RANGE_MESSAGE =
@@ -97,9 +95,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     virtual ~Heap() { deleteThis(); }
 
   private:
-    void deleteThis() {
-        delete[] _array;
-    }
+    void deleteThis() { delete[] _array; }
 
   public:
     /**
@@ -402,8 +398,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
                  * the heap as a `Heap`.
                  */
                 if (predicateIsSwapNeeded(
-                        *_array[currentIndex],
-                        *_array[indexOfSwappableChildOfCurrentRoot])) {
+                            *_array[currentIndex],
+                            *_array[indexOfSwappableChildOfCurrentRoot])) {
                     my_algorithms::swap(_array, currentIndex,
                                         indexOfSwappableChildOfCurrentRoot);
 
@@ -516,8 +512,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
              * them, in order to ensure validity of the heap, as a `Heap`.
              */
             if (predicateIsSwapNeeded(
-                    *this->_array[getParentIndex(currentIndex)],
-                    *this->_array[currentIndex])) {
+                        *this->_array[getParentIndex(currentIndex)],
+                        *this->_array[currentIndex])) {
                 my_algorithms::swap(this->_array, currentIndex,
                                     getParentIndex(currentIndex));
 
@@ -550,10 +546,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     }
 
   private:
-    std::ostream &print(std::ostream &       os,
-                        const HeapAdt<K, V> &heapAdt) const override {
-        Heap &heap = (Heap &) heapAdt; // Force cast.
-        return printThis(os, heap);
+    std::ostream &print(std::ostream &os) const override {
+        return printThis(os, *this);
     }
 
   private:

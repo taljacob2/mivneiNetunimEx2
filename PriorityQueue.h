@@ -165,11 +165,8 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   private:
-    std::ostream &print(std::ostream &                os,
-                        const PriorityQueueAdt<K, V> &priorityQueueAdt) const {
-        PriorityQueue &priorityQueue =
-                (PriorityQueue &) priorityQueueAdt; // Force cast.
-        return printThis(os, priorityQueue);
+    std::ostream &print(std::ostream &os) const override {
+        return printThis(os, *this);
     }
 
   private:
@@ -179,26 +176,22 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
         os << "---------------------------- ";
         os << "_greaterThanMedianMaxHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._greaterThanMedianMaxHeap->print(
-                std::cout, *priorityQueue._greaterThanMedianMaxHeap);
+        priorityQueue._greaterThanMedianMaxHeap->print(std::cout);
 
         os << "---------------------------- ";
         os << "_greaterThanMedianMinHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._greaterThanMedianMinHeap->print(
-                std::cout, *priorityQueue._greaterThanMedianMinHeap);
+        priorityQueue._greaterThanMedianMinHeap->print(std::cout);
 
         os << "---------------------------- ";
         os << "_lessOrEqualToMedianMaxHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._lessOrEqualToMedianMaxHeap->print(
-                std::cout, *priorityQueue._lessOrEqualToMedianMaxHeap);
+        priorityQueue._lessOrEqualToMedianMaxHeap->print(std::cout);
 
         os << "---------------------------- ";
         os << "_lessOrEqualToMedianMinHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._lessOrEqualToMedianMinHeap->print(
-                std::cout, *priorityQueue._lessOrEqualToMedianMinHeap);
+        priorityQueue._lessOrEqualToMedianMinHeap->print(std::cout);
         os << "---------------------------- ";
 
         return os;

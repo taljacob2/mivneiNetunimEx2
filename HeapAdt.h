@@ -168,8 +168,7 @@ template<typename K, typename V> class HeapAdt {
      * @param heapAdt a `HeapAdt`.
      * @return the given @p os.
      */
-    virtual std::ostream &print(std::ostream & os,
-                                const HeapAdt &heapAdt) const = 0;
+    virtual std::ostream &print(std::ostream &os) const = 0;
 };
 
 #endif // HEAP_ADT_H

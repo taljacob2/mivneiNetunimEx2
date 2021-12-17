@@ -32,8 +32,8 @@ int main() {
         Entry<int, std::string> entry(3, "hello");
         heap.insert(&entry);
         std::cout << "root is: " << *(heap.getRoot()) << std::endl;
-        // priorityQueue->print(std::cout, *priorityQueue);
-        heap.print(std::cout, heap);
+        heap.print(std::cout);
+        priorityQueueAdt.print(std::cout);
     } catch (std::exception &e) {
         std::cout << Constants::WRONG_INPUT << std::endl;
         return Constants::MAIN_ERROR;
