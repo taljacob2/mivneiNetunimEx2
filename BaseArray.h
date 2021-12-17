@@ -49,6 +49,13 @@ template<typename E> class BaseArray {
         }
         _physicalSize = physicalSize;
         _array        = new E *[_physicalSize];
+        initThis();
+    }
+
+  protected:
+    void initThis() {
+        // forEach([this](const E *e) { e = nullptr; });
+        for (int i = 0; i < _physicalSize; i++) { _array[i] = nullptr; }
     }
 
   public:
