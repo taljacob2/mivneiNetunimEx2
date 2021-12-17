@@ -18,23 +18,23 @@
  * @see MinHeap
  * @see MaxHeap
  */
-template<typename K, typename V>
-class PriorityQueue : public PriorityQueueAdt<K, V> {
+template<typename E>
+class PriorityQueue : public PriorityQueueAdt<E> {
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
             *_greaterThanMedianMaxHeap = nullptr;
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
             *_greaterThanMedianMinHeap = nullptr;
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
             *_lessOrEqualToMedianMaxHeap = nullptr;
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
             *_lessOrEqualToMedianMinHeap = nullptr;
 
   public:
@@ -69,32 +69,32 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   public:
-    Entry<K, V> max() override {
+    E max() override {
         return *_greaterThanMedianMaxHeap->getRoot(); // FIXME: check
     }
 
   public:
-    Entry<K, V> deleteMax() override {}
+    E deleteMax() override {}
 
   public:
-    Entry<K, V> min() override {
+    E min() override {
         return *_lessOrEqualToMedianMinHeap->getRoot(); // FIXME: check
     }
 
   public:
-    Entry<K, V> deleteMin() override {}
+    E deleteMin() override {}
 
   public:
     void createEmpty() override {
         deleteThis();
-        _greaterThanMedianMaxHeap   = new MaxHeap<K, V>();
-        _greaterThanMedianMinHeap   = new MaxHeap<K, V>();
-        _lessOrEqualToMedianMaxHeap = new MaxHeap<K, V>();
-        _lessOrEqualToMedianMinHeap = new MaxHeap<K, V>();
+        _greaterThanMedianMaxHeap   = new MaxHeap<E>();
+        _greaterThanMedianMinHeap   = new MaxHeap<E>();
+        _lessOrEqualToMedianMaxHeap = new MaxHeap<E>();
+        _lessOrEqualToMedianMinHeap = new MaxHeap<E>();
     }
 
   public:
-    void insert(Entry<K, V> *element) override {
+    void insert(E *element) override {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
                 if (median() < *element) {
@@ -115,19 +115,19 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     }
 
   protected:
-    void insertToLeftHeap(Entry<K, V> *element) {
+    void insertToLeftHeap(E *element) {
         _lessOrEqualToMedianMaxHeap->insert(element);
         _lessOrEqualToMedianMinHeap->insert(element);
     }
 
   protected:
-    void insertToRightHeap(Entry<K, V> *element) {
+    void insertToRightHeap(E *element) {
         _greaterThanMedianMaxHeap->insert(element);
         _greaterThanMedianMinHeap->insert(element);
     }
 
   protected:
-    void deleteElement(Entry<K, V> *element) {}
+    void deleteElement(E *element) {}
 
   protected:
     long int getLogicalSize() {
@@ -143,13 +143,13 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   protected:
     bool isLogicalSizeOfHeapAdtEven(
-            HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>> *heapAdt) {
+            HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return heapAdt->getLogicalSize() % 2 == 0;
     }
 
   protected:
     bool isLogicalSizeOfHeapAdtOdd(
-            HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>> *heapAdt) {
+            HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 
@@ -161,7 +161,7 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
      *         `_lessOrEqualToMedianMaxHeap` heap, and the user requested to
      *         retrieve the root.
      */
-    Entry<K, V> median() override {
+    E median() override {
         return *_lessOrEqualToMedianMaxHeap->getRoot(); // FIXME: check
     }
 
