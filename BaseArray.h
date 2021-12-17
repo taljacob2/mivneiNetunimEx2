@@ -1,6 +1,6 @@
 
-#ifndef ARRAY_BASE_H
-#define ARRAY_BASE_H
+#ifndef BASE_ARRAY_H
+#define BASE_ARRAY_H
 
 #include <functional>
 #include <iostream>
@@ -19,19 +19,19 @@
  *
  * @version 1.0
  */
-template<typename E> class ArrayBase {
+template<typename E> class BaseArray {
 
   protected:
     static constexpr char *PHYSICAL_SIZE_MESSAGE =
-            (char *) "ArrayBase: `physicalSize` must be at least `1`.";
+            (char *) "BaseArray: `physicalSize` must be at least `1`.";
 
   protected:
     static constexpr char *OUT_OF_RANGE_MESSAGE =
-            (char *) "ArrayBase: out of range.";
+            (char *) "BaseArray: out of range.";
 
   protected:
     static constexpr char *ELEMENT_IS_NULL_MESSAGE =
-            (char *) "ArrayBase: Element is `nullptr`.";
+            (char *) "BaseArray: Element is `nullptr`.";
 
   protected:
     E **_array = nullptr;
@@ -43,7 +43,7 @@ template<typename E> class ArrayBase {
     unsigned long getPhysicalSize() const { return _physicalSize; }
 
   public:
-    explicit ArrayBase(unsigned long physicalSize) {
+    explicit BaseArray(unsigned long physicalSize) {
         if (physicalSize < 1) {
             throw std::invalid_argument(PHYSICAL_SIZE_MESSAGE);
         }
@@ -52,13 +52,13 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase(const ArrayBase &other) { *this = other; }
+    BaseArray(const BaseArray &other) { *this = other; }
 
   public:
-    ArrayBase(ArrayBase &&other) noexcept { *this = std::move(other); }
+    BaseArray(BaseArray &&other) noexcept { *this = std::move(other); }
 
   public:
-    virtual ~ArrayBase() { deleteThis(); }
+    virtual ~BaseArray() { deleteThis(); }
 
   protected:
     void deleteThis() { delete[] _array; }
@@ -119,7 +119,7 @@ template<typename E> class ArrayBase {
      *                        for you to use this method.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    ArrayBase<E> &forEach(const std::function<void(const E &)> &callBack) {
+    BaseArray<E> &forEach(const std::function<void(const E &)> &callBack) {
         for (unsigned long i = 0; i < _physicalSize; i++) {
             assertNotNull(_array[i]);
             callBack(*_array[i]);
@@ -151,7 +151,7 @@ template<typename E> class ArrayBase {
      *                               parameter to `false`.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    ArrayBase<E> &filter(const std::function<bool(E &)> &predicate,
+    BaseArray<E> &filter(const std::function<bool(E &)> &predicate,
                          bool deleteFilteredElements = false) {
         unsigned long newArraySize = 0;
 
@@ -213,7 +213,7 @@ template<typename E> class ArrayBase {
      *         may also "chain" this method with another.
      */
     template<typename E2>
-    ArrayBase<E2> &map(const std::function<E2 &(E &)> &mapFunction,
+    BaseArray<E2> &map(const std::function<E2 &(E &)> &mapFunction,
                        bool deleteOriginalArrayElements = false) {
 
         /*
@@ -223,7 +223,7 @@ template<typename E> class ArrayBase {
          * - `delete` elements from `_array`.
          */
 
-        ArrayBase<E2> e2Array(_physicalSize);
+        BaseArray<E2> e2Array(_physicalSize);
         for (unsigned long i = 0; i < _physicalSize; i++) {
             E &element = getElement(i);
             e2Array.setElement(mapFunction(element));
@@ -244,8 +244,8 @@ template<typename E> class ArrayBase {
      * @brief Shallow-Copying `this` object.
      * @return a shallow-copy of `this` object.
      */
-    ArrayBase<E> &copy() {
-        ArrayBase<E> copyArray(_physicalSize);
+    BaseArray<E> &copy() {
+        BaseArray<E> copyArray(_physicalSize);
         for (unsigned long i = 0; i < _physicalSize; i++) {
             copyArray._array[i] = _array[i]; // Shallow-Copy the reference.
         }
@@ -298,7 +298,7 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase &operator=(const ArrayBase &other) {
+    BaseArray &operator=(const BaseArray &other) {
 
         // Guard self assignment
         if (this == &other) { return *this; }
@@ -316,7 +316,7 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase &operator=(ArrayBase &&other) noexcept {
+    BaseArray &operator=(BaseArray &&other) noexcept {
 
         // Guard self assignment
         if (this != &other) {
@@ -341,7 +341,7 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    friend std::ostream &operator<<(std::ostream &os, const ArrayBase &array) {
+    friend std::ostream &operator<<(std::ostream &os, const BaseArray &array) {
         return print(os, array);
     }
 
@@ -350,7 +350,7 @@ template<typename E> class ArrayBase {
      * @note This method is `nullptr` resistant - Instead of crashing, it prints
      *       "nullptr".
      */
-    static std::ostream &print(std::ostream &os, const ArrayBase &array) {
+    static std::ostream &print(std::ostream &os, const BaseArray &array) {
         os << '[';
         if (array._physicalSize) { printElement(os, array._array[0]); }
         for (unsigned long i = 1; i < array._physicalSize; i++) {
@@ -371,4 +371,4 @@ template<typename E> class ArrayBase {
     }
 };
 
-#endif // ARRAY_BASE_H
+#endif // BASE_ARRAY_H
