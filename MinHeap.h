@@ -10,36 +10,35 @@
  *        pointers to **lvalue `Entries`** that are composed of a *key* and a *value*.
  *
  * @li Once the heap has been built by @link buildHeap @endlink or
- * @link MinHeap(Entry<K, V> *, long int) @endlink, its *physical-size* is
+ * @link MinHeap(E *, long int) @endlink, its *physical-size* is
  * treated as a constant - thus unchangeable. In case the user wishes to
  * change the *physical-size* of the heap, there is a *must* to invoke @link
  * buildHeap @endlink again.
  * @li The heap compares its elements to each other, by the comparable `key`
  * field located in each `Entry` element.
- * @tparam K the type of *key* in the entry.
- * @tparam V the type of *value* in the entry.
+ * @tparam E the type of each element.
  * @note The terms `element`, `node` and 'entry' are synonyms.
  * @attention The `Entries` pointed must be **lvalues**.
  * @see Entry
  * @see Heap
  */
-template<typename K, typename V> class MinHeap : public Heap<K, V> {
+template<typename E> class MinHeap : public Heap<E> {
 
   public:
-    MinHeap(Entry<K, V> *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
-        : Heap<K, V>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
+    MinHeap(E *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
+        : Heap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   public:
-    explicit MinHeap(long physicalSize) : Heap<K, V>(physicalSize) {}
+    explicit MinHeap(long physicalSize) : Heap<E>(physicalSize) {}
 
   public:
-    MinHeap() : Heap<K, V>() {}
+    MinHeap() : Heap<E>() {}
 
   public:
     virtual ~MinHeap() = default;
 
   private:
-    long getIndexOfChildToSwapWithParent(Entry<K, V> **array, long size,
+    long getIndexOfChildToSwapWithParent(E **array, long size,
                                          long indexToElement1,
                                          long indexToElement2) override {
         return my_algorithms::min(array, size, indexToElement1,
@@ -47,8 +46,7 @@ template<typename K, typename V> class MinHeap : public Heap<K, V> {
     }
 
   private:
-    bool predicateIsSwapNeeded(Entry<K, V> element1,
-                               Entry<K, V> element2) override {
+    bool predicateIsSwapNeeded(E element1, E element2) override {
         return element1 > element2;
     }
 };

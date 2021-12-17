@@ -16,30 +16,29 @@
  * buildHeap @endlink again.
  * @li The heap compares its elements to each other, by the comparable `key`
  * field located in each `Entry` element.
- * @tparam K the type of *key* in the entry.
- * @tparam V the type of *value* in the entry.
+ * @tparam E the type of each element.
  * @note The terms `element`, `node` and 'entry' are synonyms.
  * @attention The `Entries` pointed must be **lvalues**.
  * @see Entry
  * @see Heap
  */
-template<typename K, typename V> class MaxHeap : public Heap<K, V> {
+template<typename E> class MaxHeap : public Heap<E> {
 
   public:
-    MaxHeap(Entry<K, V> *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
-        : Heap<K, V>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
+    MaxHeap(E *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
+        : Heap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   public:
-    explicit MaxHeap(long physicalSize) : Heap<K, V>(physicalSize) {}
+    explicit MaxHeap(long physicalSize) : Heap<E>(physicalSize) {}
 
   public:
-    MaxHeap() : Heap<K, V>() {}
+    MaxHeap() : Heap<E>() {}
 
   public:
     virtual ~MaxHeap() = default;
 
   private:
-    long getIndexOfChildToSwapWithParent(Entry<K, V> **array, long size,
+    long getIndexOfChildToSwapWithParent(E **array, long size,
                                          long indexToElement1,
                                          long indexToElement2) override {
         return my_algorithms::max(array, size, indexToElement1,
@@ -47,8 +46,7 @@ template<typename K, typename V> class MaxHeap : public Heap<K, V> {
     }
 
   private:
-    bool predicateIsSwapNeeded(Entry<K, V> element1,
-                               Entry<K, V> element2) override {
+    bool predicateIsSwapNeeded(E element1, E element2) override {
         return element1 < element2;
     }
 };
