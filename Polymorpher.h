@@ -1,24 +1,8 @@
 
-#ifndef POLYMORPH_H
-#define POLYMORPH_H
+#ifndef POLYMORPHER_H
+#define POLYMORPHER_H
 
-template<typename T> class Pointer {
-
-  private:
-    T *_pointer = nullptr;
-
-  public:
-    Pointer(const T &instance) {
-        _pointer = convertReferenceToPointer(instance);
-    }
-
-  public:
-    virtual ~Pointer() {
-        delete _pointer; // TODO: debug
-    }
-
-  public:
-    T *getPointer() const { return _pointer; }
+class Polymorpher {
 
   public:
     template<typename E>
@@ -52,4 +36,4 @@ template<typename T> class Pointer {
     }
 };
 
-#endif // POLYMORPH_H
+#endif // POLYMORPHER_H

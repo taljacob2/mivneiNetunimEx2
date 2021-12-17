@@ -31,7 +31,7 @@ int main() {
 
         auto minHeap = MinHeap<int, std::string>(1);
         HeapAdt<int, std::string> &heap =
-                Pointer<int>::polymorph<HeapAdt<int, std::string>,
+                Polymorpher::polymorph<HeapAdt<int, std::string>,
                         MinHeap<int, std::string>>(minHeap);
 
         // auto pointer = Pointer<MinHeap<int, std::string>>(
