@@ -76,7 +76,7 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
     EWrapper deepCopyEWrapper(EWrapper *eWrapper) const {
-        E &      copiedElement = *(eWrapper->getElement());
+        E *      copiedElement = (eWrapper->getElement());
         EWrapper copiedEWrapper(copiedElement);
         return copiedEWrapper;
     }
