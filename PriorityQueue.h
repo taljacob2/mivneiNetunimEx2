@@ -238,27 +238,15 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
   private:
     static std::ostream &printThis(std::ostream &          os,
                                    const PriorityQueue<E> &priorityQueue) {
+        os << "---------------------------- ";
+        os << "_lessOrEqualToMedianDoubleHeap:";
+        os << " ----------------------------" << std::endl;
+        priorityQueue._lessOrEqualToMedianDoubleHeap->print(std::cout);
 
         os << "---------------------------- ";
-        os << "_greaterThanMedianMaxHeap:";
+        os << "_greaterThanMedianDoubleHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._greaterThanMedianMaxHeap->print(std::cout);
-
-        os << "---------------------------- ";
-        os << "_greaterThanMedianMinHeap:";
-        os << " ----------------------------" << std::endl;
-        priorityQueue._greaterThanMedianMinHeap->print(std::cout);
-
-        os << "---------------------------- ";
-        os << "_lessOrEqualToMedianMaxHeap:";
-        os << " ----------------------------" << std::endl;
-        priorityQueue._lessOrEqualToMedianMaxHeap->print(std::cout);
-
-        os << "---------------------------- ";
-        os << "_lessOrEqualToMedianMinHeap:";
-        os << " ----------------------------" << std::endl;
-        priorityQueue._lessOrEqualToMedianMinHeap->print(std::cout);
-        os << "---------------------------- ";
+        priorityQueue._greaterThanMedianDoubleHeap->print(std::cout);
 
         return os;
     }

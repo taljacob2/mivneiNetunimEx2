@@ -80,6 +80,28 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         EWrapper copiedEWrapper(copiedElement);
         return copiedEWrapper;
     }
+
+
+  private:
+    std::ostream &print(std::ostream &os) const { return printThis(os, *this); }
+
+  private:
+    static std::ostream &
+    printThis(std::ostream &os,
+              const DoublePointerMinHeapAndMaxHeapComponent<E>
+                      &doublePointerMinHeapAndMaxHeapComponent) {
+        os << "---------------------------- ";
+        os << "minHeap:";
+        os << " ----------------------------" << std::endl;
+        doublePointerMinHeapAndMaxHeapComponent.minHeap->print(std::cout);
+
+        os << "---------------------------- ";
+        os << "maxHeap:";
+        os << " ----------------------------" << std::endl;
+        doublePointerMinHeapAndMaxHeapComponent.maxHeap->print(std::cout);
+
+        return os;
+    }
 };
 
 #endif // DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_COMPONENT_H
