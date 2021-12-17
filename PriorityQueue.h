@@ -19,12 +19,12 @@
 template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   protected:
-    DoublePointerMinHeapAndMaxHeapComponent<ElementInMinHeapAndMaxHeap<E>>
-            *_lessOrEqualToMedianDoubleHeap = nullptr;
+    DoublePointerMinHeapAndMaxHeapComponent<E> *_lessOrEqualToMedianDoubleHeap =
+            nullptr;
 
   protected:
-    DoublePointerMinHeapAndMaxHeapComponent<ElementInMinHeapAndMaxHeap<E>>
-            *_greaterThanMedianDoubleHeap = nullptr;
+    DoublePointerMinHeapAndMaxHeapComponent<E> *_greaterThanMedianDoubleHeap =
+            nullptr;
 
   public:
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
@@ -77,7 +77,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E max() override {
 
         // FIXME: check
-        return *_greaterThanMedianDoubleHeap->getMaxHeap()->getRoot();
+        return *(_greaterThanMedianDoubleHeap->getMaxHeap()->getRoot());
     }
 
   public:
@@ -87,7 +87,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E min() override {
 
         // FIXME: check
-        return *_lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot();
+        return *(_lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot());
     }
 
   public:
@@ -149,14 +149,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
   protected:
-    bool isLogicalSizeOfHeapAdtEven(
-            HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
+    bool isLogicalSizeOfHeapAdtEven(HeapAdt<E> *heapAdt) {
         return heapAdt->getLogicalSize() % 2 == 0;
     }
 
   protected:
-    bool
-    isLogicalSizeOfHeapAdtOdd(HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
+    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<E> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 
@@ -169,8 +167,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         retrieve the root.
      */
     E median() override {
-        return *_lessOrEqualToMedianDoubleHeap->getMaxHeap()
-                        ->getRoot(); // FIXME: check
+        return *(_lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                         ->getRoot()); // FIXME: check
     }
 
   public:
