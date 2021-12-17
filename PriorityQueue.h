@@ -68,7 +68,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E *max() override {
 
         // FIXME: check
-        return getElement(_greaterThanMedianDoubleHeap->getMaxHeap());
+        return _greaterThanMedianDoubleHeap->getMaxHeap()
+                ->getRoot()
+                ->getElement();
     }
 
   public:
@@ -78,7 +80,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E *min() override {
 
         // FIXME: check
-        return getElement(_lessOrEqualToMedianDoubleHeap->getMinHeap());
+        return _lessOrEqualToMedianDoubleHeap->getMinHeap()
+                ->getRoot()
+                ->getElement();
     }
 
   public:
