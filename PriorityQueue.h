@@ -28,10 +28,15 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   public:
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
-        _greaterThanMedianMaxHeap   = new MaxHeap<K, V>(physicalSizeOfEachHeap);
-        _greaterThanMedianMinHeap   = new MinHeap<K, V>(physicalSizeOfEachHeap);
-        _lessOrEqualToMedianMaxHeap = new MaxHeap<K, V>(physicalSizeOfEachHeap);
-        _lessOrEqualToMedianMinHeap = new MinHeap<K, V>(physicalSizeOfEachHeap);
+        _lessOrEqualToMedianDoubleHeap =
+                new DoublePointerMinHeapAndMaxHeapComponent<E>(
+                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
+                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+
+        _greaterThanMedianDoubleHeap =
+                new DoublePointerMinHeapAndMaxHeapComponent<E>(
+                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
+                        new MaxHeapWhenAlsoHavingMinHeap<E>());
     }
 
   public:
@@ -51,10 +56,13 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   private:
     void deleteThis() const {
-        delete _greaterThanMedianMaxHeap;
-        delete _greaterThanMedianMinHeap;
-        delete _lessOrEqualToMedianMaxHeap;
-        delete _lessOrEqualToMedianMinHeap;
+        delete _lessOrEqualToMedianDoubleHeap->minHeap;
+        delete _lessOrEqualToMedianDoubleHeap->maxHeap;
+        delete _lessOrEqualToMedianDoubleHeap;
+
+        delete _greaterThanMedianDoubleHeap->minHeap;
+        delete _greaterThanMedianDoubleHeap->maxHeap;
+        delete _greaterThanMedianDoubleHeap;
     }
 
   public:

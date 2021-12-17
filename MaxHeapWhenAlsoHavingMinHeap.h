@@ -9,6 +9,19 @@ template<typename E>
 class MaxHeapWhenAlsoHavingMinHeap
     : public MinHeap<ElementInMinHeapAndMaxHeap<E>> {
 
+  public:
+    MaxHeapWhenAlsoHavingMinHeap() = default;
+
+  public:
+    explicit MaxHeapWhenAlsoHavingMinHeap(long physicalSize)
+        : MinHeap<E>(physicalSize) {}
+
+  public:
+    MaxHeapWhenAlsoHavingMinHeap(
+            ElementInMinHeapAndMaxHeap<E> *arrayToBuildFrom,
+            long                           sizeOfArrayToBuildFrom)
+        : MinHeap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
+
   protected:
     void onIsSwapNeeded(long currentIndex,
                         long indexOfOtherSwappableElement) const override {
