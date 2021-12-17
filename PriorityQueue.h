@@ -137,7 +137,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     void deleteElement(E *element) {}
 
   protected:
-    E &getElement(HeapAdt<E> *heapAdt) {
+    E &getElement(HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return DoublePointerMinHeapAndMaxHeapComponent<E>::
                 getElementFromElementInMinHeapAndMaxHeap(heapAdt->getRoot());
     }
@@ -155,12 +155,13 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
   protected:
-    bool isLogicalSizeOfHeapAdtEven(HeapAdt<E> *heapAdt) {
+    bool isLogicalSizeOfHeapAdtEven(HeapAdt<ElementInMinHeapAndMaxHeap<E>>
+            *heapAdt) {
         return heapAdt->getLogicalSize() % 2 == 0;
     }
 
   protected:
-    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<E> *heapAdt) {
+    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 
