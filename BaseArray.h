@@ -98,7 +98,7 @@ template<typename E> class BaseArray {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = Polymorh<E>::convertReferenceToPointer(element);
+        this->_array[index] = Pointer<E>::convertReferenceToPointer(element);
     }
 
   public:

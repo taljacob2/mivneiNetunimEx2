@@ -2,18 +2,23 @@
 #ifndef POLYMORPH_H
 #define POLYMORPH_H
 
-template<typename SUBCLASS> class Polymorh {
+template<typename SUBCLASS> class Pointer {
 
   private:
     SUBCLASS *_subclass = nullptr;
 
   public:
-    Polymorh(const SUBCLASS &subclass) {
+    Pointer(const SUBCLASS &subclass) {
         _subclass = convertReferenceToPointer(subclass);
     }
 
   public:
-    virtual ~Polymorh() { delete _subclass; }
+    virtual ~Pointer() {
+        // delete _subclass; // TODO: debug
+    }
+
+  public:
+    SUBCLASS *getSubclass() const { return _subclass; }
 
   public:
     template<typename E>

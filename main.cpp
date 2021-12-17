@@ -27,12 +27,16 @@ int main() {
         // PriorityQueueAdt<int, std::string> *priorityQueue =
         //         new PriorityQueue<int, std::string>();
 
-        HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
+        // HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
+        auto polymorph = Pointer<MinHeap<int, std::string>>(
+                MinHeap<int, std::string>(1));
+        HeapAdt<int, std::string> *heap = polymorph.getSubclass();
+
 
         Entry<int, std::string> entry(3, "hello");
         heap->insert(&entry);
-        Entry<int, std::string> entry2(32, "hey");
-        heap->insert(&entry2);
+        // Entry<int, std::string> entry2(32, "hey");
+        // heap->insert(&entry2);
         // TestRunner::runAllTests(testArray);
         // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
@@ -48,7 +52,7 @@ int main() {
         heap->print(std::cout, *heap);
         // std::cout << priorityQueue;
         // delete priorityQueue;
-        delete heap;
+        // delete heap;
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
         return Constants::MAIN_ERROR;
