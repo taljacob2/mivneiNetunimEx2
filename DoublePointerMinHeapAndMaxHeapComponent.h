@@ -7,8 +7,9 @@
 #include "MinHeapWhenAlsoHavingMaxHeap.h"
 
 /**
- *
- * @tparam E
+ * @see MinHeap
+ * @see MaxHeap
+ * @see ElementInMinHeapAndMaxHeap
  */
 template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
