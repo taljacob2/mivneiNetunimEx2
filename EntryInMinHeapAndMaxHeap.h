@@ -3,6 +3,7 @@
 #define ENTRY_IN_MIN_HEAP_AND_MAX_HEAP_H
 
 #include "Entry.h"
+#include <ostream>
 
 /**
  * @brief This class is designed to wrap an `Entry` with two indexes.
@@ -41,6 +42,36 @@ template<typename K, typename V> class EntryInMinHeapAndMaxHeap {
 
   public:
     void setMinHeapIndex(long minHeapIndex) { _minHeapIndex = minHeapIndex; }
+
+  public:
+    bool operator<(const EntryInMinHeapAndMaxHeap &rhs) const {
+        return _entry < rhs._entry;
+    }
+    bool operator>(const EntryInMinHeapAndMaxHeap &rhs) const {
+        return rhs < *this;
+    }
+    bool operator<=(const EntryInMinHeapAndMaxHeap &rhs) const {
+        return !(rhs < *this);
+    }
+    bool operator>=(const EntryInMinHeapAndMaxHeap &rhs) const {
+        return !(*this < rhs);
+    }
+
+  public:
+    bool operator==(const EntryInMinHeapAndMaxHeap &rhs) const {
+        return _entry == rhs._entry;
+    }
+    bool operator!=(const EntryInMinHeapAndMaxHeap &rhs) const {
+        return !(rhs == *this);
+    }
+
+  public:
+    friend std::ostream &
+    operator<<(std::ostream &                  os,
+               const EntryInMinHeapAndMaxHeap &entryInMinHeapAndMaxHeap) {
+        os << entryInMinHeapAndMaxHeap._entry;
+        return os;
+    }
 };
 
 #endif // ENTRY_IN_MIN_HEAP_AND_MAX_HEAP_H
