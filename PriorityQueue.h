@@ -106,43 +106,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
                 if (*median() < *element) {
+
+                    // Insert the given EWrapper to the "greater" heap.
                     _greaterThanMedianDoubleHeap->insertToBothHeaps(element);
                 } else {
+                    transferTheMaxElementFromLessToGreater();
 
-                    /*
-                     * Transfer the maximum from `_lessOrEqualToMedianDoubleHeap`
-                     * to `_greaterThanMedianDoubleHeap`
-                     */
-                    // FIXME: here
-
-                    /*
-                     * 1. Get the `less`'s maximum EWrapper.
-                     * 2. Get the index where it is used in the maximum-heap and
-                     *    delete the element there by the index.
-                     * 3. Do the same for the minimum-heap.
-                     */
-                    EWrapper *lessMaximumEWrapper =
-                            _lessOrEqualToMedianDoubleHeap->getMaxHeap()
-                                    ->getRoot();
-
-                    /**
-                     * Delete the EWrapper from both "less" heaps and
-                     * also get a deep-copy of it.
-                     */
-                    EWrapper eWrapperToTransferToGreater =
-                            _lessOrEqualToMedianDoubleHeap->deleteFromBothHeaps(
-                                    lessMaximumEWrapper);
-
-                    // Transfer the deep-copied EWrapper to the "greater" heap.
-                    _greaterThanMedianDoubleHeap->insertToBothHeaps(
-                            &eWrapperToTransferToGreater);
-
-                    _greaterThanMedianDoubleHeap->insertToBothHeaps(
-                            ElementInMinHeapAndMaxHeap<E>(
-                                    _lessOrEqualToMedianDoubleHeap->getMaxHeap()
-                                            ->deleteRoot()));
-                    _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(
-                            element);
+                    // Insert the given EWrapper to the "less" heap.
+                    _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
                 }
             } else if (isLogicalSizeOdd()) {
                 _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
@@ -150,6 +121,26 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         } else {
             _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
         }
+    }
+
+  protected:
+    void transferTheMaxElementFromLessToGreater() const {
+
+        // Get the "less"'s maximum EWrapper.
+        EWrapper *lessMaximumEWrapper =
+                _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot();
+
+        /**
+         * Delete the EWrapper from both "less" heaps and
+         * also get a deep-copy of it.
+         */
+        EWrapper eWrapperToTransferToGreater =
+                _lessOrEqualToMedianDoubleHeap->deleteFromBothHeaps(
+                        lessMaximumEWrapper);
+
+        // Transfer the deep-copied EWrapper to the "greater" heap.
+        _greaterThanMedianDoubleHeap->insertToBothHeaps(
+                &eWrapperToTransferToGreater);
     }
 
   public:
