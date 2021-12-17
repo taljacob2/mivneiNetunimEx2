@@ -90,30 +90,36 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   public:
     void createEmpty() override {
-        MinHeapWhenAlsoHavingMaxHeap<E> lessMinHeapWhenAlsoHavingMaxHeap;
-        MinHeap<EWrapper> &             lessMinHeapWhenAlsoHavingMaxHeapBase =
+        createDoubleHeap(_lessOrEqualToMedianDoubleHeap);
+        createDoubleHeap(_greaterThanMedianDoubleHeap);
+    }
+
+  protected:
+    void
+    createDoubleHeap(DoublePointerMinHeapAndMaxHeapComponent<E> *
+                             &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
+
+        // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
+        MinHeapWhenAlsoHavingMaxHeap<E> minHeapWhenAlsoHavingMaxHeap;
+        MinHeap<EWrapper> &             minHeapWhenAlsoHavingMaxHeapBase =
                 Polymorpher::polymorphLValue<MinHeap<EWrapper>,
                                              MinHeapWhenAlsoHavingMaxHeap<E>>(
-                        lessMinHeapWhenAlsoHavingMaxHeap);
+                        minHeapWhenAlsoHavingMaxHeap);
 
-        MaxHeapWhenAlsoHavingMinHeap<E> lessMaxHeapWhenAlsoHavingMinHeap;
-        MaxHeap<EWrapper> &             lessMaxHeapWhenAlsoHavingMinHeapBase =
+        // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
+        MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap;
+        MaxHeap<EWrapper> &             maxHeapWhenAlsoHavingMinHeapBase =
                 Polymorpher::polymorphLValue<MaxHeap<EWrapper>,
                                              MaxHeapWhenAlsoHavingMinHeap<E>>(
-                        lessMaxHeapWhenAlsoHavingMinHeap);
+                        maxHeapWhenAlsoHavingMinHeap);
 
-        DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
-                &lessMinHeapWhenAlsoHavingMaxHeapBase,
-                &lessMaxHeapWhenAlsoHavingMinHeapBase);
+        // Construct `DoublePointerMinHeapAndMaxHeapComponent`.
+        DoublePointerMinHeapAndMaxHeapComponent<E> doubleHeap(
+                &minHeapWhenAlsoHavingMaxHeapBase,
+                &maxHeapWhenAlsoHavingMinHeapBase);
 
-        _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
-
-        MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap;
-        MinHeapWhenAlsoHavingMaxHeap<E> greaterMaxHeapWhenAlsoHavingMinHeap;
-        DoublePointerMinHeapAndMaxHeapComponent<E> greaterDoubleHeap(
-                &greaterMinHeapWhenAlsoHavingMaxHeap,
-                &greaterMaxHeapWhenAlsoHavingMinHeap);
-        _greaterThanMedianDoubleHeap = &greaterDoubleHeap;
+        // Set field.
+        fieldOfDoublePointerMinHeapAndMaxHeapComponent = &doubleHeap;
     }
 
   public:
