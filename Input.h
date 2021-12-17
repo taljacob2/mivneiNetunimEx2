@@ -69,8 +69,6 @@ class Input {
         StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
-        testArray.filter()
-        testArray.filter()
         return testArray;
     }
 
