@@ -25,7 +25,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
     unsigned long _logicalSize = 0;
 
   public:
-    unsigned long size() const { return _logicalSize; }
+    unsigned long getLogicalSize() const { return _logicalSize; }
 
   public:
     void push(const E &element) {
