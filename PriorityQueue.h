@@ -30,19 +30,23 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   public:
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
-        _lessOrEqualToMedianDoubleHeap =
-                new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<EWrapper>(
-                                physicalSizeOfEachHeap),
-                        new MaxHeapWhenAlsoHavingMinHeap<EWrapper>(
-                                physicalSizeOfEachHeap));
+        MinHeapWhenAlsoHavingMaxHeap<E> lessMinHeapWhenAlsoHavingMaxHeap(
+                physicalSizeOfEachHeap);
+        MinHeapWhenAlsoHavingMaxHeap<E> lessMaxHeapWhenAlsoHavingMinHeap(
+                physicalSizeOfEachHeap);
+        DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
+                lessMinHeapWhenAlsoHavingMaxHeap,
+                lessMaxHeapWhenAlsoHavingMinHeap);
+        _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
 
-        _greaterThanMedianDoubleHeap =
-                new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<EWrapper>(
-                                physicalSizeOfEachHeap),
-                        new MaxHeapWhenAlsoHavingMinHeap<EWrapper>(
-                                physicalSizeOfEachHeap));
+        MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap(
+                physicalSizeOfEachHeap);
+        MinHeapWhenAlsoHavingMaxHeap<E> greaterMaxHeapWhenAlsoHavingMinHeap(
+                physicalSizeOfEachHeap);
+        DoublePointerMinHeapAndMaxHeapComponent<E> greaterDoubleHeap(
+                greaterMinHeapWhenAlsoHavingMaxHeap,
+                greaterMaxHeapWhenAlsoHavingMinHeap);
+        _greaterThanMedianDoubleHeap = &greaterDoubleHeap;
     }
 
   public:
@@ -58,22 +62,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     PriorityQueue() = default;
 
   public:
-    virtual ~PriorityQueue() { deleteThis(); }
-
-  private:
-    void deleteThis() const {
-        if (_lessOrEqualToMedianDoubleHeap) {
-            delete _lessOrEqualToMedianDoubleHeap->getMinHeap();
-            delete _lessOrEqualToMedianDoubleHeap->getMaxHeap();
-            delete _lessOrEqualToMedianDoubleHeap;
-        }
-
-        if (_greaterThanMedianDoubleHeap) {
-            delete _greaterThanMedianDoubleHeap->getMinHeap();
-            delete _greaterThanMedianDoubleHeap->getMaxHeap();
-            delete _greaterThanMedianDoubleHeap;
-        }
-    }
+    virtual ~PriorityQueue() = default;
 
   public:
     E max() override {
@@ -97,16 +86,19 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   public:
     void createEmpty() override {
-        deleteThis();
-        _lessOrEqualToMedianDoubleHeap =
-                new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<EWrapper>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<EWrapper>());
+        MinHeapWhenAlsoHavingMaxHeap<E> lessMinHeapWhenAlsoHavingMaxHeap;
+        MinHeapWhenAlsoHavingMaxHeap<E> lessMaxHeapWhenAlsoHavingMinHeap;
+        DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
+                lessMinHeapWhenAlsoHavingMaxHeap,
+                lessMaxHeapWhenAlsoHavingMinHeap);
+        _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
 
-        _greaterThanMedianDoubleHeap =
-                new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<EWrapper>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<EWrapper>());
+        MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap;
+        MinHeapWhenAlsoHavingMaxHeap<E> greaterMaxHeapWhenAlsoHavingMinHeap;
+        DoublePointerMinHeapAndMaxHeapComponent<E> greaterDoubleHeap(
+                greaterMinHeapWhenAlsoHavingMaxHeap,
+                greaterMaxHeapWhenAlsoHavingMinHeap);
+        _greaterThanMedianDoubleHeap = &greaterDoubleHeap;
     }
 
   public:
