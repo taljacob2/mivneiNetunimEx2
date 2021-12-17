@@ -328,7 +328,6 @@ template<typename E> class ArrayBase {
         // Guard self assignment
         if (this == &other) { return *this; }
 
-
         // Free the existing resource.
         deleteThis();
 
