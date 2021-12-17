@@ -70,8 +70,14 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
     EWrapper deepCopyEWrapper(EWrapper *eWrapper) const {
+
+        // Extract the old pointer from the given `eWrapper`.
         E *      copiedElement = (eWrapper->getElement());
+
+        // Construct a new `lvalue` object from that pointer.
         EWrapper copiedEWrapper(copiedElement);
+
+        // Return the new `lvalue` object.
         return copiedEWrapper;
     }
 
