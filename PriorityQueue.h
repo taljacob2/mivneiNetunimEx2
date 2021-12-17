@@ -125,14 +125,17 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                             _lessOrEqualToMedianDoubleHeap->getMaxHeap()
                                     ->getRoot();
 
-                    auto lessMinHeapIndex =
-                            lessMaximumEWrapper->getMinHeapIndex();
-                    auto lessMaxHeapIndex =
-                            lessMaximumEWrapper->getMaxHeapIndex();
+                    /**
+                     * Delete the EWrapper from both "less" heaps and
+                     * also get a deep-copy of it.
+                     */
+                    EWrapper eWrapperToTransferToGreater =
+                            _lessOrEqualToMedianDoubleHeap->deleteFromBothHeaps(
+                                    lessMaximumEWrapper);
 
-
-                    _greaterThanMedianDoubleHeap->insertToBothHeaps();
-
+                    // Transfer the deep-copied EWrapper to the "greater" heap.
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps(
+                            &eWrapperToTransferToGreater);
 
                     _greaterThanMedianDoubleHeap->insertToBothHeaps(
                             ElementInMinHeapAndMaxHeap<E>(
