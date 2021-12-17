@@ -13,37 +13,39 @@
  */
 template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
-  protected:
-    MinHeap<ElementInMinHeapAndMaxHeap<E>> *minHeap = nullptr;
+    typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
 
   protected:
-    MaxHeap<ElementInMinHeapAndMaxHeap<E>> *maxHeap = nullptr;
+    MinHeap<EWrapper> *minHeap = nullptr;
+
+  protected:
+    MaxHeap<EWrapper> *maxHeap = nullptr;
 
   public:
-    DoublePointerMinHeapAndMaxHeapComponent(
-            MinHeap<ElementInMinHeapAndMaxHeap<E>> *minHeap,
-            MaxHeap<ElementInMinHeapAndMaxHeap<E>> *maxHeap)
+    DoublePointerMinHeapAndMaxHeapComponent(MinHeap<EWrapper> *minHeap,
+                                            MaxHeap<EWrapper> *maxHeap)
         : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
     virtual ~DoublePointerMinHeapAndMaxHeapComponent() = default;
 
   public:
-    MinHeap<ElementInMinHeapAndMaxHeap<E>> *getMinHeap() { return minHeap; }
+    MinHeap<EWrapper> *getMinHeap() { return minHeap; }
 
   public:
-    MaxHeap<ElementInMinHeapAndMaxHeap<E>> *getMaxHeap() { return maxHeap; }
+    MaxHeap<EWrapper> *getMaxHeap() { return maxHeap; }
 
   public:
     static E &getElementFromElementInMinHeapAndMaxHeap(
-            ElementInMinHeapAndMaxHeap<E> *elementInMinHeapAndMaxHeap) {
+            EWrapper *elementInMinHeapAndMaxHeap) {
         return elementInMinHeapAndMaxHeap->getElement();
     }
 
   public:
     void insertToBothHeaps(E *element) {
-        minHeap->insert(element);
-        minHeap->insert(element);
+        EWrapper eWrapper(element);
+        minHeap->insert(&eWrapper);
+        minHeap->insert(&eWrapper);
     }
 
   public:

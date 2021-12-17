@@ -105,7 +105,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     void insert(E *element) override {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
-                if (median() < *element) {
+                if (*median() < *element) {
                     _greaterThanMedianDoubleHeap->insertToBothHeaps(element);
                 } else {
 
