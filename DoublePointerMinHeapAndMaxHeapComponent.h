@@ -34,7 +34,10 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     }
 
   public:
-    void deleteFromBothHeaps(E *element) {}
+    void deleteFromBothHeaps(E *element) {
+        // TODO: implement. via `i` ? or via a `pointer`? need to check.
+
+    }
 };
 
 #endif // DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_COMPONENT_H
