@@ -549,7 +549,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         return printThis(os, heap);
     }
 
-  private:
+  public:
     std::ostream &print(std::ostream &os) const override {
         return printThis(os, *this);
     }

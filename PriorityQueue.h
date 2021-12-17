@@ -230,7 +230,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         return printThis(os, priorityQueue);
     }
 
-  private:
+  public:
     std::ostream &print(std::ostream &os) const override {
         return printThis(os, *this);
     }

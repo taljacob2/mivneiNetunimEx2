@@ -82,8 +82,10 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     }
 
 
-  private:
-    std::ostream &print(std::ostream &os) const { return printThis(os, *this); }
+  public:
+    virtual std::ostream &print(std::ostream &os) const {
+        return printThis(os, *this);
+    }
 
   private:
     static std::ostream &
