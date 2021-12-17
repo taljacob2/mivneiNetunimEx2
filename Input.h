@@ -65,11 +65,11 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static StaticArray<std::string> &getTestArray() {
+    static StaticArray<std::string> getTestArray() {
         StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
-        return (StaticArray<std::string> &) std::move(testArray);
+        return testArray;
     }
 
   private:
