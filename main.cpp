@@ -13,7 +13,10 @@
  */
 int main() {
     try {
-        auto testArray = Input::getTestArray();
+        // auto testArray = Input::getTestArray();
+
+
+        auto testArray = StaticArray<std::string>(2);
 
         // TODO: print test
         std::cout << testArray << std::endl;

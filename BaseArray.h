@@ -49,6 +49,7 @@ template<typename E> class BaseArray {
         }
         _physicalSize = physicalSize;
         _array        = new E *[_physicalSize];
+        initThis();
     }
 
   public:
@@ -59,6 +60,11 @@ template<typename E> class BaseArray {
 
   public:
     virtual ~BaseArray() { deleteThis(); }
+
+  protected:
+    void initThis() {
+        forEach([this](E *e) { e = nullptr; });
+    }
 
   protected:
     void deleteThis() { delete[] _array; }
@@ -132,6 +138,26 @@ template<typename E> class BaseArray {
 
   public:
     /**
+     * @brief This method will *invoke* the given @p callBack function on
+     *        each element in the array.
+     *
+     * @param callBack a `void` function that each element in the array will
+     *                 be invoked with.
+     *                  @note You are suggested to use a "lambda" function
+     *                        for this function - so that it will be quicker
+     *                        for you to use this method.
+     * @return `this` object. So that you may "chain" this method with another.
+     */
+    BaseArray<E> &forEach(const std::function<void(E *)> &callBack) {
+        for (unsigned long i = 0; i < _physicalSize; i++) {
+            callBack(_array[i]);
+        }
+
+        return *this;
+    }
+
+  public:
+    /**
      * @brief This method will *filter* out from the array the elements that
      *        do not return `true` the given @p predicate function.
      *
@@ -186,7 +212,66 @@ template<typename E> class BaseArray {
         }
 
         update(newArraySize, newArray);
-        return this;
+        return *this;
+    }
+
+  public:
+    /**
+     * @brief This method will *filter* out from the array the elements that
+     *        do not return `true` the given @p predicate function.
+     *
+     * @param predicate a `bool` function such that only the elements that
+     *                  are returning `true` to this @p predicate function
+     *                  would remain in the array. The others would be
+     *                  `deleted` from the array. And based on the given @p
+     *                  deleteFilteredElements parameter, they may also be
+     *                  `deleted` from the heap.
+     *                  @note You are suggested to use a "lambda" function
+     *                        for this function - so that it will be quicker
+     *                        for you to use this method.
+     * @param deleteFilteredElements set this parameter to `true` if the
+     *                               elements in `this` array are allocated
+     *                               via the heap, so that this method will
+     *                               `delete` them if they are filtered out.
+     *                               Else, it means you allocated the elements
+     *                               locally, and in this case set this
+     *                               parameter to `false`.
+     * @return `this` object. So that you may "chain" this method with another.
+     */
+    BaseArray<E> &filter(const std::function<bool(E *)> &predicate,
+                         bool deleteFilteredElements = false) {
+        unsigned long newArraySize = 0;
+
+        /*
+         * Must iterate over the array twice.
+         * The `for-loops`' content is:
+         * 1. Count the `newArraySize`.
+         * 2. - `insert` the elements that are `true` with the predicate
+         *      given to `newArray`.
+         *    - `delete` elements that are `false` with the predicate
+         *      given from `_array`.
+         */
+        for (int i = 0; i < this->_physicalSize; i++) {
+            if (predicate(getElementAsPointer(i))) { newArraySize++; }
+        }
+
+        E **newArray = new E *[newArraySize];
+        for (unsigned long i = 0; i < _physicalSize; i++) {
+            E &element = getElement(i);
+            if (predicate(element)) {
+                newArray[i] = element;
+                continue;
+            }
+
+            /**
+             * This element should be filtered out from the array.
+             * `delete` the element if the user required to.
+             */
+            if (deleteFilteredElements) { delete element; }
+        }
+
+        update(newArraySize, newArray);
+        return *this;
     }
 
   public:
