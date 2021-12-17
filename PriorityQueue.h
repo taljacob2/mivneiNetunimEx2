@@ -30,23 +30,10 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   public:
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
-        MinHeapWhenAlsoHavingMaxHeap<E> lessMinHeapWhenAlsoHavingMaxHeap(
-                physicalSizeOfEachHeap);
-        MinHeapWhenAlsoHavingMaxHeap<E> lessMaxHeapWhenAlsoHavingMinHeap(
-                physicalSizeOfEachHeap);
-        DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
-                &lessMinHeapWhenAlsoHavingMaxHeap,
-                &lessMaxHeapWhenAlsoHavingMinHeap);
-        _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
-
-        MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap(
-                physicalSizeOfEachHeap);
-        MinHeapWhenAlsoHavingMaxHeap<E> greaterMaxHeapWhenAlsoHavingMinHeap(
-                physicalSizeOfEachHeap);
-        DoublePointerMinHeapAndMaxHeapComponent<E> greaterDoubleHeap(
-                &greaterMinHeapWhenAlsoHavingMaxHeap,
-                &greaterMaxHeapWhenAlsoHavingMinHeap);
-        _greaterThanMedianDoubleHeap = &greaterDoubleHeap;
+        createDoubleHeapWithPhysicalSize(_lessOrEqualToMedianDoubleHeap,
+                                         physicalSizeOfEachHeap);
+        createDoubleHeapWithPhysicalSize(_greaterThanMedianDoubleHeap,
+                                         physicalSizeOfEachHeap);
     }
 
   public:
@@ -137,8 +124,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                         minHeapWhenAlsoHavingMaxHeap);
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
-        MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap;
-        MaxHeap<EWrapper> &             maxHeapWhenAlsoHavingMinHeapBase =
+        MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap(
+                physicalSize);
+        MaxHeap<EWrapper> &maxHeapWhenAlsoHavingMinHeapBase =
                 Polymorpher::polymorphLValue<MaxHeap<EWrapper>,
                                              MaxHeapWhenAlsoHavingMinHeap<E>>(
                         maxHeapWhenAlsoHavingMinHeap);
