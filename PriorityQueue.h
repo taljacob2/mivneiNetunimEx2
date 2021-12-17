@@ -12,9 +12,8 @@
  * @attention the `median()` is defined as the element that its priority is
  *            `ceil(n / 2)`.
  *
- * @tparam K The `key` type of each entry. **Must** be `comparable`.
- *           The *priority* of each entry is based on this `key`.
- * @tparam V the type of *value* of each entry.
+ * @tparam E The type of each element. **Must** be `comparable`.
+ *           The *priority* of each element is based on this comparable `key`.
  * @see MinHeap
  * @see MaxHeap
  */
