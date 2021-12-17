@@ -431,8 +431,9 @@ template<typename E> class Heap : public HeapAdt<E> {
     }
 
   protected:
-    virtual void onSwapIsNeeded(long currentIndex,
-                                long indexOfOtherSwappableElement) const {
+    virtual void
+    onSwapIsNeeded(unsigned long currentIndex,
+                   unsigned long indexOfOtherSwappableElement) const {
         my_algorithms::swap(_array, currentIndex, indexOfOtherSwappableElement);
     }
 
