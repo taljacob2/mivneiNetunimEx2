@@ -13,9 +13,6 @@
  */
 template<typename K, typename V> class EntryInMinHeapAndMaxHeap {
 
-  public:
-    EntryInMinHeapAndMaxHeap() = default;
-
   private:
     Entry<K, V> *_entry = nullptr;
 
@@ -24,6 +21,12 @@ template<typename K, typename V> class EntryInMinHeapAndMaxHeap {
 
   private:
     long int _minHeapIndex = 0;
+
+  public:
+    EntryInMinHeapAndMaxHeap() = default;
+
+  public:
+    virtual ~EntryInMinHeapAndMaxHeap() = default;
 
   public:
     Entry<K, V> *getEntry() const { return _entry; }
