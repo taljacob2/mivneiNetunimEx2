@@ -15,17 +15,18 @@ class MaxHeapWhenAlsoHavingMinHeap
     MaxHeapWhenAlsoHavingMinHeap() = default;
 
   public:
-    explicit MaxHeapWhenAlsoHavingMinHeap(long physicalSize)
+    explicit MaxHeapWhenAlsoHavingMinHeap(unsigned long physicalSize)
         : MinHeap<E>(physicalSize) {}
 
   public:
-    MaxHeapWhenAlsoHavingMinHeap(EWrapper *arrayToBuildFrom,
-                                 long      sizeOfArrayToBuildFrom)
+    MaxHeapWhenAlsoHavingMinHeap(EWrapper *    arrayToBuildFrom,
+                                 unsigned long sizeOfArrayToBuildFrom)
         : MinHeap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   protected:
-    void onSwapIsNeeded(long currentIndex,
-                        long indexOfOtherSwappableElement) const override {
+    void
+    onSwapIsNeeded(unsigned long currentIndex,
+                   unsigned long indexOfOtherSwappableElement) const override {
 
         // Update this element's heap-index to the new index:
         (this->_array[currentIndex])
