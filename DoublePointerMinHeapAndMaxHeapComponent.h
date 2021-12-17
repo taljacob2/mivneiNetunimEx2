@@ -28,10 +28,10 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     virtual ~DoublePointerMinHeapAndMaxHeapComponent() = default;
 
   public:
-    const MinHeap<E> &getMinHeap() const { return minHeap; }
+    MinHeap<E> *getMinHeap() { return minHeap; }
 
   public:
-    const MaxHeap<E> &getMaxHeap() const { return maxHeap; }
+    MaxHeap<E> *getMaxHeap() { return maxHeap; }
 
   public:
     void insertToBothHeaps(E *element) {
