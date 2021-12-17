@@ -30,16 +30,20 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
         _lessOrEqualToMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<E>(
+                        new MinHeapWhenAlsoHavingMaxHeap<
+                                ElementInMinHeapAndMaxHeap<E>>(
                                 physicalSizeOfEachHeap),
-                        new MaxHeapWhenAlsoHavingMinHeap<E>(
+                        new MaxHeapWhenAlsoHavingMinHeap<
+                                ElementInMinHeapAndMaxHeap<E>>(
                                 physicalSizeOfEachHeap));
 
         _greaterThanMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<E>(
+                        new MinHeapWhenAlsoHavingMaxHeap<
+                                ElementInMinHeapAndMaxHeap<E>>(
                                 physicalSizeOfEachHeap),
-                        new MaxHeapWhenAlsoHavingMinHeap<E>(
+                        new MaxHeapWhenAlsoHavingMinHeap<
+                                ElementInMinHeapAndMaxHeap<E>>(
                                 physicalSizeOfEachHeap));
     }
 
@@ -98,13 +102,17 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         deleteThis();
         _lessOrEqualToMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+                        new MinHeapWhenAlsoHavingMaxHeap<
+                                ElementInMinHeapAndMaxHeap<E>>(),
+                        new MaxHeapWhenAlsoHavingMinHeap<
+                                ElementInMinHeapAndMaxHeap<E>>());
 
         _greaterThanMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+                        new MinHeapWhenAlsoHavingMaxHeap<
+                                ElementInMinHeapAndMaxHeap<E>>(),
+                        new MaxHeapWhenAlsoHavingMinHeap<
+                                ElementInMinHeapAndMaxHeap<E>>());
     }
 
   public:
@@ -155,13 +163,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
   protected:
-    bool isLogicalSizeOfHeapAdtEven(HeapAdt<ElementInMinHeapAndMaxHeap<E>>
-            *heapAdt) {
+    bool isLogicalSizeOfHeapAdtEven(
+            HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return heapAdt->getLogicalSize() % 2 == 0;
     }
 
   protected:
-    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
+    bool
+    isLogicalSizeOfHeapAdtOdd(HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 

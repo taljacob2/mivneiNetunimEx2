@@ -21,8 +21,8 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   public:
     DoublePointerMinHeapAndMaxHeapComponent(
-            const MinHeap<ElementInMinHeapAndMaxHeap<E>> *minHeap,
-            const MaxHeap<ElementInMinHeapAndMaxHeap<E>> *maxHeap)
+            MinHeap<ElementInMinHeapAndMaxHeap<E>> *minHeap,
+            MaxHeap<ElementInMinHeapAndMaxHeap<E>> *maxHeap)
         : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
