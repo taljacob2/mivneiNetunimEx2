@@ -49,7 +49,6 @@ template<typename E> class BaseArray {
         }
         _physicalSize = physicalSize;
         _array        = new E *[_physicalSize];
-        initThis();
     }
 
   public:
@@ -60,11 +59,6 @@ template<typename E> class BaseArray {
 
   public:
     virtual ~BaseArray() { deleteThis(); }
-
-  protected:
-    void initThis() {
-        forEach([this](E *e) { e = nullptr; });
-    }
 
   protected:
     void deleteThis() { delete[] _array; }

@@ -13,13 +13,11 @@
  */
 int main() {
     try {
-        // auto testArray = Input::getTestArray();
+        auto testArray = Input::getTestArray();
 
-
-        auto testArray = StaticArray<std::string>(2);
 
         // TODO: print test
-        std::cout << testArray << std::endl;
+        // std::cout << testArray << std::endl;
 
         // TestRunner::runAllTests(testArray);
 
@@ -30,7 +28,7 @@ int main() {
         HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>();
 
         Entry<int, std::string> entry(3, "hello");
-        // heap->insert(&entry);
+        heap->insert(&entry);
         // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
         // heap->insert(new Entry<int, std::string>(5, "hi"));
