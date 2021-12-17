@@ -11,12 +11,12 @@
  *       that returns `bool`, and tells whether a `node` should be *swapped*
  *       with its `parent` or not. In this implementation,
  *       `<<predicate-resulted>>` is defined to be the result of the
- *       @link predicateIsSwapNeeded(Entry<K, V>, Entry<K, V>) @endlink method.
+ *       @link predicateIsSwapNeeded(E, E) @endlink method.
  * @tparam K the type of *key* in the entry.
  * @tparam V the type of *value* in the entry.
  * @see HeapAdt
  */
-template<typename K, typename V> class Heap : public HeapAdt<K, V> {
+template<typename E> class Heap : public HeapAdt<E> {
 
   protected:
     static constexpr char *IS_EMPTY_MESSAGE = (char *) "Heap: heap is empty.";
@@ -41,7 +41,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * Array of pointers to **lvalue `Entries`** that serve as `elements`.
      * Initialized to `nullptr`.
      */
-    Entry<K, V> **_array = nullptr;
+    E **_array = nullptr;
 
   protected:
     /// The *physical-size* of the `_array`. Initialized to `0`.
@@ -67,7 +67,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      *                               heap from.
      * @see buildHeap
      */
-    Heap(Entry<K, V> *arrayToBuildFrom, long int sizeOfArrayToBuildFrom) {
+    Heap(E *arrayToBuildFrom, long int sizeOfArrayToBuildFrom) {
         buildHeap(arrayToBuildFrom, sizeOfArrayToBuildFrom);
     }
 
@@ -81,7 +81,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      */
     explicit Heap(long int physicalSize) {
         this->_physicalSize = physicalSize;
-        this->_array        = new Entry<K, V> *[physicalSize];
+        this->_array        = new E *[physicalSize];
         for (int i = 0; i < _physicalSize; i++) { _array[i] = nullptr; }
     }
 
@@ -103,7 +103,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @throws std::runtime_error in case there are no elements in the heap,
      *         and the user requested to retrieve the root.
      */
-    Entry<K, V> *getRoot() override {
+    E *getRoot() override {
         if (!_logicalSize) {
             throw std::runtime_error(IS_EMPTY_MESSAGE);
         } else {
@@ -124,7 +124,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @see fixHeap(long int)
      * @see deleteRoot(bool)
      */
-    Entry<K, V> *deleteRoot() override { return deleteRoot(true); }
+    E *deleteRoot() override { return deleteRoot(true); }
 
   private:
     /**
@@ -143,10 +143,10 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @throws std::logic_error in case the heap is already empty.
      * @see fixHeap(long int)
      */
-    Entry<K, V> *deleteRoot(bool fixHeapAfterDeletion) {
+    E *deleteRoot(bool fixHeapAfterDeletion) {
 
         /* Save the value of `root` to return in the end of the method. */
-        Entry<K, V> *returnElement = getRoot();
+        E *returnElement = getRoot();
 
         if (this->_logicalSize >= 2) {
             deleteRootWhenThereAreTwoOrMoreElements(fixHeapAfterDeletion);
@@ -221,8 +221,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @attention the `Entries` elements in the @p arrayToBuildFrom must be
      *            **lvalues**.
      */
-    void buildHeap(Entry<K, V> *arrayToBuildFrom,
-                   long int     sizeOfArrayToBuildFrom) override {
+    void buildHeap(E *      arrayToBuildFrom,
+                   long int sizeOfArrayToBuildFrom) override {
 
         /* Delete the old _array if there is any. */
         deleteThis();
@@ -230,7 +230,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
         /* Initialize a `new` empty _array of pointers to elements given. */
         this->_physicalSize = sizeOfArrayToBuildFrom;
         this->_logicalSize  = sizeOfArrayToBuildFrom;
-        this->_array        = new Entry<K, V> *[sizeOfArrayToBuildFrom];
+        this->_array        = new E *[sizeOfArrayToBuildFrom];
         for (long int i = 0; i < sizeOfArrayToBuildFrom; i++) {
             this->_array[i] = &arrayToBuildFrom[i];
         }
@@ -448,7 +448,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @see fixHeapWhile(long int, Direction)
      */
     virtual long int
-    getIndexOfChildToSwapWithParent(Entry<K, V> **array, long int size,
+    getIndexOfChildToSwapWithParent(E **array, long int size,
                                     long int indexToElement1,
                                     long int indexToElement2) = 0;
 
@@ -456,8 +456,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     /**
      * @see fixHeapWhile(long int, Direction)
      */
-    virtual bool predicateIsSwapNeeded(Entry<K, V> element1,
-                                       Entry<K, V> element2) = 0;
+    virtual bool predicateIsSwapNeeded(E element1, E element2) = 0;
 
   public:
     /**
@@ -466,7 +465,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      * @param elementToInsert the element to insert to the heap.
      * @throws std::logic_error in case the heap is already full.
      */
-    void insert(Entry<K, V> *elementToInsert) override {
+    void insert(E *elementToInsert) override {
         if (this->_physicalSize <= this->_logicalSize) {
 
             /* The heap is already full. Throw a message. */
@@ -490,9 +489,9 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      *
      * @param elementToInsert is the element required to be inserted to the
      *                        heap.
-     * @see insert(Entry<K, V> *)
+     * @see insert(E *)
      */
-    void insertWhenThereIsEnoughSpace(Entry<K, V> *elementToInsert) {
+    void insertWhenThereIsEnoughSpace(E *elementToInsert) {
 
         /* Add the `elementToInsert` as the `last` element in the _array. */
         this->_array[this->_logicalSize++] = elementToInsert;
@@ -551,7 +550,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     }
 
   private:
-    static std::ostream &printThis(std::ostream &os, const Heap<K, V> &heap) {
+    static std::ostream &printThis(std::ostream &os, const Heap<E> &heap) {
         os << "_array{\n";
 
         /* In case the _array is empty, print a message instead of elements. */

@@ -2,8 +2,6 @@
 #ifndef HEAP_ADT_H
 #define HEAP_ADT_H
 
-#include "Entry.h"
-
 /**
  * @brief This class represents an *abstract* **Heap**,
  *        which its elements are *Entries* that are composed by a
@@ -21,7 +19,7 @@
  * @note DEVELOPER NOTE: `long int` and `long` types are the same.
  * @see Entry
  */
-template<typename K, typename V> class HeapAdt {
+template<typename E> class HeapAdt {
 
   public:
     HeapAdt() = default;
@@ -36,7 +34,7 @@ template<typename K, typename V> class HeapAdt {
      *
      * @return the *root element* of the heap.
      */
-    virtual Entry<K, V> *getRoot() = 0;
+    virtual E *getRoot() = 0;
 
   public:
     /**
@@ -44,7 +42,7 @@ template<typename K, typename V> class HeapAdt {
      *
      * @return the *root element* removed from the heap.
      */
-    virtual Entry<K, V> *deleteRoot() = 0;
+    virtual E *deleteRoot() = 0;
 
   public:
     /**
@@ -52,7 +50,7 @@ template<typename K, typename V> class HeapAdt {
      *
      * @param elementToInsert the element to insert to the heap.
      */
-    virtual void insert(Entry<K, V> *elementToInsert) = 0;
+    virtual void insert(E *elementToInsert) = 0;
 
   public:
     /**
@@ -87,7 +85,7 @@ template<typename K, typename V> class HeapAdt {
      * @param arrayToBuildFrom the given array of elements to build the
      *                         heap from.
      */
-    virtual void buildHeap(Entry<K, V> *arrayToBuildFrom,
+    virtual void buildHeap(E *arrayToBuildFrom,
                            long int     sizeOfArrayToBuildFrom) = 0;
 
   public:
