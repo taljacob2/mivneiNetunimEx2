@@ -39,8 +39,8 @@ template<typename E> class BaseArray {
   protected:
     unsigned long _physicalSize = 100;
 
-  protected:
-    unsigned long getPhysicalSize() const { return _physicalSize; }
+  public:
+    unsigned long physicalSize() const { return _physicalSize; }
 
   public:
     explicit BaseArray(unsigned long physicalSize) {

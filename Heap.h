@@ -28,10 +28,9 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
-     * Array of pointers to **lvalue `Entries`** that serve as `elements`.
-     * Initialized to `nullptr`.
+     * Array of pointers to `Entries` that serve as `elements`.
      */
-    Entry<K, V> **_array = nullptr;
+    StaticArray<Entry<K, V>> staticArray;
 
   protected:
     /// The *physical-size* of the `_array`. Initialized to `0`.
@@ -42,7 +41,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     long int _logicalSize = 0;
 
   public:
-    long int getLogicalSize() const override { return _logicalSize; }
+    long int getLogicalSize() const override { return staticArray.size(); }
 
   public:
     /**
