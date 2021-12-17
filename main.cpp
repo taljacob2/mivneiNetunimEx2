@@ -12,7 +12,7 @@
  * @version 1.0
  */
 int main() {
-    try {
+    // try {
         auto testArray = Input::getTestArray();
 
         // TODO: print test
@@ -28,7 +28,7 @@ int main() {
 
         Entry<int, std::string> entry(3, "hello");
         heap->insert(&entry);
-        TestRunner::runAllTests(testArray);
+        // TestRunner::runAllTests(testArray);
         // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
         // heap->insert(new Entry<int, std::string>(5, "hi"));
@@ -44,10 +44,10 @@ int main() {
         // std::cout << priorityQueue;
         // delete priorityQueue;
         delete heap;
-    } catch (std::exception &e) {
-        std::cout << e.what() << std::endl;
-        return Constants::MAIN_ERROR;
-    }
+    // } catch (std::exception &e) {
+    //     std::cout << e.what() << std::endl;
+    //     return Constants::MAIN_ERROR;
+    // }
 
     return 0;
 }

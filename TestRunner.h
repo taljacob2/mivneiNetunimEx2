@@ -12,7 +12,7 @@ class TestRunner {
     static void runAllTests(StaticArray<std::string> &testArray) {
         PriorityQueue<int, std::string> priorityQueue;
 
-        for (int i = 0; i < testArray.getLogicalSize(); i++) {
+        for (unsigned long i = 0; i < testArray.getLogicalSize(); i++) {
             std::string *test = Input::getTest(testArray, ' ', i);
             runTest(test, priorityQueue);
             delete[] test;
