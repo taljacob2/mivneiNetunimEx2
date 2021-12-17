@@ -369,7 +369,7 @@ template<typename E> class BaseArray {
         return pElement;
     }
 
-  protected:
+  private:
     /**
      * @todo `delete` `element`.
      */
