@@ -28,9 +28,9 @@ int main() {
         //         new PriorityQueue<int, std::string>();
 
         // HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
-        auto polymorph = Pointer<MinHeap<int, std::string>>(
+        auto pointer = Pointer<MinHeap<int, std::string>>(
                 MinHeap<int, std::string>(1));
-        HeapAdt<int, std::string> *heap = polymorph.getSubclass();
+        HeapAdt<int, std::string> *heap = pointer.getSubclass();
 
 
         Entry<int, std::string> entry(3, "hello");
