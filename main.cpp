@@ -1,7 +1,5 @@
 #include "Constants.h"
 #include "Input.h"
-#include "MaxHeap.h"
-#include "MinHeap.h"
 #include "TestRunner.h"
 #include <iostream>
 

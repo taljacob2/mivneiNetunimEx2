@@ -176,7 +176,7 @@ class Input {
      * @todo delete [] splitArray.
      */
     static std::string *getTest(StaticArray<std::string> &testArray,
-                                char delimiter, int i) {
+                                char delimiter, unsigned long i) {
         std::string *splitArray = nullptr;
         try {
 
