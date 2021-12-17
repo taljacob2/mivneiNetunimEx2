@@ -399,8 +399,8 @@ template<typename E> class Heap : public HeapAdt<E> {
                 if (predicateIsSwapNeeded(
                             *_array[currentIndex],
                             *_array[indexOfSwappableChildOfCurrentRoot])) {
-                    my_algorithms::swap(_array, currentIndex,
-                                        indexOfSwappableChildOfCurrentRoot);
+                    onIsSwapNeeded(currentIndex,
+                                   indexOfSwappableChildOfCurrentRoot);
 
                     /*
                      * Set the updated iterator index to the replaced index.
@@ -428,6 +428,12 @@ template<typename E> class Heap : public HeapAdt<E> {
                 break;
             }
         }
+    }
+
+  protected:
+    virtual void onIsSwapNeeded(long currentIndex,
+                                long indexOfOtherSwappableElement) const {
+        my_algorithms::swap(_array, currentIndex, indexOfOtherSwappableElement);
     }
 
   private:
@@ -512,8 +518,7 @@ template<typename E> class Heap : public HeapAdt<E> {
             if (predicateIsSwapNeeded(
                         *this->_array[getParentIndex(currentIndex)],
                         *this->_array[currentIndex])) {
-                my_algorithms::swap(this->_array, currentIndex,
-                                    getParentIndex(currentIndex));
+                onIsSwapNeeded(currentIndex, getParentIndex(currentIndex));
 
                 /* Step upwards to the parent of the element. */
                 currentIndex = getParentIndex(currentIndex);
