@@ -27,7 +27,7 @@ template<typename E> class Heap : public HeapAdt<E> {
     static constexpr char *OUT_OF_RANGE_MESSAGE =
             (char *) "Heap: out of range.";
 
-  private:
+  protected:
     /**
      * @see fixHeap(long int)
      * @see fixHeapUpwards(long int)
@@ -362,7 +362,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         fixHeapWhile(currentIndex, direction);
     }
 
-  private:
+  protected:
     /**
      * @brief This method is a *protected* method, that represents a `while`
      *        that is being invoked by the @link fixHeap(long int) @endlink method.
@@ -399,7 +399,7 @@ template<typename E> class Heap : public HeapAdt<E> {
                 if (predicateIsSwapNeeded(
                             *_array[currentIndex],
                             *_array[indexOfSwappableChildOfCurrentRoot])) {
-                    onIsSwapNeeded(currentIndex,
+                    onSwapIsNeeded(currentIndex,
                                    indexOfSwappableChildOfCurrentRoot);
 
                     /*
@@ -431,12 +431,12 @@ template<typename E> class Heap : public HeapAdt<E> {
     }
 
   protected:
-    virtual void onIsSwapNeeded(long currentIndex,
+    virtual void onSwapIsNeeded(long currentIndex,
                                 long indexOfOtherSwappableElement) const {
         my_algorithms::swap(_array, currentIndex, indexOfOtherSwappableElement);
     }
 
-  private:
+  protected:
     /**
      * @note in case @p currentIndex is `0`, then the result will be `-1`.
      * @param currentIndex the index of the element to get its parent element
@@ -486,7 +486,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         insertWhenThereIsEnoughSpace(elementToInsert);
     }
 
-  private:
+  protected:
     /**
      * @brief This method is a *private* method, that represents the
      *        case when there is enough space in the heap to insert an
@@ -518,7 +518,7 @@ template<typename E> class Heap : public HeapAdt<E> {
             if (predicateIsSwapNeeded(
                         *this->_array[getParentIndex(currentIndex)],
                         *this->_array[currentIndex])) {
-                onIsSwapNeeded(currentIndex, getParentIndex(currentIndex));
+                onSwapIsNeeded(currentIndex, getParentIndex(currentIndex));
 
                 /* Step upwards to the parent of the element. */
                 currentIndex = getParentIndex(currentIndex);
