@@ -77,7 +77,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E max() override {
 
         // FIXME: check
-        return *_lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot();
+        return *_greaterThanMedianDoubleHeap->getMaxHeap()->getRoot();
     }
 
   public:
@@ -87,7 +87,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E min() override {
 
         // FIXME: check
-        return *_lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot();
+        return *_lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot();
     }
 
   public:
@@ -129,24 +129,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   protected:
-    void insertToLeftHeap(E *element) {
-        _lessOrEqualToMedianMaxHeap->insert(element);
-        _lessOrEqualToMedianMinHeap->insert(element);
-    }
-
-  protected:
-    void insertToRightHeap(E *element) {
-        _greaterThanMedianMaxHeap->insert(element);
-        _greaterThanMedianMinHeap->insert(element);
-    }
-
-  protected:
     void deleteElement(E *element) {}
 
   protected:
     long int getLogicalSize() {
-        return _greaterThanMedianMinHeap->getLogicalSize() +
-               _greaterThanMedianMaxHeap->getLogicalSize();
+        return _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getLogicalSize() +
+               _greaterThanMedianDoubleHeap->getMaxHeap()->getLogicalSize();
     }
 
   protected:
@@ -176,7 +164,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         retrieve the root.
      */
     E median() override {
-        return *_lessOrEqualToMedianMaxHeap->getRoot(); // FIXME: check
+        return *_lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot(); // FIXME: check
     }
 
   public:
@@ -192,7 +180,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   private:
     static std::ostream &printThis(std::ostream &             os,
-                                   const PriorityQueue<K, V> &priorityQueue) {
+                                   const PriorityQueue<E> &priorityQueue) {
 
         os << "---------------------------- ";
         os << "_greaterThanMedianMaxHeap:";
