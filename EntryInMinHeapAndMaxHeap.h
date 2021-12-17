@@ -7,9 +7,10 @@
 
 /**
  * @brief This class is designed to wrap an `Entry` with two indexes.
- *        @li the first index tells at which index this `entry` is placed on
- * @tparam K
- * @tparam V
+ *        @li one index tells at which index this `entry` is placed on
+ *        a minimum-heap.
+ *        @li the other index tells at which index this `entry` is placed on
+ *        a maximum-heap.
  */
 template<typename K, typename V> class EntryInMinHeapAndMaxHeap {
 
