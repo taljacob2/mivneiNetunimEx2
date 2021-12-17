@@ -49,6 +49,12 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     }
 
   public:
+    void insertToBothHeaps(EWrapper *eWrapper) {
+        minHeap->insert(eWrapper);
+        maxHeap->insert(eWrapper);
+    }
+
+  public:
     EWrapper deleteFromBothHeaps(EWrapper *eWrapper) {
 
         // Backup fields of the given `eWrapper`.
