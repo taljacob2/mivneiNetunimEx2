@@ -52,9 +52,10 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase(ArrayBase &&other) noexcept : _physicalSize(0), _array(nullptr) {
-        *this = std::move(other);
-    }
+    ArrayBase(ArrayBase &other) { *this = other; }
+
+  public:
+    ArrayBase(ArrayBase &&other) noexcept { *this = std::move(other); }
 
   public:
     virtual ~ArrayBase() { deleteThis(); }
@@ -296,35 +297,41 @@ template<typename E> class ArrayBase {
         _physicalSize = newArraySize;
     }
 
-    // public:
-    //   ArrayBase &operator=(ArrayBase &&other) noexcept {
-    //       if (this != &other) {
-    //
-    //           // Free the existing resource.
-    //           deleteThis();
-    //
-    //           // Copy the data pointer and its length from the source object.
-    //           this->_physicalSize = other._physicalSize;
-    //           for (unsigned long i = 0; i < _physicalSize; i++) {
-    //               _array[i] = other._array[i]; // Shallow-Copy the reference.
-    //           }
-    //
-    //           /**
-    //            * Release the data pointer from the source object so that
-    //            * the destructor does not free the memory multiple times.
-    //            */
-    //           other._physicalSize = 0;
-    //           other._array        = nullptr;
-    //       }
-    //       return *this;
-    //   }
+  public:
+    ArrayBase &operator=(ArrayBase &&other) noexcept {
+
+        // Guard self assignment
+        if (this != &other) {
+
+            // Free the existing resource.
+            deleteThis();
+
+            // Copy the data pointer and its size from the source object.
+            this->_physicalSize = other._physicalSize;
+            for (unsigned long i = 0; i < _physicalSize; i++) {
+                _array[i] = other._array[i]; // Shallow-Copy the reference.
+            }
+
+            /*
+             * Release the data pointer from the source object so that
+             * the destructor does not free the memory multiple times.
+             */
+            other._physicalSize = 0;
+            other._array        = nullptr;
+        }
+        return *this;
+    }
 
   public:
     ArrayBase &operator=(const ArrayBase &other) {
+
         // Guard self assignment
         if (this == &other) { return *this; }
 
+        // Free the existing resource.
         deleteThis();
+
+        // Copy the data pointer and its size from the source object.
         this->_physicalSize = other._physicalSize;
         for (unsigned long i = 0; i < _physicalSize; i++) {
             _array[i] = other._array[i]; // Shallow-Copy the reference.
