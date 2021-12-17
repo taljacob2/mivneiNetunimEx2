@@ -34,6 +34,11 @@ int main() {
                 Polymorpher::polymorph<HeapAdt<int, std::string>,
                         MinHeap<int, std::string>>(minHeap);
 
+        // HeapAdt<int, std::string> &heap =
+        //         Polymorpher::polymorph<HeapAdt<int, std::string>,
+        //                                MinHeap<int, std::string>>(
+        //                 MinHeap<int, std::string>(1));
+
         // auto pointer = Pointer<MinHeap<int, std::string>>(
         //         MinHeap<int, std::string>(1));
         // HeapAdt<int, std::string> *heap = pointer.getPointer();
