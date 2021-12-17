@@ -45,12 +45,34 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     void insertToBothHeaps(E *element) {
         EWrapper eWrapper(element);
         minHeap->insert(&eWrapper);
-        minHeap->insert(&eWrapper);
+        maxHeap->insert(&eWrapper);
     }
 
   public:
-    void deleteFromBothHeaps(E *element) {
-        // TODO: implement. via `i` ? or via a `pointer`? need to check.
+    EWrapper deleteFromBothHeaps(EWrapper *eWrapper) {
+
+        // Backup fields of the given `eWrapper`.
+        auto     lessMinHeapIndex   = eWrapper->getMinHeapIndex();
+        auto     lessMaxHeapIndex   = eWrapper->getMaxHeapIndex();
+        EWrapper deepCopiedEWrapper = deepCopyEWrapper(eWrapper);
+
+        // Delete the pointer to the element.
+        eWrapper->setElement(nullptr);
+        minHeap->fixHeap(lessMinHeapIndex);
+        maxHeap->fixHeap(lessMaxHeapIndex);
+
+        /*
+         * Return a deep-copy of the given `eWrapper`,
+         * with its indexes reset to 0.
+         */
+        return deepCopiedEWrapper;
+    }
+
+  protected:
+    EWrapper deepCopyEWrapper(EWrapper *eWrapper) const {
+        E &      copiedElement = *(eWrapper->getElement());
+        EWrapper copiedEWrapper(copiedElement);
+        return copiedEWrapper;
     }
 };
 
