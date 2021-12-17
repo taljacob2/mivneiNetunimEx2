@@ -4,6 +4,7 @@
 
 #include "Entry.h"
 #include "Input.h"
+#include "Polymorpher.h"
 #include "PriorityQueue.h"
 #include <string>
 

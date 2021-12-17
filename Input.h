@@ -110,7 +110,7 @@ class Input {
 
         for (unsigned long i = 0; i < testArray.getPhysicalSize(); i++) {
             std::string line = getLine(std::cin);
-            testArray.setElement(line, i);
+            testArray.setElement(&line, i);
             sizeCounter++;
         }
 
@@ -149,7 +149,7 @@ class Input {
 
             // Split the current line by ' ' delimiter.
             int splitArraySize = 0;
-            split(testArray.getElement(i), delimiter, splitArray,
+            split(*testArray.getElement(i), delimiter, splitArray,
                   splitArraySize);
 
             assertSplit(i, splitArraySize, testArray, splitArray);
@@ -182,7 +182,7 @@ class Input {
 
             // Split the current line by ' ' delimiter.
             int splitArraySize = 0;
-            split(testArray.getElement(i), delimiter, splitArray,
+            split(*testArray.getElement(i), delimiter, splitArray,
                   splitArraySize);
 
             assertSplit(i, splitArraySize, testArray, splitArray);
@@ -213,13 +213,13 @@ class Input {
     static void assertFirstLetter(int i, StaticArray<std::string> &testArray,
                                   std::string *&splitArray) {
         if (i == 0) {
-            if (!((testArray.getElement(i).length() == 1) &&
-                  testArray.getElement(i)[0] == FIRST_LETTER)) {
+            if (!((testArray.getElement(i)->length() == 1) &&
+                  (*testArray.getElement(i))[0] == FIRST_LETTER)) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         } else {
             if (!predicateIsValidLetter(splitArray[0]) ||
-                testArray.getElement(i)[0] == FIRST_LETTER) {
+                (*testArray.getElement(i))[0] == FIRST_LETTER) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         }
