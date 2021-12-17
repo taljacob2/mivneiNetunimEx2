@@ -177,7 +177,7 @@ template<typename E> class BaseArray {
      *                               parameter to `false`.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    BaseArray<E> &filter(const std::function<bool(E &)> &predicate,
+    BaseArray<E> &filter(const std::function<bool(const E &)> &predicate,
                          bool deleteFilteredElements = false) {
         unsigned long newArraySize = 0;
 
@@ -298,7 +298,7 @@ template<typename E> class BaseArray {
      *         may also "chain" this method with another.
      */
     template<typename E2>
-    BaseArray<E2> &map(const std::function<E2 &(E &)> &mapFunction,
+    BaseArray<E2> &map(const std::function<E2 &(const E &)> &mapFunction,
                        bool deleteOriginalArrayElements = false) {
 
         /*
