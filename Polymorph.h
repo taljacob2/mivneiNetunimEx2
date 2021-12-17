@@ -2,23 +2,23 @@
 #ifndef POLYMORPH_H
 #define POLYMORPH_H
 
-template<typename SUBCLASS> class Pointer {
+template<typename T> class Pointer {
 
   private:
-    SUBCLASS *_subclass = nullptr;
+    T *_pointer = nullptr;
 
   public:
-    Pointer(const SUBCLASS &subclass) {
-        _subclass = convertReferenceToPointer(subclass);
+    Pointer(const T &instance) {
+        _pointer = convertReferenceToPointer(instance);
     }
 
   public:
     virtual ~Pointer() {
-        // delete _subclass; // TODO: debug
+        // delete _pointer; // TODO: debug
     }
 
   public:
-    SUBCLASS *getSubclass() const { return _subclass; }
+    T *getPointer() const { return _pointer; }
 
   public:
     template<typename E>
@@ -40,7 +40,7 @@ template<typename SUBCLASS> class Pointer {
     /**
      * @todo `delete` `element`.
      */
-    static SUBCLASS *moveLocalAllocatedToHeap(const E &element) {
+    static E *moveLocalAllocatedToHeap(const E &element) {
         E *pElement = new E(element);
         return pElement;
     }
