@@ -88,23 +88,25 @@ template<typename E> class BaseArray {
         return _array[index];
     }
 
-  protected:
-    virtual bool isOutOfRange(unsigned long index) {
+  public:
+    virtual void setElement(const E &element, unsigned long index) {
+        if (isOutOfRange(index)) {
+            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
+        }
 
-        // `_physicalSize` *must* be at least 1.
-        return !((0 <= index) && (index < _physicalSize));
+        this->_array[index] = convertReferenceToPointer(element);
     }
 
-  protected:
-    void assertNotNull(E *element) {
-        if (element == nullptr) {
-            std::string msg = (char *) ELEMENT_IS_NULL_MESSAGE;
-            std::string msg2 =
-                    (char *) "Use the `getElementAsPointer(unsigned long)`"
-                             " method to retrieve it, instead of this"
-                             " method.";
-            throw std::runtime_error(msg + " " + msg2);
+  public:
+    /**
+     * @warning Use with caution.
+     */
+    virtual void setElementAsPointer(const E *element, unsigned long index) {
+        if (isOutOfRange(index)) {
+            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
+
+        this->_array[index] = const_cast<E *>(element);
     }
 
   public:
@@ -253,13 +255,16 @@ template<typename E> class BaseArray {
         return copyArray;
     }
 
-  public:
-    virtual void setElement(const E &element, unsigned long index) {
-        if (isOutOfRange(index)) {
-            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
-        }
-
-        this->_array[index] = convertReferenceToPointer(element);
+  protected:
+    /**
+     * @brief Update the fields of `this` object.
+     * @param newArraySize .
+     * @param newArray .
+     */
+    void update(unsigned long newArraySize, E **newArray) {
+        deleteThis();
+        _array        = newArray;
+        _physicalSize = newArraySize;
     }
 
   protected:
@@ -273,28 +278,23 @@ template<typename E> class BaseArray {
         return pElement;
     }
 
-  public:
-    /**
-     * @warning Use with caution.
-     */
-    virtual void setElementAsPointer(const E *element, unsigned long index) {
-        if (isOutOfRange(index)) {
-            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
-        }
+  protected:
+    virtual bool isOutOfRange(unsigned long index) {
 
-        this->_array[index] = const_cast<E *>(element);
+        // `_physicalSize` *must* be at least 1.
+        return !((0 <= index) && (index < _physicalSize));
     }
 
   protected:
-    /**
-     * @brief Update the fields of `this` object.
-     * @param newArraySize .
-     * @param newArray .
-     */
-    void update(unsigned long newArraySize, E **newArray) {
-        deleteThis();
-        _array        = newArray;
-        _physicalSize = newArraySize;
+    void assertNotNull(E *element) {
+        if (element == nullptr) {
+            std::string msg = (char *) ELEMENT_IS_NULL_MESSAGE;
+            std::string msg2 =
+                    (char *) "Use the `getElementAsPointer(unsigned long)`"
+                             " method to retrieve it, instead of this"
+                             " method.";
+            throw std::runtime_error(msg + " " + msg2);
+        }
     }
 
   public:
