@@ -8,35 +8,33 @@
 template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
-    MinHeapWhenAlsoHavingMaxHeap<E> minHeap;
+    HeapAdt<ElementInMinHeapAndMaxHeap<E>> *minHeap = nullptr;
 
   protected:
-    MaxHeapWhenAlsoHavingMinHeap<E> maxHeap;
+    HeapAdt<ElementInMinHeapAndMaxHeap<E>> *maxHeap = nullptr;
 
   public:
-    DoublePointerMinHeapAndMaxHeapComponent(
-            const MinHeapWhenAlsoHavingMaxHeap<E> &minHeap,
-            const MaxHeapWhenAlsoHavingMinHeap<E> &maxHeap)
+    DoublePointerMinHeapAndMaxHeapComponent(const HeapAdt<E> &minHeap,
+                                            const HeapAdt<E> &maxHeap)
         : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
     virtual ~DoublePointerMinHeapAndMaxHeapComponent() = default;
 
   public:
-    const MinHeapWhenAlsoHavingMaxHeap<E> &getMinHeap() const {
-        return minHeap;
+    const HeapAdt<E> &getMinHeap() const { return minHeap; }
+
+  public:
+    const HeapAdt<E> &getMaxHeap() const { return maxHeap; }
+
+  public:
+    void insertToBothHeaps(E *element) {
+        minHeap->insert(element);
+        minHeap->insert(element);
     }
 
   public:
-    const MaxHeapWhenAlsoHavingMinHeap<E> &getMaxHeap() const {
-        return maxHeap;
-    }
-
-  public:
-    void insert(E *element) {
-        minHeap.insert(element);
-        maxHeap.insert(element);
-    }
+    void deleteFromBothHeaps(E *element) {}
 };
 
 #endif // DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_COMPONENT_H
