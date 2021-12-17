@@ -2,6 +2,7 @@
 #ifndef ELEMENT_IN_MIN_HEAP_AND_MAX_HEAP_H
 #define ELEMENT_IN_MIN_HEAP_AND_MAX_HEAP_H
 
+#include "Pointer.h"
 #include <ostream>
 
 /**
@@ -28,10 +29,12 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     ElementInMinHeapAndMaxHeap() = default;
 
   public:
-    explicit ElementInMinHeapAndMaxHeap(E *element) : _element(element) {}
+    explicit ElementInMinHeapAndMaxHeap(const E &element) {
+        _element = Pointer::convertReferenceToPointer(element);
+    }
 
   public:
-    virtual ~ElementInMinHeapAndMaxHeap() = default;
+    virtual ~ElementInMinHeapAndMaxHeap() { delete _element; }
 
   public:
     E *getElement() const { return _element; }
