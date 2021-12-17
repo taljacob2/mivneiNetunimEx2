@@ -15,39 +15,19 @@ int main() {
     try {
         auto testArray = Input::getTestArray();
 
-        // TODO: print test
-
-        // TODO: debug print
-        // std::cout << testArray.getElement(0);
-        std::cout << testArray << std::endl;
-
         // TestRunner::runAllTests(testArray);
 
         // TODO: testing heaps:
-        // PriorityQueueAdt<int, std::string> *priorityQueue =
-        //         new PriorityQueue<int, std::string>();
-
-        // HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
+        auto  priorityQueue = PriorityQueue<int, std::string>();
+        auto &priorityQueueAdt =
+                Polymorpher::polymorphLValue<PriorityQueueAdt<int, std::string>,
+                                             PriorityQueue<int, std::string>>(
+                        priorityQueue);
 
         auto  minHeap = MinHeap<int, std::string>(1);
         auto &heap    = Polymorpher::polymorphLValue<HeapAdt<int, std::string>,
                                                   MinHeap<int, std::string>>(
                 minHeap);
-
-
-        // HeapAdt<int, std::string> &heap =
-        //         Polymorpher::polymorph<HeapAdt<int, std::string>,
-        //                                MinHeap<int, std::string>>(
-        //                 MinHeap<int, std::string>(1));
-
-        // auto pointer = Pointer<MinHeap<int, std::string>>(
-        //         MinHeap<int, std::string>(1));
-        // HeapAdt<int, std::string> *heap = pointer.getPointer();
-
-
-        // HeapAdt<int, std::string> *heap =Pointer<MinHeap<int, std::string>>(
-        //         MinHeap<int, std::string>(1)).getPointer();
-
 
         Entry<int, std::string> entry(3, "hello");
         heap.insert(&entry);
