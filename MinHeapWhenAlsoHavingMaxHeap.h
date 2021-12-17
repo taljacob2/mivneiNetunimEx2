@@ -23,7 +23,7 @@ class MinHeapWhenAlsoHavingMaxHeap
         : MinHeap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   protected:
-    void onIsSwapNeeded(long currentIndex,
+    void onSwapIsNeeded(long currentIndex,
                         long indexOfOtherSwappableElement) const override {
 
         // Update this element's heap-index to the new index:
