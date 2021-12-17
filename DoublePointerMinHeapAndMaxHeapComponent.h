@@ -36,12 +36,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     MaxHeap<EWrapper> *getMaxHeap() { return maxHeap; }
 
   public:
-    static E &getElementFromElementInMinHeapAndMaxHeap(
-            EWrapper *elementInMinHeapAndMaxHeap) {
-        return elementInMinHeapAndMaxHeap->getElement();
-    }
-
-  public:
     void insertToBothHeaps(E *element) {
         EWrapper eWrapper(element);
         minHeap->insert(&eWrapper);
@@ -80,7 +74,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         EWrapper copiedEWrapper(copiedElement);
         return copiedEWrapper;
     }
-
 
   public:
     virtual std::ostream &print(std::ostream &os) const {
