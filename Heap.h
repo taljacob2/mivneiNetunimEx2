@@ -28,9 +28,10 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     /**
-     * Array of pointers to `Entries` that serve as `elements`.
+     * Array of pointers to **lvalue `Entries`** that serve as `elements`.
+     * Initialized to `nullptr`.
      */
-    StaticArray<Entry<K, V>> staticArray;
+    Entry<K, V> **_array = nullptr;
 
   protected:
     /// The *physical-size* of the `_array`. Initialized to `0`.
@@ -41,7 +42,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
     long int _logicalSize = 0;
 
   public:
-    long int getLogicalSize() const override { return staticArray.size(); }
+    long int getLogicalSize() const override { return _logicalSize; }
 
   public:
     /**
@@ -389,8 +390,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
                  * the heap as a `Heap`.
                  */
                 if (predicateIsSwapNeeded(
-                            *_array[currentIndex],
-                            *_array[indexOfSwappableChildOfCurrentRoot])) {
+                        *_array[currentIndex],
+                        *_array[indexOfSwappableChildOfCurrentRoot])) {
                     my_algorithms::swap(_array, currentIndex,
                                         indexOfSwappableChildOfCurrentRoot);
 
@@ -503,8 +504,8 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
              * them, in order to ensure validity of the heap, as a `Heap`.
              */
             if (predicateIsSwapNeeded(
-                        *this->_array[getParentIndex(currentIndex)],
-                        *this->_array[currentIndex])) {
+                    *this->_array[getParentIndex(currentIndex)],
+                    *this->_array[currentIndex])) {
                 my_algorithms::swap(this->_array, currentIndex,
                                     getParentIndex(currentIndex));
 
