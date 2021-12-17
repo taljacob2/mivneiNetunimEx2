@@ -48,8 +48,8 @@ template<typename E> class BaseArray {
             throw std::invalid_argument(PHYSICAL_SIZE_MESSAGE);
         }
         _physicalSize = physicalSize;
-        _array        = new E *[_physicalSize];
-        // initThis();
+        _array        = new E *[_physicalSize]();
+        // initThis(); // TODO: check if required. if it is, then replace with `()`
     }
 
   protected:
