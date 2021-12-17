@@ -122,6 +122,20 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                      * to `_greaterThanMedianDoubleHeap->getMaxHeap()`
                      */
                     // FIXME: here
+
+                    /*
+                     * 1. Get the left maximum EWrapper.
+                     * 2. Get the index where it is used in the maximum-heap and
+                     *    delete the element there by the index.
+                     * 3. Do the same for the minimum-heap.
+                     */
+                    EWrapper *leftMaximumEWrapper =
+                            _lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                                    ->getRoot();
+
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps();
+
+
                     _greaterThanMedianDoubleHeap->insertToBothHeaps(
                             ElementInMinHeapAndMaxHeap<E>(
                                     _lessOrEqualToMedianDoubleHeap->getMaxHeap()
