@@ -164,9 +164,6 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   protected:
-    void deleteElement(E *element) {}
-
-  protected:
     long int getLogicalSize() {
         return _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getLogicalSize() +
                _greaterThanMedianDoubleHeap->getMaxHeap()->getLogicalSize();
