@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <iostream>
+#include "Polymorph.h"
 
 /**
  * @brief This class wraps an array of a *constant size*, and `delete`s it on
@@ -97,7 +98,7 @@ template<typename E> class BaseArray {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = convertReferenceToPointer(element);
+        this->_array[index] = Polymorh<E>::convertReferenceToPointer(element);
     }
 
   public:
@@ -347,26 +348,6 @@ template<typename E> class BaseArray {
         deleteThis();
         _array        = newArray;
         _physicalSize = newArraySize;
-    }
-
-  protected:
-    E *convertReferenceToPointer(const E &element) {
-
-        /*
-         * IMPORTANT: Polymorphic use.
-         * A "pointer ( = *)" is the parent-class of a "reference ( = &)".
-         */
-        E *pElement = moveLocalAllocatedToHeap(element);
-        return pElement;
-    }
-
-  private:
-    /**
-     * @todo `delete` `element`.
-     */
-    E *moveLocalAllocatedToHeap(const E &element) const {
-        E *pElement = new E(element);
-        return pElement;
     }
 
   protected:

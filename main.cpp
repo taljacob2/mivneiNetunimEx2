@@ -12,7 +12,7 @@
  * @version 1.0
  */
 int main() {
-    // try {
+    try {
         auto testArray = Input::getTestArray();
 
         // TODO: print test
@@ -27,10 +27,12 @@ int main() {
         // PriorityQueueAdt<int, std::string> *priorityQueue =
         //         new PriorityQueue<int, std::string>();
 
-        HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>();
+        HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
 
         Entry<int, std::string> entry(3, "hello");
         heap->insert(&entry);
+        Entry<int, std::string> entry2(32, "hey");
+        heap->insert(&entry2);
         // TestRunner::runAllTests(testArray);
         // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
@@ -47,10 +49,10 @@ int main() {
         // std::cout << priorityQueue;
         // delete priorityQueue;
         delete heap;
-    // } catch (std::exception &e) {
-    //     std::cout << e.what() << std::endl;
-    //     return Constants::MAIN_ERROR;
-    // }
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+        return Constants::MAIN_ERROR;
+    }
 
     return 0;
 }
