@@ -19,7 +19,7 @@ int main() {
 
         // TODO: debug print
         // std::cout << testArray.getElement(0);
-        // std::cout << testArray << std::endl;
+        std::cout << testArray << std::endl;
 
         // TestRunner::runAllTests(testArray);
 

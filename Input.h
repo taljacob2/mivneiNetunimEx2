@@ -69,12 +69,6 @@ class Input {
         StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
-
-        // TODO: debug print
-        std::cout << testArray.getElement(0);
-        // std::cout << *testArray.getElementAsPointer(0);
-
-
         return testArray;
     }
 
