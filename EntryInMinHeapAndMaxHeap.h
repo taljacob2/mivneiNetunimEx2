@@ -1,6 +1,6 @@
 
-#ifndef ENTRY_WRAPPER_H
-#define ENTRY_WRAPPER_H
+#ifndef ENTRY_IN_MIN_HEAP_AND_MAX_HEAP_H
+#define ENTRY_IN_MIN_HEAP_AND_MAX_HEAP_H
 
 #include "Entry.h"
 
@@ -10,10 +10,10 @@
  * @tparam K
  * @tparam V
  */
-template<typename K, typename V> class EntryWrapper {
+template<typename K, typename V> class EntryInMinHeapAndMaxHeap {
 
   public:
-    EntryWrapper() = default;
+    EntryInMinHeapAndMaxHeap() = default;
 
   private:
     Entry<K, V> *_entry = nullptr;
@@ -43,4 +43,4 @@ template<typename K, typename V> class EntryWrapper {
     void setMinHeapIndex(long minHeapIndex) { _minHeapIndex = minHeapIndex; }
 };
 
-#endif // ENTRY_WRAPPER_H
+#endif // ENTRY_IN_MIN_HEAP_AND_MAX_HEAP_H
