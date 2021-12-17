@@ -2,7 +2,7 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
-#include "ElementInMinHeapAndMaxHeap.h"
+#include "DoublePointerMinHeapAndMaxHeapComponent.h"
 #include "PriorityQueueAdt.h"
 
 /**
@@ -15,27 +15,16 @@
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
  * @see DoublePointerMinHeapAndMaxHeapComponent
- * @see MinHeap
- * @see MaxHeap
  */
-template<typename E>
-class PriorityQueue : public PriorityQueueAdt<E> {
+template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
-            *_greaterThanMedianMaxHeap = nullptr;
+    DoublePointerMinHeapAndMaxHeapComponent<ElementInMinHeapAndMaxHeap<E>>
+            *_lessOrEqualToMedianDoubleHeap = nullptr;
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
-            *_greaterThanMedianMinHeap = nullptr;
-
-  protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
-            *_lessOrEqualToMedianMaxHeap = nullptr;
-
-  protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<E>>
-            *_lessOrEqualToMedianMinHeap = nullptr;
+    DoublePointerMinHeapAndMaxHeapComponent<ElementInMinHeapAndMaxHeap<E>>
+            *_greaterThanMedianDoubleHeap = nullptr;
 
   public:
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
@@ -148,8 +137,8 @@ class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   protected:
-    bool isLogicalSizeOfHeapAdtOdd(
-            HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
+    bool
+    isLogicalSizeOfHeapAdtOdd(HeapAdt<ElementInMinHeapAndMaxHeap<E>> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 
