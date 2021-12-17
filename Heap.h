@@ -245,7 +245,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         }
     }
 
-  protected:
+  public:
     /**
      * @brief Fixes the heap from a given @p indexToFixFrom and **downwards**.
      * @param indexToFixFrom an index of an element in the heap, that the
@@ -256,7 +256,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         fixHeap(indexToFixFrom, Direction::DOWNWARDS);
     }
 
-  protected:
+  public:
     /**
      * @brief Fixes the heap from a given @p indexToFixFrom and **upwards**.
      * @param indexToFixFrom an index of an element in the heap, that the
