@@ -3,6 +3,7 @@
 #define BASE_ARRAY_H
 
 #include "Polymorpher.h"
+#include "Pointer.h"
 #include <functional>
 #include <iostream>
 
