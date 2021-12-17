@@ -61,14 +61,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
   private:
     void deleteThis() const {
         if (_lessOrEqualToMedianDoubleHeap) {
-            delete _lessOrEqualToMedianDoubleHeap->minHeap;
-            delete _lessOrEqualToMedianDoubleHeap->maxHeap;
+            delete _lessOrEqualToMedianDoubleHeap->getMinHeap();
+            delete _lessOrEqualToMedianDoubleHeap->getMaxHeap();
             delete _lessOrEqualToMedianDoubleHeap;
         }
 
         if (_greaterThanMedianDoubleHeap) {
-            delete _greaterThanMedianDoubleHeap->minHeap;
-            delete _greaterThanMedianDoubleHeap->maxHeap;
+            delete _greaterThanMedianDoubleHeap->getMinHeap();
+            delete _greaterThanMedianDoubleHeap->getMaxHeap();
             delete _greaterThanMedianDoubleHeap;
         }
     }
