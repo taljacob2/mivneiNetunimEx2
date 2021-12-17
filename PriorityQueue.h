@@ -77,7 +77,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E max() override {
 
         // FIXME: check
-        return *(_greaterThanMedianDoubleHeap->getMaxHeap()->getRoot());
+        return getElement(_greaterThanMedianDoubleHeap->getMaxHeap());
     }
 
   public:
@@ -87,7 +87,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E min() override {
 
         // FIXME: check
-        return *(_lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot());
+        return getElement(_lessOrEqualToMedianDoubleHeap->getMinHeap());
     }
 
   public:
@@ -137,6 +137,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     void deleteElement(E *element) {}
 
   protected:
+    E &getElement(HeapAdt<E> *heapAdt) {
+        return DoublePointerMinHeapAndMaxHeapComponent<E>::
+                getElementFromElementInMinHeapAndMaxHeap(heapAdt->getRoot());
+    }
+
+  protected:
     long int getLogicalSize() {
         return _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getLogicalSize() +
                _greaterThanMedianDoubleHeap->getMaxHeap()->getLogicalSize();
@@ -167,8 +173,10 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         retrieve the root.
      */
     E median() override {
-        return *(_lessOrEqualToMedianDoubleHeap->getMaxHeap()
-                         ->getRoot()); // FIXME: check
+
+        // FIXME: check
+        return getElement(
+                _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot());
     }
 
   public:

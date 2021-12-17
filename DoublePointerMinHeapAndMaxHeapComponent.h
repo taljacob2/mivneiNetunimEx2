@@ -34,6 +34,12 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     MaxHeap<ElementInMinHeapAndMaxHeap<E>> *getMaxHeap() { return maxHeap; }
 
   public:
+    static E &getElementFromElementInMinHeapAndMaxHeap(
+            ElementInMinHeapAndMaxHeap<E> *elementInMinHeapAndMaxHeap) {
+        return elementInMinHeapAndMaxHeap->getElement();
+    }
+
+  public:
     void insertToBothHeaps(E *element) {
         minHeap->insert(element);
         minHeap->insert(element);
