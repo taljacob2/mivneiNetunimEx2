@@ -363,7 +363,17 @@ template<typename E> class BaseArray {
          * A "pointer ( = *)" is the parent-class of a "reference ( = &)".
          */
         E e = element; // TODO: debug. bug is here
-        E *pElement = const_cast<E *>(&e);
+        // E *pElement = const_cast<E *>(&e);
+        E *pElement = moveLocalToHeap(e);
+        return pElement;
+    }
+
+  protected:
+    /**
+     * @todo `delete` `element`.
+     */
+    E *moveLocalToHeap(const E &element) const {
+        E *pElement = new E(element);
         return pElement;
     }
 
