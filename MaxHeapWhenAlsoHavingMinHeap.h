@@ -3,12 +3,11 @@
 #define MAX_HEAP_WHEN_ALSO_HAVING_MIN_HEAP_H
 
 #include "ElementInMinHeapAndMaxHeap.h"
-#include "Entry.h"
 #include "MinHeap.h"
 
-template<typename K, typename V>
+template<typename E>
 class MaxHeapWhenAlsoHavingMinHeap
-    : public MinHeap<ElementInMinHeapAndMaxHeap<Entry<K, V>>> {
+    : public MinHeap<ElementInMinHeapAndMaxHeap<E>> {
 
   protected:
     void onIsSwapNeeded(long currentIndex,
@@ -23,7 +22,7 @@ class MaxHeapWhenAlsoHavingMinHeap
                 ->setMaxHeapIndex(currentIndex);
 
         // Swap the elements:
-        Heap<ElementInMinHeapAndMaxHeap<Entry<K, V>>>::onSwapIsNeeded(
+        Heap<ElementInMinHeapAndMaxHeap<E>>::onSwapIsNeeded(
                 currentIndex, indexOfOtherSwappableElement);
     }
 };

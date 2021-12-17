@@ -1,0 +1,11 @@
+
+#ifndef DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_H
+#define DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_H
+
+class DoublePointerMinHeapAndMaxHeap{
+
+    pri
+
+};
+
+#endif // DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_H

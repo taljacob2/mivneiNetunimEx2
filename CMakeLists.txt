@@ -8,4 +8,4 @@ add_executable(mivneiNetunimEx2 main.cpp Constants.h
         TestRunner.h MinHeap.h MaxHeap.h my_algorithms.h
         HeapAdt.h Heap.h ElementInMinHeapAndMaxHeap.h
         BaseArray.h StaticArray.h Polymorpher.h Pointer.h
-        MinHeapWhenAlsoHavingMaxHeap.h MaxHeapWhenAlsoHavingMinHeap.h)
+        MinHeapWhenAlsoHavingMaxHeap.h MaxHeapWhenAlsoHavingMinHeap.h DoublePointerMinHeapAndMaxHeap.h)
