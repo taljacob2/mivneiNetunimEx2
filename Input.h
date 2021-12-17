@@ -69,7 +69,7 @@ class Input {
         StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
-        return testArray;
+        return (StaticArray<std::string> &) std::move(testArray);
     }
 
   private:

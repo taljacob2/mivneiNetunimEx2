@@ -28,7 +28,7 @@ template<typename E> class StaticArray : public ArrayBase<E> {
     unsigned long size() const { return _logicalSize; }
 
   public:
-    void push(E &element) {
+    void push(const E &element) {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
         }
@@ -39,13 +39,13 @@ template<typename E> class StaticArray : public ArrayBase<E> {
     }
 
   public:
-    void pushNull() {
+    void pushAsPointer(const E *element) {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
         }
 
         // May throw here.
-        this->setNull(_logicalSize);
+        this->setElementAsPointer(element, _logicalSize);
         _logicalSize++;
     }
 

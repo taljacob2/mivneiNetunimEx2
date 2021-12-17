@@ -13,7 +13,7 @@
  */
 int main() {
     try {
-        auto testArray         = Input::getTestArray();
+        auto testArray         = std::move(Input::getTestArray());
 
         // TODO: print test
         std::cout << testArray;

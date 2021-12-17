@@ -52,9 +52,6 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase(ArrayBase &copyArray) { *this = copyArray.copy(); }
-
-  public:
     ArrayBase(ArrayBase &&other) noexcept : _physicalSize(0), _array(nullptr) {
         *this = std::move(other);
     }
@@ -72,15 +69,7 @@ template<typename E> class ArrayBase {
         }
 
         E *pElement = _array[index];
-
-        if (pElement == nullptr) {
-            std::string msg = (char *) ELEMENT_IS_NULL_MESSAGE;
-            std::string msg2 =
-                    (char *) "Use the `getElementAsPointer(unsigned long)`"
-                             " method to retrieve it, instead of this"
-                             " method.";
-            throw std::runtime_error(msg + " " + msg2);
-        }
+        assertNotNull(pElement);
 
         return *pElement;
     }
@@ -105,6 +94,18 @@ template<typename E> class ArrayBase {
         return !((0 <= index) && (index < _physicalSize));
     }
 
+  protected:
+    void assertNotNull(E *element) {
+        if (element == nullptr) {
+            std::string msg = (char *) ELEMENT_IS_NULL_MESSAGE;
+            std::string msg2 =
+                    (char *) "Use the `getElementAsPointer(unsigned long)`"
+                             " method to retrieve it, instead of this"
+                             " method.";
+            throw std::runtime_error(msg + " " + msg2);
+        }
+    }
+
   public:
     /**
      * @brief This method will *invoke* the given @p callBack function on
@@ -117,9 +118,10 @@ template<typename E> class ArrayBase {
      *                        for you to use this method.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    ArrayBase<E> &forEach(const std::function<void(E &)> &callBack) {
+    ArrayBase<E> &forEach(const std::function<void(const E &)> &callBack) {
         for (unsigned long i = 0; i < _physicalSize; i++) {
-            callBack(_array[i]);
+            assertNotNull(_array[i]);
+            callBack(*_array[i]);
         }
 
         return this;
@@ -161,13 +163,13 @@ template<typename E> class ArrayBase {
          *    - `delete` elements that are `false` with the predicate
          *      given from `_array`.
          */
-        forEach([&newArraySize, predicate](E &e) {
-            if (predicate(e)) { newArraySize++; }
-        });
+        for (int i = 0; i < this->_physicalSize; i++) {
+            if (predicate(getElement(i))) { newArraySize++; }
+        }
 
         E **newArray = new E *[newArraySize];
         for (unsigned long i = 0; i < _physicalSize; i++) {
-            E &element = _array[i];
+            E &element = getElement(i);
             if (predicate(element)) {
                 newArray[i] = element;
                 continue;
@@ -222,8 +224,8 @@ template<typename E> class ArrayBase {
 
         ArrayBase<E2> e2Array(_physicalSize);
         for (unsigned long i = 0; i < _physicalSize; i++) {
-            E &element = _array[i];
-            e2Array[i] = mapFunction(element);
+            E &element = getElement(i);
+            e2Array.setElement(mapFunction(element));
 
             /**
              * This element should be filtered out from the array.
@@ -251,29 +253,35 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    virtual void setElement(E &element, unsigned long index) {
+    virtual void setElement(const E &element, unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
+
+        this->_array[index] = convertReferenceToPointer(element);
+    }
+
+  protected:
+    E *convertReferenceToPointer(const E &element) {
 
         /*
          * IMPORTANT: Polymorphic use.
          * A "pointer ( = *)" is the parent-class of a "reference ( = &)".
          */
-        E *pElement         = &element;
-        this->_array[index] = pElement;
+        E *pElement = const_cast<E *>(&element);
+        return pElement;
     }
 
   public:
     /**
      * @warning Use with caution.
      */
-    virtual void setElementAsPointer(E *element, unsigned long index) {
+    virtual void setElementAsPointer(const E *element, unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = element;
+        this->_array[index] = const_cast<E *>(element);
     }
 
   protected:
@@ -288,28 +296,28 @@ template<typename E> class ArrayBase {
         _physicalSize = newArraySize;
     }
 
-  public:
-    ArrayBase &operator=(ArrayBase &&other) noexcept {
-        if (this != &other) {
-
-            // Free the existing resource.
-            deleteThis();
-
-            // Copy the data pointer and its length from the source object.
-            this->_physicalSize = other._physicalSize;
-            for (unsigned long i = 0; i < _physicalSize; i++) {
-                _array[i] = other._array[i]; // Shallow-Copy the reference.
-            }
-
-            /**
-             * Release the data pointer from the source object so that
-             * the destructor does not free the memory multiple times.
-             */
-            other._physicalSize = 0;
-            other._array        = nullptr;
-        }
-        return *this;
-    }
+    // public:
+    //   ArrayBase &operator=(ArrayBase &&other) noexcept {
+    //       if (this != &other) {
+    //
+    //           // Free the existing resource.
+    //           deleteThis();
+    //
+    //           // Copy the data pointer and its length from the source object.
+    //           this->_physicalSize = other._physicalSize;
+    //           for (unsigned long i = 0; i < _physicalSize; i++) {
+    //               _array[i] = other._array[i]; // Shallow-Copy the reference.
+    //           }
+    //
+    //           /**
+    //            * Release the data pointer from the source object so that
+    //            * the destructor does not free the memory multiple times.
+    //            */
+    //           other._physicalSize = 0;
+    //           other._array        = nullptr;
+    //       }
+    //       return *this;
+    //   }
 
   public:
     ArrayBase &operator=(const ArrayBase &other) {
