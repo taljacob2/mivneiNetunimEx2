@@ -122,7 +122,7 @@ template<typename K, typename V> class HeapAdt {
      *
      * For example, you could print this class like so:
      * @code
-     * heapAdt->print(std::cout, *heapAdt);
+     * heapAdt->print(std::cout);
      * @endcode
      *
      * Tip:
@@ -138,8 +138,7 @@ template<typename K, typename V> class HeapAdt {
      *   private:
      *     std::ostream &print(std::ostream &       os,
      *                         const HeapAdt<K, V> &heapAdt) const override {
-     *         HeapAdtSubClass &heap = (HeapAdtSubClass &) heapAdt; // Force cast.
-     *         return printThis(os, heap);
+     *         return printThis(os, *this);
      *     }
      *
      *   private:

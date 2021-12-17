@@ -79,7 +79,7 @@ template<typename K, typename V> class PriorityQueueAdt {
      *
      * For example, you could print this class like so:
      * @code
-     * priorityQueueAdt->print(std::cout, *priorityQueueAdt);
+     * priorityQueueAdt->print(std::cout);
      * @endcode
      *
      * Tip:
@@ -95,8 +95,7 @@ template<typename K, typename V> class PriorityQueueAdt {
      *   private:
      *     std::ostream &print(std::ostream &       os,
      *                         const PriorityQueueAdt<K, V> &priorityQueueAdt) const override {
-     *         PriorityQueueAdtSubClass &priorityQueue = (PriorityQueueAdtSubClass &) priorityQueueAdt; // Force cast.
-     *         return printThis(os, priorityQueue);
+     *         return printThis(os, *this);
      *     }
      *
      *   private:
