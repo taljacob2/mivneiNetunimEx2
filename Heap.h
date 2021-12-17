@@ -24,7 +24,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
   protected:
     static constexpr char *IS_FULL_MESSAGE =
-            (char *) "StaticArray: array is full.";
+            (char *) "Heap: array is full.";
 
   protected:
     static constexpr char *OUT_OF_RANGE_MESSAGE =
