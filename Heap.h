@@ -18,6 +18,18 @@
  */
 template<typename K, typename V> class Heap : public HeapAdt<K, V> {
 
+  protected:
+    static constexpr char *IS_EMPTY_MESSAGE =
+            (char *) "Heap: heap is empty.";
+
+  protected:
+    static constexpr char *IS_FULL_MESSAGE =
+            (char *) "StaticArray: array is full.";
+
+  protected:
+    static constexpr char *OUT_OF_RANGE_MESSAGE =
+            (char *) "Heap: out of range.";
+
   private:
     /**
      * @see fixHeap(long int)
@@ -97,7 +109,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
      */
     Entry<K, V> *getRoot() override {
         if (!_logicalSize) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
+            throw std::runtime_error(IS_EMPTY_MESSAGE);
         } else {
             return this->_array[0];
         }
@@ -154,7 +166,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
             /* `_logicalSize` is 0. */
             // throw std::logic_error("You have tried to delete an element from "
             //                        "an empty heap.\n");
-            throw std::logic_error(Constants::WRONG_INPUT);
+            throw std::logic_error(IS_EMPTY_MESSAGE);
         }
         return returnElement;
     }
@@ -305,7 +317,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
             // message.append(std::to_string(_logicalSize));
             // message.append(" elements in the heap.\n");
 
-            throw std::out_of_range(Constants::WRONG_INPUT);
+            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
         fixHeapLegalIndex(indexToFixFrom, direction);
     }
@@ -348,7 +360,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
             //         "The index provided is out of range. The element "
             //         "you have provided is `nullptr`. Thus, in-comparable.\n");
 
-            throw std::out_of_range(Constants::WRONG_INPUT);
+            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
         /* _array[currentIndex] is not `nullptr`. Thus, comparable. */
@@ -467,7 +479,7 @@ template<typename K, typename V> class Heap : public HeapAdt<K, V> {
             // message.append(std::to_string(_physicalSize));
             // message.append(" elements.\n");
 
-            throw std::logic_error(Constants::WRONG_INPUT);
+            throw std::logic_error(IS_FULL_MESSAGE);
         }
 
         /* If there is enough space in the _array. */
