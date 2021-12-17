@@ -65,24 +65,24 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     virtual ~PriorityQueue() = default;
 
   public:
-    E max() override {
+    E *max() override {
 
         // FIXME: check
         return getElement(_greaterThanMedianDoubleHeap->getMaxHeap());
     }
 
   public:
-    E deleteMax() override {}
+    E *deleteMax() override {}
 
   public:
-    E min() override {
+    E *min() override {
 
         // FIXME: check
         return getElement(_lessOrEqualToMedianDoubleHeap->getMinHeap());
     }
 
   public:
-    E deleteMin() override {}
+    E *deleteMin() override {}
 
   public:
     void createEmpty() override {
@@ -149,14 +149,24 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         }
     }
 
-  protected:
-    void deleteElement(E *element) {}
+  public:
+    /**
+     * @return the median priority element - defining the median as the
+     *         element that its priority is `ceil(n / 2)`
+     * @throws std::runtime_error in case there are no elements in the
+     *         `_lessOrEqualToMedianMaxHeap` heap, and the user requested to
+     *         retrieve the root.
+     */
+    E *median() override {
+
+        // FIXME: check
+        return _lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                ->getRoot()
+                ->getElement();
+    }
 
   protected:
-    E &getElement(HeapAdt<EWrapper> *heapAdt) {
-        return DoublePointerMinHeapAndMaxHeapComponent<E>::
-                getElementFromElementInMinHeapAndMaxHeap(heapAdt->getRoot());
-    }
+    void deleteElement(E *element) {}
 
   protected:
     long int getLogicalSize() {
@@ -178,21 +188,6 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
   protected:
     bool isLogicalSizeOfHeapAdtOdd(HeapAdt<EWrapper> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
-    }
-
-  public:
-    /**
-     * @return the median priority element - defining the median as the
-     *         element that its priority is `ceil(n / 2)`
-     * @throws std::runtime_error in case there are no elements in the
-     *         `_lessOrEqualToMedianMaxHeap` heap, and the user requested to
-     *         retrieve the root.
-     */
-    E median() override {
-
-        // FIXME: check
-        return getElement(
-                _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot());
     }
 
   public:

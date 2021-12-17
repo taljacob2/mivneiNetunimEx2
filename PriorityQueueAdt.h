@@ -23,28 +23,28 @@ template<typename E> class PriorityQueueAdt {
      * @return the highest priority element, *without removing it* from the
      *         data-structure.
      */
-    virtual E max() = 0;
+    virtual E *max() = 0;
 
   public:
     /**
      * @return the highest priority element, *and removes it* from the
      *         data-structure.
      */
-    virtual E deleteMax() = 0;
+    virtual E *deleteMax() = 0;
 
   public:
     /**
      * @return the lowest priority element, *without removing it* from the
      *         data-structure.
      */
-    virtual E min() = 0;
+    virtual E *min() = 0;
 
   public:
     /**
      * @return the lowest priority element, *and removes it* from the
      *         data-structure.
      */
-    virtual E deleteMin() = 0;
+    virtual E *deleteMin() = 0;
 
   public:
     /**
@@ -63,7 +63,7 @@ template<typename E> class PriorityQueueAdt {
     /**
      * @return the median priority element.
      */
-    virtual E median() = 0;
+    virtual E *median() = 0;
 
   public:
     /**
