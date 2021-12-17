@@ -118,12 +118,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             } else if (isLogicalSizeOdd()) {
 
                 // Insert the given EWrapper to the "less" heap.
-                _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
+                _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
             }
         } else {
 
             // Insert the given EWrapper to the "less" heap.
-            _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
+            _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
         }
     }
 
