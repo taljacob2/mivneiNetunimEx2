@@ -29,10 +29,10 @@ int main() {
 
         // HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
 
-        // auto                       minHeap = MinHeap<int, std::string>(1);
-        // HeapAdt<int, std::string> &heap    = Polymorpher<
-        //         HeapAdt<int, std::string>,
-        //         MinHeap<int, std::string>>::polymorphLValue(minHeap);
+        auto  minHeap = MinHeap<int, std::string>(1);
+        auto &heap    = Polymorpher::polymorphLValue<HeapAdt<int, std::string>,
+                                                  MinHeap<int, std::string>>(
+                minHeap);
 
 
         // HeapAdt<int, std::string> &heap =
