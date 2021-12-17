@@ -298,6 +298,24 @@ template<typename E> class ArrayBase {
     }
 
   public:
+    ArrayBase &operator=(const ArrayBase &other) {
+
+        // Guard self assignment
+        if (this == &other) { return *this; }
+
+        // Free the existing resource.
+        deleteThis();
+
+        // Copy the data pointer and its size from the source object.
+        this->_physicalSize = other._physicalSize;
+        for (unsigned long i = 0; i < _physicalSize; i++) {
+            _array[i] = other._array[i]; // Shallow-Copy the reference.
+        }
+
+        return *this;
+    }
+
+  public:
     ArrayBase &operator=(ArrayBase &&other) noexcept {
 
         // Guard self assignment
@@ -319,24 +337,6 @@ template<typename E> class ArrayBase {
             other._physicalSize = 0;
             other._array        = nullptr;
         }
-        return *this;
-    }
-
-  public:
-    ArrayBase &operator=(const ArrayBase &other) {
-
-        // Guard self assignment
-        if (this == &other) { return *this; }
-
-        // Free the existing resource.
-        deleteThis();
-
-        // Copy the data pointer and its size from the source object.
-        this->_physicalSize = other._physicalSize;
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            _array[i] = other._array[i]; // Shallow-Copy the reference.
-        }
-
         return *this;
     }
 
