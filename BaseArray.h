@@ -52,14 +52,6 @@ template<typename E> class BaseArray {
         // initThis(); // TODO: check if required. if it is, then replace with `()`
     }
 
-  protected:
-    void initThis() {
-        // forEach([this](const E *e) { e = nullptr; });
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            _array[i] = nullptr;
-        }
-    }
-
   public:
     BaseArray(const BaseArray &other) { *this = other; }
 
