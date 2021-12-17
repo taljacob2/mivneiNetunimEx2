@@ -112,19 +112,24 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
                 if (median() < *element) {
-                    _greaterThanMedianMaxHeap->insert(element);
+                    _greaterThanMedianDoubleHeap->getMaxHeap()->insert(element);
                 } else {
 
-                    // Transfer the maximum from `_lessOrEqualToMedianMaxHeap` to `_greaterThanMedianMaxHeap`
-                    _greaterThanMedianMaxHeap->insert(
-                            _lessOrEqualToMedianMaxHeap->deleteRoot());
-                    _lessOrEqualToMedianMaxHeap->insert(element);
+                    /*
+                     * Transfer the maximum from `_lessOrEqualToMedianDoubleHeap->getMaxHeap()`
+                     * to `_greaterThanMedianDoubleHeap->getMaxHeap()`
+                     */
+                    _greaterThanMedianDoubleHeap->getMaxHeap()->insert(
+                            _lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                                    ->deleteRoot());
+                    _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(
+                            element);
                 }
             } else if (isLogicalSizeOdd()) {
-                _lessOrEqualToMedianMaxHeap->insert(element);
+                _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
             }
         } else {
-            _lessOrEqualToMedianMaxHeap->insert(element);
+            _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
         }
     }
 
@@ -164,7 +169,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         retrieve the root.
      */
     E median() override {
-        return *_lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot(); // FIXME: check
+        return *_lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                        ->getRoot(); // FIXME: check
     }
 
   public:
@@ -179,7 +185,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   private:
-    static std::ostream &printThis(std::ostream &             os,
+    static std::ostream &printThis(std::ostream &          os,
                                    const PriorityQueue<E> &priorityQueue) {
 
         os << "---------------------------- ";
