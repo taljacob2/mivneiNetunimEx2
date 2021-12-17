@@ -114,16 +114,18 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
                 if (median() < *element) {
-                    _greaterThanMedianDoubleHeap->getMaxHeap()->insert(element);
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps(element);
                 } else {
 
                     /*
                      * Transfer the maximum from `_lessOrEqualToMedianDoubleHeap->getMaxHeap()`
                      * to `_greaterThanMedianDoubleHeap->getMaxHeap()`
                      */
-                    _greaterThanMedianDoubleHeap->getMaxHeap()->insert(
-                            _lessOrEqualToMedianDoubleHeap->getMaxHeap()
-                                    ->deleteRoot());
+                    // FIXME: here
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps(
+                            ElementInMinHeapAndMaxHeap<E>(
+                                    _lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                                            ->deleteRoot()));
                     _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(
                             element);
                 }
