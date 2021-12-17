@@ -35,8 +35,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         MinHeapWhenAlsoHavingMaxHeap<E> lessMaxHeapWhenAlsoHavingMinHeap(
                 physicalSizeOfEachHeap);
         DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
-                lessMinHeapWhenAlsoHavingMaxHeap,
-                lessMaxHeapWhenAlsoHavingMinHeap);
+                &lessMinHeapWhenAlsoHavingMaxHeap,
+                &lessMaxHeapWhenAlsoHavingMinHeap);
         _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
 
         MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap(
@@ -44,8 +44,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         MinHeapWhenAlsoHavingMaxHeap<E> greaterMaxHeapWhenAlsoHavingMinHeap(
                 physicalSizeOfEachHeap);
         DoublePointerMinHeapAndMaxHeapComponent<E> greaterDoubleHeap(
-                greaterMinHeapWhenAlsoHavingMaxHeap,
-                greaterMaxHeapWhenAlsoHavingMinHeap);
+                &greaterMinHeapWhenAlsoHavingMaxHeap,
+                &greaterMaxHeapWhenAlsoHavingMinHeap);
         _greaterThanMedianDoubleHeap = &greaterDoubleHeap;
     }
 
@@ -93,15 +93,15 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         MinHeapWhenAlsoHavingMaxHeap<E> lessMinHeapWhenAlsoHavingMaxHeap;
         MinHeapWhenAlsoHavingMaxHeap<E> lessMaxHeapWhenAlsoHavingMinHeap;
         DoublePointerMinHeapAndMaxHeapComponent<E> lessDoubleHeap(
-                lessMinHeapWhenAlsoHavingMaxHeap,
-                lessMaxHeapWhenAlsoHavingMinHeap);
+                &lessMinHeapWhenAlsoHavingMaxHeap,
+                &lessMaxHeapWhenAlsoHavingMinHeap);
         _lessOrEqualToMedianDoubleHeap = &lessDoubleHeap;
 
         MinHeapWhenAlsoHavingMaxHeap<E> greaterMinHeapWhenAlsoHavingMaxHeap;
         MinHeapWhenAlsoHavingMaxHeap<E> greaterMaxHeapWhenAlsoHavingMinHeap;
         DoublePointerMinHeapAndMaxHeapComponent<E> greaterDoubleHeap(
-                greaterMinHeapWhenAlsoHavingMaxHeap,
-                greaterMaxHeapWhenAlsoHavingMinHeap);
+                &greaterMinHeapWhenAlsoHavingMaxHeap,
+                &greaterMaxHeapWhenAlsoHavingMinHeap);
         _greaterThanMedianDoubleHeap = &greaterDoubleHeap;
     }
 
