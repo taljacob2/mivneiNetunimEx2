@@ -29,9 +29,9 @@ template<typename E> class Heap : public HeapAdt<E> {
 
   protected:
     /**
-     * @see fixHeap(long int)
-     * @see fixHeapUpwards(long int)
-     * @see fixHeapWhile(long int, Direction)
+     * @see fixHeap(unsigned long)
+     * @see fixHeapUpwards(unsigned long)
+     * @see fixHeapWhile(unsigned long, Direction)
      */
     enum class Direction { UPWARDS, DOWNWARDS };
 
@@ -44,14 +44,14 @@ template<typename E> class Heap : public HeapAdt<E> {
 
   protected:
     /// The *physical-size* of the `_array`. Initialized to `0`.
-    long int _physicalSize = 0;
+    unsigned long _physicalSize = 0;
 
   protected:
     /// The *logical-size* of the `_array`. Initialized to `0`.
-    long int _logicalSize = 0;
+    unsigned long _logicalSize = 0;
 
   public:
-    long int getLogicalSize() const override { return _logicalSize; }
+    unsigned long getLogicalSize() const override { return _logicalSize; }
 
   public:
     /**
@@ -66,7 +66,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                               heap from.
      * @see buildHeap
      */
-    Heap(E *arrayToBuildFrom, long int sizeOfArrayToBuildFrom) {
+    Heap(E *arrayToBuildFrom, unsigned long sizeOfArrayToBuildFrom) {
         buildHeap(arrayToBuildFrom, sizeOfArrayToBuildFrom);
     }
 
@@ -78,7 +78,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @note the content of the `_array` remains empty.
      * @param physicalSize set the `_physicalSize` of the `_array` to be this size.
      */
-    explicit Heap(long int physicalSize) {
+    explicit Heap(unsigned long physicalSize) {
         this->_physicalSize = physicalSize;
         this->_array        = new E *[physicalSize];
         for (int i = 0; i < _physicalSize; i++) { _array[i] = nullptr; }
@@ -120,7 +120,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *            this method returns `null_ptr`.
      * @return the *root element* removed from the heap.
      * @throws std::logic_error in case the heap is already empty.
-     * @see fixHeap(long int)
+     * @see fixHeap(unsigned long)
      * @see deleteRoot(bool)
      */
     E *deleteRoot() override { return deleteRoot(true); }
@@ -140,7 +140,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                             ensure that the heap is still valid.
      * @return the *root element* removed from the heap.
      * @throws std::logic_error in case the heap is already empty.
-     * @see fixHeap(long int)
+     * @see fixHeap(unsigned long)
      */
     E *deleteRoot(bool fixHeapAfterDeletion) {
 
@@ -178,7 +178,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                             *fixHeap(0)* method, after deletion, to
      *                             ensure that the heap is still valid.
      * @see deleteRoot()
-     * @see fixHeap(long int)
+     * @see fixHeap(unsigned long)
      */
     void deleteRootWhenThereAreTwoOrMoreElements(bool fixHeapAfterDeletion) {
 
@@ -220,8 +220,8 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @attention the `E` elements in the @p arrayToBuildFrom must be
      *            **lvalues**.
      */
-    void buildHeap(E *      arrayToBuildFrom,
-                   long int sizeOfArrayToBuildFrom) override {
+    void buildHeap(E *           arrayToBuildFrom,
+                   unsigned long sizeOfArrayToBuildFrom) override {
 
         /* Delete the old _array if there is any. */
         deleteThis();
@@ -230,7 +230,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         this->_physicalSize = sizeOfArrayToBuildFrom;
         this->_logicalSize  = sizeOfArrayToBuildFrom;
         this->_array        = new E *[sizeOfArrayToBuildFrom];
-        for (long int i = 0; i < sizeOfArrayToBuildFrom; i++) {
+        for (unsigned long i = 0; i < sizeOfArrayToBuildFrom; i++) {
             this->_array[i] = &arrayToBuildFrom[i];
         }
 
@@ -238,8 +238,8 @@ template<typename E> class Heap : public HeapAdt<E> {
          * `currentIndex` should be in between `0` and `(_logicalSize / 2)`.
          * Note: the almost last level has `(_logicalSize / 2)` `nodes`.
          */
-        long int lastIndex = this->_logicalSize - 1;
-        for (long int currentIndex = getParentIndex(lastIndex);
+        unsigned long lastIndex = this->_logicalSize - 1;
+        for (unsigned long currentIndex = getParentIndex(lastIndex);
              currentIndex >= 0; currentIndex--) {
             fixHeap(currentIndex);
         }
@@ -250,9 +250,9 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @brief Fixes the heap from a given @p indexToFixFrom and **downwards**.
      * @param indexToFixFrom an index of an element in the heap, that the
      *                       user wishes to fix the heap from.
-     * @see fixHeap(long int, Direction)
+     * @see fixHeap(unsigned long, Direction)
      */
-    void fixHeap(long int indexToFixFrom) override {
+    void fixHeap(unsigned long indexToFixFrom) override {
         fixHeap(indexToFixFrom, Direction::DOWNWARDS);
     }
 
@@ -261,9 +261,9 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @brief Fixes the heap from a given @p indexToFixFrom and **upwards**.
      * @param indexToFixFrom an index of an element in the heap, that the
      *                       user wishes to fix the heap from.
-     * @see fixHeap(long int, Direction)
+     * @see fixHeap(unsigned long, Direction)
      */
-    void fixHeapUpwards(long int indexToFixFrom) override {
+    void fixHeapUpwards(unsigned long indexToFixFrom) override {
         fixHeap(indexToFixFrom, Direction::UPWARDS);
     }
 
@@ -298,10 +298,10 @@ template<typename E> class Heap : public HeapAdt<E> {
      *            will have no effect, as explained earlier.
      * @throws std::out_of_range in case the index provided is out of range.
      * @see Direction
-     * @see fixHeap(long int)
-     * @see fixHeapUpwards(long int)
+     * @see fixHeap(unsigned long)
+     * @see fixHeapUpwards(unsigned long)
      */
-    void fixHeap(long int indexToFixFrom, Direction direction) {
+    void fixHeap(unsigned long indexToFixFrom, Direction direction) {
 
         /* Check that `indexToFixFrom` is a legal index. */
         if ((indexToFixFrom < 0) || (this->_logicalSize <= indexToFixFrom)) {
@@ -321,7 +321,7 @@ template<typename E> class Heap : public HeapAdt<E> {
     /**
      * @brief This method is a *private* method, that represents the
      *        case when the provided @p currentIndex is a legal index.
-     *        This method is being invoked by the @link fixHeap(long int,
+     *        This method is being invoked by the @link fixHeap(unsigned long,
      *        Direction) @endlink method.
      *
      * @param currentIndex has been checked as a legal index. Should be
@@ -329,11 +329,11 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                     Represents the index to *fixHeap* from.
      * @param direction tells the `Direction` of which the `fixHeap` would
      *                  iterate.
-     * @see fixHeap(long int)
-     * @see fixHeapUpwards(long int)
+     * @see fixHeap(unsigned long)
+     * @see fixHeapUpwards(unsigned long)
      * @see Direction
      */
-    void fixHeapLegalIndex(long int indexToFixFrom, Direction direction) {
+    void fixHeapLegalIndex(unsigned long indexToFixFrom, Direction direction) {
 
         /*
          * `currentIndex` should be in between `0` and `(_logicalSize / 2)`.
@@ -342,7 +342,7 @@ template<typename E> class Heap : public HeapAdt<E> {
          * Attention: there is no use to give `indexToFixFrom` that is larger
          *            than `(_logicalSize / 2)`.
          */
-        long int currentIndex = indexToFixFrom;
+        unsigned long currentIndex = indexToFixFrom;
         if (this->_array[currentIndex] == nullptr) {
 
             /*
@@ -365,7 +365,7 @@ template<typename E> class Heap : public HeapAdt<E> {
   protected:
     /**
      * @brief This method is a *protected* method, that represents a `while`
-     *        that is being invoked by the @link fixHeap(long int) @endlink method.
+     *        that is being invoked by the @link fixHeap(unsigned long) @endlink method.
      *
      * The `while` loop has `2` stop conditions:
      *  @li there are no children to the `node` that is being iterated ( =
@@ -374,17 +374,17 @@ template<typename E> class Heap : public HeapAdt<E> {
      *  its children.
      * @param currentIndex should be in between `0` and `(_logicalSize / 2)`.
      *                     Represents the index to *fixHeap* from.
-     * @see fixHeap(long int)
-     * @see fixHeapUpwards(long int)
+     * @see fixHeap(unsigned long)
+     * @see fixHeapUpwards(unsigned long)
      * @see Direction
      */
-    void fixHeapWhile(long int currentIndex, Direction direction) {
+    void fixHeapWhile(unsigned long currentIndex, Direction direction) {
 
         /* _array[currentIndex] is not `nullptr`. Thus, comparable. */
         while ((0 <= currentIndex) && (currentIndex < (_logicalSize / 2))) {
 
             /* Get the index that points to the `swappable` element. */
-            long int indexOfSwappableChildOfCurrentRoot =
+            unsigned long indexOfSwappableChildOfCurrentRoot =
                     getIndexOfChildToSwapWithParent(_array, _logicalSize,
                                                     currentIndex * 2 + 1,
                                                     currentIndex * 2 + 2);
@@ -444,22 +444,22 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @return the index of the parent element of the element which its index
      *         is the given @p currentIndex.
      */
-    static long int getParentIndex(long int currentIndex) {
+    static unsigned long getParentIndex(unsigned long currentIndex) {
         return floor(((double) (currentIndex - 1)) / 2);
     }
 
   protected:
     /**
-     * @see fixHeapWhile(long int, Direction)
+     * @see fixHeapWhile(unsigned long, Direction)
      */
-    virtual long int
-    getIndexOfChildToSwapWithParent(E **array, long int size,
-                                    long int indexToElement1,
-                                    long int indexToElement2) = 0;
+    virtual unsigned long
+    getIndexOfChildToSwapWithParent(E **array, unsigned long size,
+                                    unsigned long indexToElement1,
+                                    unsigned long indexToElement2) = 0;
 
   protected:
     /**
-     * @see fixHeapWhile(long int, Direction)
+     * @see fixHeapWhile(unsigned long, Direction)
      */
     virtual bool predicateIsSwapNeeded(E element1, E element2) = 0;
 
@@ -501,7 +501,7 @@ template<typename E> class Heap : public HeapAdt<E> {
         /* Add the `elementToInsert` as the `last` element in the _array. */
         this->_array[this->_logicalSize++] = elementToInsert;
 
-        long int currentIndex = this->_logicalSize - 1;
+        unsigned long currentIndex = this->_logicalSize - 1;
 
         /*
          * Check upwards the heap, whether there is a need to `swap` the
@@ -562,7 +562,7 @@ template<typename E> class Heap : public HeapAdt<E> {
             os << "The _array is empty."
                << "\n";
         }
-        for (long int i = 0; i < heap._logicalSize; i++) {
+        for (unsigned long i = 0; i < heap._logicalSize; i++) {
             os << *heap._array[i] << ";";
             os << "\n";
         }

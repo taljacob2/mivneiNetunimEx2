@@ -14,7 +14,6 @@
  * @note The term `<<predicate-resulted>>` is a result of a predicate method
  *       that returns `bool`, and tells whether a `node` should be *swapped*
  *       with its `parent` or not.
- * @note DEVELOPER NOTE: `long int` and `long` types are the same.
  */
 template<typename E> class HeapAdt {
 
@@ -58,9 +57,9 @@ template<typename E> class HeapAdt {
      * @note this method will continue to run until the root is no longer
      *       `<<predicate-resulted>>` than one of his children,
      *       or when the root is a leaf.
-     * @see fixHeapUpwards(long int)
+     * @see fixHeapUpwards(unsigned long)
      */
-    virtual void fixHeap(long int indexToFixFrom) = 0;
+    virtual void fixHeap(unsigned long indexToFixFrom) = 0;
 
   public:
     /**
@@ -70,9 +69,9 @@ template<typename E> class HeapAdt {
      *                       the root of the heap.
      * @note this method will continue to run until the root is no longer
      *       `predicated` than one of his children, or when the root is a leaf.
-     * @see fixHeap(long int)
+     * @see fixHeap(unsigned long)
      */
-    virtual void fixHeapUpwards(long int indexToFixFrom) = 0;
+    virtual void fixHeapUpwards(unsigned long indexToFixFrom) = 0;
 
   public:
     /**
@@ -82,8 +81,8 @@ template<typename E> class HeapAdt {
      * @param arrayToBuildFrom the given array of elements to build the
      *                         heap from.
      */
-    virtual void buildHeap(E *arrayToBuildFrom,
-                           long int     sizeOfArrayToBuildFrom) = 0;
+    virtual void buildHeap(E *           arrayToBuildFrom,
+                           unsigned long sizeOfArrayToBuildFrom) = 0;
 
   public:
     /**
@@ -105,7 +104,7 @@ template<typename E> class HeapAdt {
      * @note This is an extension method - made for convenience.
      * @return The logicalSize of the data-structure.
      */
-    virtual long int getLogicalSize() const = 0;
+    virtual unsigned long getLogicalSize() const = 0;
 
   public:
     /**
@@ -146,7 +145,7 @@ template<typename E> class HeapAdt {
      *                  os << "The _array is empty."
      *                     << "\n";
      *              }
-     *              for (long int i = 0; i < heap._logicalSize; i++) {
+     *              for (unsigned long i = 0; i < heap._logicalSize; i++) {
      *                  os << *heap._array[i] << ";";
      *                  os << "\n";
      *              }

@@ -10,7 +10,7 @@
  *        pointers to **lvalue `E`** that are *comparable* to each other.
  *
  * @li Once the heap has been built by @link buildHeap @endlink or
- * @link MinHeap(E *, long int) @endlink, its *physical-size* is
+ * @link MinHeap(E *, unsigned long) @endlink, its *physical-size* is
  * treated as a constant - thus unchangeable. In case the user wishes to
  * change the *physical-size* of the heap, there is a *must* to invoke @link
  * buildHeap @endlink again.
@@ -24,11 +24,11 @@
 template<typename E> class MinHeap : public Heap<E> {
 
   public:
-    MinHeap(E *arrayToBuildFrom, long sizeOfArrayToBuildFrom)
+    MinHeap(E *arrayToBuildFrom, unsigned long sizeOfArrayToBuildFrom)
         : Heap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   public:
-    explicit MinHeap(long physicalSize) : Heap<E>(physicalSize) {}
+    explicit MinHeap(unsigned long physicalSize) : Heap<E>(physicalSize) {}
 
   public:
     MinHeap() : Heap<E>() {}
@@ -37,9 +37,9 @@ template<typename E> class MinHeap : public Heap<E> {
     virtual ~MinHeap() = default;
 
   private:
-    long getIndexOfChildToSwapWithParent(E **array, long size,
-                                         long indexToElement1,
-                                         long indexToElement2) override {
+    unsigned long getIndexOfChildToSwapWithParent(E **array, unsigned long size,
+                                         unsigned long indexToElement1,
+                                         unsigned long indexToElement2) override {
         return my_algorithms::min(array, size, indexToElement1,
                                   indexToElement2);
     }
