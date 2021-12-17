@@ -122,6 +122,36 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         fieldOfDoublePointerMinHeapAndMaxHeapComponent = &doubleHeap;
     }
 
+  protected:
+    void
+    createDoubleHeapWithPhysicalSize
+            (DoublePointerMinHeapAndMaxHeapComponent<E> *
+    &fieldOfDoublePointerMinHeapAndMaxHeapComponent, unsigned long
+                     physicalSize) {
+
+        // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
+        MinHeapWhenAlsoHavingMaxHeap<E> minHeapWhenAlsoHavingMaxHeap(physicalSize);
+        MinHeap<EWrapper> &             minHeapWhenAlsoHavingMaxHeapBase =
+                Polymorpher::polymorphLValue<MinHeap<EWrapper>,
+                        MinHeapWhenAlsoHavingMaxHeap<E>>(
+                        minHeapWhenAlsoHavingMaxHeap);
+
+        // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
+        MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap;
+        MaxHeap<EWrapper> &             maxHeapWhenAlsoHavingMinHeapBase =
+                Polymorpher::polymorphLValue<MaxHeap<EWrapper>,
+                        MaxHeapWhenAlsoHavingMinHeap<E>>(
+                        maxHeapWhenAlsoHavingMinHeap);
+
+        // Construct `DoublePointerMinHeapAndMaxHeapComponent`.
+        DoublePointerMinHeapAndMaxHeapComponent<E> doubleHeap(
+                &minHeapWhenAlsoHavingMaxHeapBase,
+                &maxHeapWhenAlsoHavingMinHeapBase);
+
+        // Set field.
+        fieldOfDoublePointerMinHeapAndMaxHeapComponent = &doubleHeap;
+    }
+
   public:
     void insert(E *element) override {
         if (getLogicalSize() > 1) {
