@@ -2,6 +2,7 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
+#include "ElementInMinHeapAndMaxHeap.h"
 #include "PriorityQueueAdt.h"
 
 /**
@@ -21,16 +22,20 @@ template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
 
   private:
-    HeapAdt<K, V> *_greaterThanMedianMaxHeap = nullptr;
+    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+            *_greaterThanMedianMaxHeap = nullptr;
 
   private:
-    HeapAdt<K, V> *_greaterThanMedianMinHeap = nullptr;
+    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+            *_greaterThanMedianMinHeap = nullptr;
 
   private:
-    HeapAdt<K, V> *_lessOrEqualToMedianMaxHeap = nullptr;
+    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+            *_lessOrEqualToMedianMaxHeap = nullptr;
 
   private:
-    HeapAdt<K, V> *_lessOrEqualToMedianMinHeap = nullptr;
+    HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
+            *_lessOrEqualToMedianMinHeap = nullptr;
 
   public:
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
@@ -137,12 +142,14 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
   private:
-    bool isLogicalSizeOfHeapAdtEven(HeapAdt<K, V> *heapAdt) {
+    bool isLogicalSizeOfHeapAdtEven(
+            HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>> *heapAdt) {
         return heapAdt->getLogicalSize() % 2 == 0;
     }
 
   private:
-    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<K, V> *heapAdt) {
+    bool isLogicalSizeOfHeapAdtOdd(
+            HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
     }
 

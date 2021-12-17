@@ -12,8 +12,7 @@
  *       with its `parent` or not. In this implementation,
  *       `<<predicate-resulted>>` is defined to be the result of the
  *       @link predicateIsSwapNeeded(E, E) @endlink method.
- * @tparam K the type of *key* in the entry.
- * @tparam V the type of *value* in the entry.
+ * @tparam E the type of each element.
  * @see HeapAdt
  */
 template<typename E> class Heap : public HeapAdt<E> {
@@ -392,7 +391,7 @@ template<typename E> class Heap : public HeapAdt<E> {
             if (_array[indexOfSwappableChildOfCurrentRoot] != nullptr) {
 
                 /*
-                 * There is a living entry.
+                 * There is a living element.
                  * Compare by keys.
                  * `swap` the elements if needed, to maintain the validity of
                  * the heap as a `Heap`.
@@ -422,7 +421,7 @@ template<typename E> class Heap : public HeapAdt<E> {
             } else {
 
                 /*
-                 * There is no entry to compare with.
+                 * There is no element to compare with.
                  * Thus, this `node` does not have children,
                  * and is actually a leaf.
                  */

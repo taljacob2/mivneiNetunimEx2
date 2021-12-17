@@ -8,16 +8,14 @@
  *        *key* and a *value*.
  *
  * The heap compares its elements to each other, by the comparable `key` field
- * located in each `Entry` element.
- * @tparam K the type of *key* in the entry.
- * @tparam V the type of *value* in the entry.
- * @note The terms `element`, `node` and 'entry' are synonyms.
+ * located in each element.
+ * @tparam E the type of each element.
+ * @note The terms `element`, `node` are synonyms.
  * @note The terms `heap` and `tree` are synonyms.
  * @note The term `<<predicate-resulted>>` is a result of a predicate method
  *       that returns `bool`, and tells whether a `node` should be *swapped*
  *       with its `parent` or not.
  * @note DEVELOPER NOTE: `long int` and `long` types are the same.
- * @see Entry
  */
 template<typename E> class HeapAdt {
 
