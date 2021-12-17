@@ -31,26 +31,11 @@ int main() {
 
         Entry<int, std::string> entry(3, "hello");
         heap.insert(&entry);
-        // Entry<int, std::string> entry2(32, "hey");
-        // heap->insert(&entry2);
-        // TestRunner::runAllTests(testArray);
-        // priorityQueue->insert(entry);
-        // std::cout << "min is: " << (priorityQueue->min());
-        // heap->insert(new Entry<int, std::string>(5, "hi"));
-        // heap->insert(new Entry<int, std::string>(2, "hey"));
-        // heap->insert(new Entry<int, std::string>(1, "no"));
-        // heap->insert(new Entry<int, std::string>(7, "oye"));
-        // heap->insert(&(Entry<int, std::string>(9, "yoyo")));
-        // heap->insert(&(Entry<int, std::string>(9, "yoyo")));
-        // std::cout << "root is: " << *(priorityQueue->root());
-        std::cout << "root is: " << *(heap.getRoot());
+        std::cout << "root is: " << *(heap.getRoot()) << std::endl;
         // priorityQueue->print(std::cout, *priorityQueue);
         heap.print(std::cout, heap);
-        // std::cout << priorityQueue;
-        // delete priorityQueue;
-        // delete heap;
     } catch (std::exception &e) {
-        std::cout << e.what() << std::endl;
+        std::cout << Constants::WRONG_INPUT << std::endl;
         return Constants::MAIN_ERROR;
     }
 
