@@ -328,7 +328,10 @@ template<typename E> class ArrayBase {
         // Guard self assignment
         if (this == &other) { return *this; }
 
+
         // Free the existing resource.
+        this->_physicalSize = 0;
+        this->_array        = nullptr;
         deleteThis();
 
         // Copy the data pointer and its size from the source object.
