@@ -123,24 +123,24 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   protected:
-    void
-    createDoubleHeapWithPhysicalSize
-            (DoublePointerMinHeapAndMaxHeapComponent<E> *
-    &fieldOfDoublePointerMinHeapAndMaxHeapComponent, unsigned long
-                     physicalSize) {
+    void createDoubleHeapWithPhysicalSize(
+            DoublePointerMinHeapAndMaxHeapComponent<E> *
+                    &     fieldOfDoublePointerMinHeapAndMaxHeapComponent,
+            unsigned long physicalSize) {
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
-        MinHeapWhenAlsoHavingMaxHeap<E> minHeapWhenAlsoHavingMaxHeap(physicalSize);
-        MinHeap<EWrapper> &             minHeapWhenAlsoHavingMaxHeapBase =
+        MinHeapWhenAlsoHavingMaxHeap<E> minHeapWhenAlsoHavingMaxHeap(
+                physicalSize);
+        MinHeap<EWrapper> &minHeapWhenAlsoHavingMaxHeapBase =
                 Polymorpher::polymorphLValue<MinHeap<EWrapper>,
-                        MinHeapWhenAlsoHavingMaxHeap<E>>(
+                                             MinHeapWhenAlsoHavingMaxHeap<E>>(
                         minHeapWhenAlsoHavingMaxHeap);
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
         MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap;
         MaxHeap<EWrapper> &             maxHeapWhenAlsoHavingMinHeapBase =
                 Polymorpher::polymorphLValue<MaxHeap<EWrapper>,
-                        MaxHeapWhenAlsoHavingMinHeap<E>>(
+                                             MaxHeapWhenAlsoHavingMinHeap<E>>(
                         maxHeapWhenAlsoHavingMinHeap);
 
         // Construct `DoublePointerMinHeapAndMaxHeapComponent`.
