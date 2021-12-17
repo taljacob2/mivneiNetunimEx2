@@ -49,7 +49,6 @@ template<typename E> class BaseArray {
         }
         _physicalSize = physicalSize;
         _array        = new E *[_physicalSize]();
-        // initThis(); // TODO: check if required. if it is, then replace with `()`
     }
 
   public:
