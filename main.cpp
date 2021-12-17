@@ -30,7 +30,7 @@ int main() {
         // HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
         auto pointer = Pointer<MinHeap<int, std::string>>(
                 MinHeap<int, std::string>(1));
-        HeapAdt<int, std::string> *heap = pointer.getSubclass();
+        HeapAdt<int, std::string> *heap = pointer.getPointer();
 
 
         Entry<int, std::string> entry(3, "hello");
