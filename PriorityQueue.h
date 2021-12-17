@@ -116,9 +116,13 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                     _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
                 }
             } else if (isLogicalSizeOdd()) {
+
+                // Insert the given EWrapper to the "less" heap.
                 _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
             }
         } else {
+
+            // Insert the given EWrapper to the "less" heap.
             _lessOrEqualToMedianDoubleHeap->getMaxHeap()->insert(element);
         }
     }
