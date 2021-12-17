@@ -16,13 +16,13 @@
  */
 template<typename E> class ElementInMinHeapAndMaxHeap {
 
-  private:
+  protected:
     E *_element = nullptr;
 
-  private:
+  protected:
     long int _maxHeapIndex = 0;
 
-  private:
+  protected:
     long int _minHeapIndex = 0;
 
   public:
