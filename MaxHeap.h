@@ -15,11 +15,10 @@
  * change the *physical-size* of the heap, there is a *must* to invoke @link
  * buildHeap @endlink again.
  * @li The heap compares its elements to each other, by the comparable `key`
- * field located in each `Entry` element.
+ * field located in each `element`.
  * @tparam E the type of each element.
- * @note The terms `element`, `node` and 'entry' are synonyms.
- * @attention The `Entries` pointed must be **lvalues**.
- * @see Entry
+ * @note The terms `element`, `node` are synonyms.
+ * @attention The `elements` pointed must be **lvalues**.
  * @see Heap
  */
 template<typename E> class MaxHeap : public Heap<E> {
