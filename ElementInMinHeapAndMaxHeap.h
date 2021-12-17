@@ -10,6 +10,8 @@
  *        a minimum-heap.
  *        @li the other index tells at which index this `element` is placed on
  *        a maximum-heap.
+ * @tparam E the type of `element`, that *must* be *comparable* to other
+ *         `elements`.
  */
 template<typename E> class ElementInMinHeapAndMaxHeap {
 
