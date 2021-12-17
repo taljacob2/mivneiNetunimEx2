@@ -9,6 +9,8 @@ template<typename E>
 class MaxHeapWhenAlsoHavingMinHeap
     : public MinHeap<ElementInMinHeapAndMaxHeap<E>> {
 
+    typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
+
   public:
     MaxHeapWhenAlsoHavingMinHeap() = default;
 
@@ -17,9 +19,8 @@ class MaxHeapWhenAlsoHavingMinHeap
         : MinHeap<E>(physicalSize) {}
 
   public:
-    MaxHeapWhenAlsoHavingMinHeap(
-            ElementInMinHeapAndMaxHeap<E> *arrayToBuildFrom,
-            long                           sizeOfArrayToBuildFrom)
+    MaxHeapWhenAlsoHavingMinHeap(EWrapper *arrayToBuildFrom,
+                                 long      sizeOfArrayToBuildFrom)
         : MinHeap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   protected:
@@ -35,8 +36,8 @@ class MaxHeapWhenAlsoHavingMinHeap
                 ->setMaxHeapIndex(currentIndex);
 
         // Swap the elements:
-        Heap<ElementInMinHeapAndMaxHeap<E>>::onSwapIsNeeded(
-                currentIndex, indexOfOtherSwappableElement);
+        Heap<EWrapper>::onSwapIsNeeded(currentIndex,
+                                       indexOfOtherSwappableElement);
     }
 };
 
