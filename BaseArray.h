@@ -70,7 +70,10 @@ template<typename E> class BaseArray {
     virtual ~BaseArray() { deleteThis(); }
 
   protected:
-    void deleteThis() { delete[] _array; }
+    void deleteThis() {
+        forEach([this](E *e){delete e;});
+        delete[] _array;
+    }
 
   public:
     virtual E &getElement(unsigned long index) {
@@ -362,9 +365,7 @@ template<typename E> class BaseArray {
          * IMPORTANT: Polymorphic use.
          * A "pointer ( = *)" is the parent-class of a "reference ( = &)".
          */
-        E e = element; // TODO: debug. bug is here
-        // E *pElement = const_cast<E *>(&e);
-        E *pElement = moveLocalToHeap(e);
+        E *pElement = moveLocalAllocatedToHeap(element);
         return pElement;
     }
 
@@ -372,7 +373,7 @@ template<typename E> class BaseArray {
     /**
      * @todo `delete` `element`.
      */
-    E *moveLocalToHeap(const E &element) const {
+    E *moveLocalAllocatedToHeap(const E &element) const {
         E *pElement = new E(element);
         return pElement;
     }
