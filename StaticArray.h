@@ -6,7 +6,7 @@
 
 /**
  * @tparam E the type of `element` in the array.
- * @version 1.0
+ * @version 1.0.1
  */
 template<typename E> class StaticArray : public BaseArray<E> {
 
@@ -19,7 +19,8 @@ template<typename E> class StaticArray : public BaseArray<E> {
             (char *) "StaticArray: array is full.";
 
   public:
-    explicit StaticArray(unsigned long physicalSize) : BaseArray<E>(physicalSize) {}
+    explicit StaticArray(unsigned long physicalSize)
+            : BaseArray<E>(physicalSize) {}
 
   protected:
     unsigned long _logicalSize = 0;
@@ -28,7 +29,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
     unsigned long getLogicalSize() const { return _logicalSize; }
 
   public:
-    void push(const E &element) {
+    void push(E *element) {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
         }
@@ -39,36 +40,14 @@ template<typename E> class StaticArray : public BaseArray<E> {
     }
 
   public:
-    void pushAsPointer(const E *element) {
-        if (_logicalSize == this->_physicalSize) {
-            throw std::runtime_error(IS_FULL_MESSAGE);
-        }
-
-        // May throw here.
-        this->setElementAsPointer(element, _logicalSize);
-        _logicalSize++;
-    }
-
-  public:
-    E &pop() {
+    E *pop() {
         if (!_logicalSize) { throw std::runtime_error(IS_EMPTY_MESSAGE); }
 
         // May throw here.
-        E& returnValue = this->getElement(_logicalSize - 1);
+        E *returnValue = this->getElement(_logicalSize - 1);
         _logicalSize--;
 
-        return returnValue;
-    }
-
-  public:
-    E *popAsPointer() {
-        if (!_logicalSize) { throw std::runtime_error(IS_EMPTY_MESSAGE); }
-
-        // May throw here.
-        E *returnValue = this->getElementAsPointer(_logicalSize - 1);
-        _logicalSize--;
-
-        return this->getElementAsPointer(returnValue);
+        return this->getElement(returnValue);
     }
 };
 

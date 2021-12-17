@@ -2,8 +2,6 @@
 #ifndef BASE_ARRAY_H
 #define BASE_ARRAY_H
 
-#include "Polymorpher.h"
-#include "Pointer.h"
 #include <functional>
 #include <iostream>
 
@@ -19,7 +17,7 @@
  * array afterwards.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0
+ * @version 1.0.1
  */
 template<typename E> class BaseArray {
 
@@ -64,28 +62,11 @@ template<typename E> class BaseArray {
 
   protected:
     void deleteThis() {
-        forEach([this](E *e) { delete e; });
         delete[] _array;
     }
 
   public:
-    virtual E &getElement(unsigned long index) {
-        if (isOutOfRange(index)) {
-            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
-        }
-
-        E *pElement = _array[index];
-        assertNotNull(pElement);
-
-        return *pElement;
-    }
-
-  public:
-    /**
-     * @note In case there are `nullptr`s in the array, you may use this
-     *       method to retrieve them without an error.
-     */
-    virtual E *getElementAsPointer(unsigned long index) {
+    virtual E *getElement(unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
@@ -94,45 +75,12 @@ template<typename E> class BaseArray {
     }
 
   public:
-    virtual void setElement(const E &element, unsigned long index) {
+    virtual void setElement(E *element, unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = Pointer::convertReferenceToPointer(element);
-    }
-
-  public:
-    /**
-     * @warning Use with caution.
-     */
-    virtual void setElementAsPointer(const E *element, unsigned long index) {
-        if (isOutOfRange(index)) {
-            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
-        }
-
-        this->_array[index] = const_cast<E *>(element);
-    }
-
-  public:
-    /**
-     * @brief This method will *invoke* the given @p callBack function on
-     *        each element in the array.
-     *
-     * @param callBack a `void` function that each element in the array will
-     *                 be invoked with.
-     *                  @note You are suggested to use a "lambda" function
-     *                        for this function - so that it will be quicker
-     *                        for you to use this method.
-     * @return `this` object. So that you may "chain" this method with another.
-     */
-    BaseArray<E> &forEach(const std::function<void(const E &)> &callBack) {
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            assertNotNull(_array[i]);
-            callBack(*_array[i]);
-        }
-
-        return this;
+        this->_array[index] = element;
     }
 
   public:
@@ -178,65 +126,6 @@ template<typename E> class BaseArray {
      *                               parameter to `false`.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    BaseArray<E> &filter(const std::function<bool(const E &)> &predicate,
-                         bool deleteFilteredElements = false) {
-        unsigned long newArraySize = 0;
-
-        /*
-         * Must iterate over the array twice.
-         * The `for-loops`' content is:
-         * 1. Count the `newArraySize`.
-         * 2. - `insert` the elements that are `true` with the predicate
-         *      given to `newArray`.
-         *    - `delete` elements that are `false` with the predicate
-         *      given from `_array`.
-         */
-        for (int i = 0; i < this->_physicalSize; i++) {
-            if (predicate(getElement(i))) { newArraySize++; }
-        }
-
-        E **newArray = new E *[newArraySize];
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            E &element = getElement(i);
-            if (predicate(element)) {
-                newArray[i] = element;
-                continue;
-            }
-
-            /**
-             * This element should be filtered out from the array.
-             * `delete` the element if the user required to.
-             */
-            if (deleteFilteredElements) { delete element; }
-        }
-
-        update(newArraySize, newArray);
-        return *this;
-    }
-
-  public:
-    /**
-     * @brief This method will *filter* out from the array the elements that
-     *        do not return `true` the given @p predicate function.
-     *
-     * @param predicate a `bool` function such that only the elements that
-     *                  are returning `true` to this @p predicate function
-     *                  would remain in the array. The others would be
-     *                  `deleted` from the array. And based on the given @p
-     *                  deleteFilteredElements parameter, they may also be
-     *                  `deleted` from the heap.
-     *                  @note You are suggested to use a "lambda" function
-     *                        for this function - so that it will be quicker
-     *                        for you to use this method.
-     * @param deleteFilteredElements set this parameter to `true` if the
-     *                               elements in `this` array are allocated
-     *                               via the heap, so that this method will
-     *                               `delete` them if they are filtered out.
-     *                               Else, it means you allocated the elements
-     *                               locally, and in this case set this
-     *                               parameter to `false`.
-     * @return `this` object. So that you may "chain" this method with another.
-     */
     BaseArray<E> &filter(const std::function<bool(E *)> &predicate,
                          bool deleteFilteredElements = false) {
         unsigned long newArraySize = 0;
@@ -251,7 +140,7 @@ template<typename E> class BaseArray {
          *      given from `_array`.
          */
         for (int i = 0; i < this->_physicalSize; i++) {
-            if (predicate(getElementAsPointer(i))) { newArraySize++; }
+            if (predicate(getElement(i))) { newArraySize++; }
         }
 
         E **newArray = new E *[newArraySize];
@@ -363,7 +252,7 @@ template<typename E> class BaseArray {
         if (element == nullptr) {
             std::string msg = (char *) ELEMENT_IS_NULL_MESSAGE;
             std::string msg2 =
-                    (char *) "Use the `getElementAsPointer(unsigned long)`"
+                    (char *) "Use the `getElement(unsigned long)`"
                              " method to retrieve it, instead of this"
                              " method.";
             throw std::runtime_error(msg + " " + msg2);
