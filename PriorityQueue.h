@@ -21,19 +21,19 @@
 template<typename K, typename V>
 class PriorityQueue : public PriorityQueueAdt<K, V> {
 
-  private:
+  protected:
     HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
             *_greaterThanMedianMaxHeap = nullptr;
 
-  private:
+  protected:
     HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
             *_greaterThanMedianMinHeap = nullptr;
 
-  private:
+  protected:
     HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
             *_lessOrEqualToMedianMaxHeap = nullptr;
 
-  private:
+  protected:
     HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>>
             *_lessOrEqualToMedianMinHeap = nullptr;
 
@@ -114,40 +114,40 @@ class PriorityQueue : public PriorityQueueAdt<K, V> {
         }
     }
 
-  private:
+  protected:
     void insertToLeftHeap(Entry<K, V> *element) {
         _lessOrEqualToMedianMaxHeap->insert(element);
         _lessOrEqualToMedianMinHeap->insert(element);
     }
 
-  private:
+  protected:
     void insertToRightHeap(Entry<K, V> *element) {
         _greaterThanMedianMaxHeap->insert(element);
         _greaterThanMedianMinHeap->insert(element);
     }
 
-  private:
+  protected:
     void deleteElement(Entry<K, V> *element) {}
 
-  private:
+  protected:
     long int getLogicalSize() {
         return _greaterThanMedianMinHeap->getLogicalSize() +
                _greaterThanMedianMaxHeap->getLogicalSize();
     }
 
-  private:
+  protected:
     bool isLogicalSizeEven() { return getLogicalSize() % 2 == 0; }
 
-  private:
+  protected:
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
-  private:
+  protected:
     bool isLogicalSizeOfHeapAdtEven(
             HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>> *heapAdt) {
         return heapAdt->getLogicalSize() % 2 == 0;
     }
 
-  private:
+  protected:
     bool isLogicalSizeOfHeapAdtOdd(
             HeapAdt<ElementInMinHeapAndMaxHeap<Entry<K, V>>> *heapAdt) {
         return !isLogicalSizeOfHeapAdtEven(heapAdt);
