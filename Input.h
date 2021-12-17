@@ -71,7 +71,10 @@ class Input {
         // validateTestArray(testArray, testArraySize);
 
         // TODO: debug print
-        // std::cout << testArray.getElement(0);
+        std::cout << testArray.getElement(0);
+        // std::cout << *testArray.getElementAsPointer(0);
+
+
         return testArray;
     }
 

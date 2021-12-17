@@ -362,7 +362,8 @@ template<typename E> class BaseArray {
          * IMPORTANT: Polymorphic use.
          * A "pointer ( = *)" is the parent-class of a "reference ( = &)".
          */
-        E *pElement = const_cast<E *>(&element);
+        E e = element; // TODO: debug. bug is here
+        E *pElement = const_cast<E *>(&e);
         return pElement;
     }
 
