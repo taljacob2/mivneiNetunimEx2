@@ -133,6 +133,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                             _lessOrEqualToMedianDoubleHeap->getMaxHeap()
                                     ->getRoot();
 
+                    auto leftMinHeapIndex =
+                            leftMaximumEWrapper->getMinHeapIndex();
+                    auto leftMaxHeapIndex =
+                            leftMaximumEWrapper->getMaxHeapIndex();
+
+
                     _greaterThanMedianDoubleHeap->insertToBothHeaps();
 
 

@@ -37,7 +37,7 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     virtual ~ElementInMinHeapAndMaxHeap() { delete _element; }
 
   public:
-    E &getElement() const { return *_element; }
+    E *getElement() const { return _element; }
 
   public:
     long getMaxHeapIndex() const { return _maxHeapIndex; }
