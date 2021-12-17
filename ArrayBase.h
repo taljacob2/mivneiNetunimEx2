@@ -52,7 +52,7 @@ template<typename E> class ArrayBase {
     }
 
   public:
-    ArrayBase(ArrayBase &other) { *this = other; }
+    ArrayBase(const ArrayBase &other) { *this = other; }
 
   public:
     ArrayBase(ArrayBase &&other) noexcept { *this = std::move(other); }
