@@ -2,9 +2,9 @@
 #ifndef BASE_ARRAY_H
 #define BASE_ARRAY_H
 
+#include "Pointer.h"
 #include <functional>
 #include <iostream>
-#include "Polymorph.h"
 
 /**
  * @brief This class wraps an array of a *constant size*, and `delete`s it on

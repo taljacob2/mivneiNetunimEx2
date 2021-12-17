@@ -28,9 +28,15 @@ int main() {
         //         new PriorityQueue<int, std::string>();
 
         // HeapAdt<int, std::string> *heap = new MinHeap<int, std::string>(1);
-        auto pointer = Pointer<MinHeap<int, std::string>>(
-                MinHeap<int, std::string>(1));
-        HeapAdt<int, std::string> *heap = pointer.getPointer();
+
+
+        // auto pointer = Pointer<MinHeap<int, std::string>>(
+        //         MinHeap<int, std::string>(1));
+        // HeapAdt<int, std::string> *heap = pointer.getPointer();
+
+
+        HeapAdt<int, std::string> *heap =Pointer<MinHeap<int, std::string>>(
+                MinHeap<int, std::string>(1)).getPointer();
 
 
         Entry<int, std::string> entry(3, "hello");
