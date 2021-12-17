@@ -28,6 +28,9 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     ElementInMinHeapAndMaxHeap() = default;
 
   public:
+    explicit ElementInMinHeapAndMaxHeap(E *element) : _element(element) {}
+
+  public:
     virtual ~ElementInMinHeapAndMaxHeap() = default;
 
   public:
@@ -72,7 +75,7 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
 
   public:
     friend std::ostream &
-    operator<<(std::ostream &                  os,
+    operator<<(std::ostream &                    os,
                const ElementInMinHeapAndMaxHeap &entryInMinHeapAndMaxHeap) {
         os << entryInMinHeapAndMaxHeap._element;
         return os;
