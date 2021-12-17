@@ -63,7 +63,7 @@ template<typename E> class BaseArray {
 
   protected:
     void deleteThis() {
-        forEach([this](E *e){delete e;});
+        forEach([this](E *e) { delete e; });
         delete[] _array;
     }
 
