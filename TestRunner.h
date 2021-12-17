@@ -9,10 +9,10 @@
 class TestRunner {
 
   public:
-    static void runAllTests(std::string *&testArray, int testArraySize) {
+    static void runAllTests(StaticArray<std::string> &testArray) {
         PriorityQueue<int, std::string> priorityQueue;
 
-        for (int i = 0; i < testArraySize; i++) {
+        for (int i = 0; i < testArray.getLogicalSize(); i++) {
             std::string *test = Input::getTest(testArray, ' ', i);
             runTest(test, priorityQueue);
             delete[] test;

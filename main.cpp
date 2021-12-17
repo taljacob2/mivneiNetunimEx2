@@ -28,6 +28,7 @@ int main() {
 
         Entry<int, std::string> entry(3, "hello");
         heap->insert(&entry);
+        TestRunner::runAllTests(testArray);
         // priorityQueue->insert(entry);
         // std::cout << "min is: " << (priorityQueue->min());
         // heap->insert(new Entry<int, std::string>(5, "hi"));
