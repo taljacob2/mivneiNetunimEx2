@@ -53,7 +53,49 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *          @li This kind of implementation is served only because of a
      *          request given by the customer ( = the course lecturer).
      */
-    PriorityQueue() {
+    PriorityQueue() = default;
+
+  public:
+    virtual ~PriorityQueue() { deleteThis(); }
+
+  private:
+    void deleteThis() const {
+        if (_lessOrEqualToMedianDoubleHeap) {
+            delete _lessOrEqualToMedianDoubleHeap->minHeap;
+            delete _lessOrEqualToMedianDoubleHeap->maxHeap;
+            delete _lessOrEqualToMedianDoubleHeap;
+        }
+
+        if (_greaterThanMedianDoubleHeap) {
+            delete _greaterThanMedianDoubleHeap->minHeap;
+            delete _greaterThanMedianDoubleHeap->maxHeap;
+            delete _greaterThanMedianDoubleHeap;
+        }
+    }
+
+  public:
+    E max() override {
+
+        // FIXME: check
+        return *_lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot();
+    }
+
+  public:
+    E deleteMax() override {}
+
+  public:
+    E min() override {
+
+        // FIXME: check
+        return *_lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot();
+    }
+
+  public:
+    E deleteMin() override {}
+
+  public:
+    void createEmpty() override {
+        deleteThis();
         _lessOrEqualToMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
                         new MinHeapWhenAlsoHavingMaxHeap<E>(),
@@ -63,45 +105,6 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
                         new MinHeapWhenAlsoHavingMaxHeap<E>(),
                         new MaxHeapWhenAlsoHavingMinHeap<E>());
-    }
-
-  public:
-    virtual ~PriorityQueue() { deleteThis(); }
-
-  private:
-    void deleteThis() const {
-        delete _lessOrEqualToMedianDoubleHeap->minHeap;
-        delete _lessOrEqualToMedianDoubleHeap->maxHeap;
-        delete _lessOrEqualToMedianDoubleHeap;
-
-        delete _greaterThanMedianDoubleHeap->minHeap;
-        delete _greaterThanMedianDoubleHeap->maxHeap;
-        delete _greaterThanMedianDoubleHeap;
-    }
-
-  public:
-    E max() override {
-        return *_greaterThanMedianMaxHeap->getRoot(); // FIXME: check
-    }
-
-  public:
-    E deleteMax() override {}
-
-  public:
-    E min() override {
-        return *_lessOrEqualToMedianMinHeap->getRoot(); // FIXME: check
-    }
-
-  public:
-    E deleteMin() override {}
-
-  public:
-    void createEmpty() override {
-        deleteThis();
-        _greaterThanMedianMaxHeap   = new MaxHeap<E>();
-        _greaterThanMedianMinHeap   = new MaxHeap<E>();
-        _lessOrEqualToMedianMaxHeap = new MaxHeap<E>();
-        _lessOrEqualToMedianMinHeap = new MaxHeap<E>();
     }
 
   public:
