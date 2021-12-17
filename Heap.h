@@ -12,7 +12,7 @@
  *       with its `parent` or not. In this implementation,
  *       `<<predicate-resulted>>` is defined to be the result of the
  *       @link predicateIsSwapNeeded(E, E) @endlink method.
- * @tparam E the type of each element.
+ * @tparam E the type of each `element`.
  * @see HeapAdt
  */
 template<typename E> class Heap : public HeapAdt<E> {
@@ -37,7 +37,7 @@ template<typename E> class Heap : public HeapAdt<E> {
 
   protected:
     /**
-     * Array of pointers to **lvalue `Entries`** that serve as `elements`.
+     * Array of pointers to **lvalue `E`** that serve as `elements`.
      * Initialized to `nullptr`.
      */
     E **_array = nullptr;
@@ -58,7 +58,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @brief Constructor, initializes the `_array`.
      *
      * Builds a **Heap** by giving an @p arrayToBuildFrom of
-     * **lvalue `Entries`** as a parameter. Done by invoking the
+     * **lvalue `E`** as a parameter. Done by invoking the
      * @link buildHeap @endlink method.
      * @param arrayToBuildFrom the given array of elements to build the
      *                         heap from.
@@ -206,7 +206,7 @@ template<typename E> class Heap : public HeapAdt<E> {
   public:
     /**
      * @brief Builds a **Heap** by giving an @p arrayToBuildFrom of
-     *        **lvalue `Entries`** as a parameter.
+     *        **lvalue `E`** as a parameter.
      *
      * Done by making an _array of pointers to the elements given in the @p
      * arrayToBuildFrom.
@@ -217,7 +217,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @note In case there is already an `allocated` `_array` in this heap,
      *       this method ensures to `delete []` it *before* handling the
      *       building process.
-     * @attention the `Entries` elements in the @p arrayToBuildFrom must be
+     * @attention the `E` elements in the @p arrayToBuildFrom must be
      *            **lvalues**.
      */
     void buildHeap(E *      arrayToBuildFrom,

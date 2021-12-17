@@ -4,12 +4,11 @@
 
 /**
  * @brief This class represents an *abstract* **Heap**,
- *        which its elements are *Entries* that are composed by a
- *        *key* and a *value*.
+ *        which its elements are *comparable* to each other.
  *
- * The heap compares its elements to each other, by the comparable `key` field
+ * The heap compares its elements to each other, by a comparable `key`
  * located in each element.
- * @tparam E the type of each element.
+ * @tparam E the type of each `element`.
  * @note The terms `element`, `node` are synonyms.
  * @note The terms `heap` and `tree` are synonyms.
  * @note The term `<<predicate-resulted>>` is a result of a predicate method

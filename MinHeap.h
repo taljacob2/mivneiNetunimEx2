@@ -7,7 +7,7 @@
 
 /**
  * @brief This class implements a **Minimum-Heap** which its elements are
- *        pointers to **lvalue `Entries`** that are composed of a *key* and a *value*.
+ *        pointers to **lvalue `E`** that are *comparable* to each other.
  *
  * @li Once the heap has been built by @link buildHeap @endlink or
  * @link MinHeap(E *, long int) @endlink, its *physical-size* is
@@ -16,7 +16,7 @@
  * buildHeap @endlink again.
  * @li The heap compares its elements to each other, by the comparable `key`
  * field located in each `element`.
- * @tparam E the type of each element.
+ * @tparam E the type of each `element`.
  * @note The terms `element`, `node` are synonyms.
  * @attention The `elements` pointed must be **lvalues**.
  * @see Heap
