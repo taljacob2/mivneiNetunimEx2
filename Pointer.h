@@ -14,7 +14,7 @@ template<typename T> class Pointer {
 
   public:
     virtual ~Pointer() {
-        // delete _pointer; // TODO: debug
+        delete _pointer; // TODO: debug
     }
 
   public:
@@ -43,6 +43,12 @@ template<typename T> class Pointer {
     static E *moveLocalAllocatedToHeap(const E &element) {
         E *pElement = new E(element);
         return pElement;
+    }
+
+  public:
+    template<typename BASE_CLASS, typename SUB_CLASS>
+    static BASE_CLASS &polymorph(const SUB_CLASS &subClass) {
+        return (BASE_CLASS &) subClass;
     }
 };
 
