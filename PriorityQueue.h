@@ -30,13 +30,17 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     explicit PriorityQueue(int physicalSizeOfEachHeap) {
         _lessOrEqualToMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+                        new MinHeapWhenAlsoHavingMaxHeap<E>(
+                                physicalSizeOfEachHeap),
+                        new MaxHeapWhenAlsoHavingMinHeap<E>(
+                                physicalSizeOfEachHeap));
 
         _greaterThanMedianDoubleHeap =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+                        new MinHeapWhenAlsoHavingMaxHeap<E>(
+                                physicalSizeOfEachHeap),
+                        new MaxHeapWhenAlsoHavingMinHeap<E>(
+                                physicalSizeOfEachHeap));
     }
 
   public:
@@ -49,7 +53,17 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *          @li This kind of implementation is served only because of a
      *          request given by the customer ( = the course lecturer).
      */
-    PriorityQueue() = default;
+    PriorityQueue() {
+        _lessOrEqualToMedianDoubleHeap =
+                new DoublePointerMinHeapAndMaxHeapComponent<E>(
+                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
+                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+
+        _greaterThanMedianDoubleHeap =
+                new DoublePointerMinHeapAndMaxHeapComponent<E>(
+                        new MinHeapWhenAlsoHavingMaxHeap<E>(),
+                        new MaxHeapWhenAlsoHavingMinHeap<E>());
+    }
 
   public:
     virtual ~PriorityQueue() { deleteThis(); }
