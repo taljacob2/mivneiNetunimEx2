@@ -2,30 +2,35 @@
 #ifndef DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_COMPONENT_H
 #define DOUBLE_POINTER_MIN_HEAP_AND_MAX_HEAP_COMPONENT_H
 
+#include "MaxHeap.h"
 #include "MaxHeapWhenAlsoHavingMinHeap.h"
 #include "MinHeapWhenAlsoHavingMaxHeap.h"
 
+/**
+ *
+ * @tparam E
+ */
 template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<E>> *minHeap = nullptr;
+    MinHeap<ElementInMinHeapAndMaxHeap<E>> *minHeap = nullptr;
 
   protected:
-    HeapAdt<ElementInMinHeapAndMaxHeap<E>> *maxHeap = nullptr;
+    MaxHeap<ElementInMinHeapAndMaxHeap<E>> *maxHeap = nullptr;
 
   public:
-    DoublePointerMinHeapAndMaxHeapComponent(const HeapAdt<E> &minHeap,
-                                            const HeapAdt<E> &maxHeap)
+    DoublePointerMinHeapAndMaxHeapComponent(const MinHeap<E> &minHeap,
+                                            const MaxHeap<E> &maxHeap)
         : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
     virtual ~DoublePointerMinHeapAndMaxHeapComponent() = default;
 
   public:
-    const HeapAdt<E> &getMinHeap() const { return minHeap; }
+    const MinHeap<E> &getMinHeap() const { return minHeap; }
 
   public:
-    const HeapAdt<E> &getMaxHeap() const { return maxHeap; }
+    const MaxHeap<E> &getMaxHeap() const { return maxHeap; }
 
   public:
     void insertToBothHeaps(E *element) {
@@ -36,7 +41,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
   public:
     void deleteFromBothHeaps(E *element) {
         // TODO: implement. via `i` ? or via a `pointer`? need to check.
-
     }
 };
 

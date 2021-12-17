@@ -14,6 +14,7 @@
  *
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
+ * @see DoublePointerMinHeapAndMaxHeapComponent
  * @see MinHeap
  * @see MaxHeap
  */
