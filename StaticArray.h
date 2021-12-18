@@ -50,7 +50,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
 
   public:
     explicit StaticArray(unsigned long size)
-        : BaseArray<E>(size), _logicalSize(size - 1) {}
+            : BaseArray<E>(size), _logicalSize(size - 1) {}
 
   protected:
     unsigned long _logicalSize = 0;

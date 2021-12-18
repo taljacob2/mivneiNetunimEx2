@@ -22,6 +22,9 @@ template<typename E> class Unique {
     explicit Unique(E *element) : _element(element) {}
 
   public:
+    Unique(const Unique &unique) = default;
+
+  public:
     virtual ~Unique() { deleteThis(); }
 
   protected:

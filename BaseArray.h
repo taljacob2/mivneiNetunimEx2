@@ -53,7 +53,15 @@ template<typename E> class BaseArray {
             throw std::invalid_argument(PHYSICAL_SIZE_MESSAGE);
         }
         _physicalSize = physicalSize;
-        _array        = new Unique<E> *[_physicalSize]();
+        _array        = new Unique<E> *[_physicalSize];
+        initUniqueArray(_array, _physicalSize);
+    }
+
+  protected:
+    static void initUniqueArray(Unique<E> **&array, unsigned long size) {
+        for (unsigned long i = 0; i < size; i++) {
+            array[i] = new Unique<E>(nullptr);
+        }
     }
 
   public:
@@ -181,11 +189,13 @@ template<typename E> class BaseArray {
          * 2. - `insert` the elements that are `true` with the predicate
          *      given to `newArray`.
          */
-        for (int i = 0; i < this->_physicalSize; i++) {
+        for (unsigned long i = 0; i < this->_physicalSize; i++) {
             if (predicate(_array[i]->getElement())) { newArraySize++; }
         }
 
         Unique<E> **newArray = new Unique<E> *[newArraySize];
+        initUniqueArray(newArray, newArraySize);
+
         for (unsigned long i = 0; i < _physicalSize; i++) {
             E *element = _array[i]->getElement();
             if (predicate(element)) {
@@ -203,7 +213,7 @@ template<typename E> class BaseArray {
                 } else if (_array[i]->isNeedToDeleteElement()) {
 
                     // Deep-Copy the pointer within unique.
-                    newArray[i] = new Unique<E>(_array[i]);
+                    newArray[i] = new Unique<E>(*_array[i]);
                 }
                 continue;
             }
@@ -314,7 +324,6 @@ template<typename E> class BaseArray {
         return e2Array;
     }
 
-    // FIXME: change to unique
   public:
     /**
      * @brief Shallow-Copying `this` object.
