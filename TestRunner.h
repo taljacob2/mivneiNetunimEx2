@@ -12,7 +12,7 @@ class TestRunner {
 
   public:
     template<typename E>
-    static void runAllTests(StaticArray<std::string> &testArray) {
+    static void runAllTests(BaseArray<std::string> &testArray) {
         auto                 priorityQueue = PriorityQueue<E>();
         PriorityQueueAdt<E> &priorityQueueAdt =
                 Polymorpher::polymorphLValue<PriorityQueueAdt<E>,

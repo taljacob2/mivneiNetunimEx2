@@ -127,7 +127,7 @@ template<typename E> class BaseArray {
      *                this element - and then, `this` array will replace its
      *                presence with `nullptr` (to mark it as "deleted").
      */
-    virtual E *getElement(unsigned long index) {
+    virtual E *getElementUnsafe(unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
@@ -140,6 +140,16 @@ template<typename E> class BaseArray {
         }
 
         return element;
+    }
+
+  public:
+    virtual E &getElement(unsigned long index) {
+        if (isOutOfRange(index)) {
+            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
+        }
+
+        E *element = _array[index]->getElement(); // Shallow copy pointer.
+        return *element;
     }
 
   public:

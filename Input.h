@@ -110,7 +110,7 @@ class Input {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            testArray.setElement(getLine(std::cin), i);
+            testArray.setElement(new std::string(getLine(std::cin)), i, true);
             sizeCounter++;
         }
 
@@ -129,7 +129,7 @@ class Input {
      * @see assertSplit(int, int, std::string *&, std::string *&)
      */
     static void validateTestArray(BaseArray<std::string> &testArray,
-                                  int                       testArraySize) {
+                                  int                     testArraySize) {
         for (int i = 0; i < testArraySize; i++) {
             validateTest(testArray, ' ', i);
         }
@@ -142,23 +142,17 @@ class Input {
      * @throws std::runtime_error in case the `testArray[i]` is not valid.
      * @see getTest(std::string *&, char &, int)
      */
-    static void validateTest(BaseArray<std::string> &testArray,
-                             char delimiter, int i) {
-        std::string *splitArray = nullptr;
+    static void validateTest(BaseArray<std::string> &testArray, char delimiter,
+                             int i) {
         try {
 
             // Split the current line by ' ' delimiter.
-            int splitArraySize = 0;
-            split(*testArray.getElement(i), delimiter, splitArray,
-                  splitArraySize);
+            int                    splitArraySize = 0;
+            BaseArray<std::string> splitArray =
+                    split(*testArray.getElement(i), delimiter);
 
             assertSplit(i, splitArraySize, testArray, splitArray);
-
-            delete[] splitArray;
-        } catch (std::exception &e) {
-            delete[] splitArray;
-            throw;
-        }
+        } catch (std::exception &e) { throw; }
     }
 
   public:
@@ -198,7 +192,7 @@ class Input {
   private:
     static void assertSplit(unsigned long i, int splitArraySize,
                             BaseArray<std::string> &testArray,
-                            std::string *&            splitArray) {
+                            BaseArray<std::string>&          splitArray) {
 
         // Assert first letter.
         assertFirstLetter(i, testArray, splitArray);
@@ -210,9 +204,9 @@ class Input {
     }
 
   private:
-    static void assertFirstLetter(unsigned long             i,
+    static void assertFirstLetter(unsigned long           i,
                                   BaseArray<std::string> &testArray,
-                                  std::string *&            splitArray) {
+                                  BaseArray<std::string>&          splitArray) {
         if (i == 0) {
             if (!((testArray.getElement(i)->length() == 1) &&
                   (*testArray.getElement(i))[0] == FIRST_LETTER)) {
@@ -374,14 +368,11 @@ class Input {
      * @param outputSplitArraySize the size of the @p outputSplitArray.
      * @todo delete[] @p outputSplitArray.
      */
-    static void split(std::string &str, char delimiter,
-                      std::string *&outputSplitArray,
-                      int &         outputSplitArraySize) {
-        outputSplitArraySize =
-                countNumberOfDelimiterInString(str, delimiter) + 1;
-        outputSplitArray = new std::string[outputSplitArraySize];
-
-        splitPrivate(str, delimiter, outputSplitArray);
+    static BaseArray<std::string> split(std::string &str, char delimiter) {
+        BaseArray<std::string> splitArray(
+                countNumberOfDelimiterInString(str, delimiter) + 1);
+        splitPrivate(str, delimiter, splitArray);
+        return splitArray;
     }
 
   private:
@@ -389,7 +380,7 @@ class Input {
      * @see split(std::string &, char, std::string *&, int &)
      */
     static void splitPrivate(std::string &stringToSplit, char delimiter,
-                             std::string *&splitArray) {
+                             BaseArray<std::string> &splitArray) {
         long unsigned int stringToSplitIndex = 1;
         long unsigned int splitArrayIndex    = 0;
         long unsigned int startIndex         = 0;
@@ -397,8 +388,10 @@ class Input {
              stringToSplitIndex++) {
             if ((stringToSplit[stringToSplitIndex] == delimiter) &&
                 (stringToSplit[stringToSplitIndex - 1] != delimiter)) {
-                splitArray[splitArrayIndex] = stringToSplit.substr(
-                        startIndex, stringToSplitIndex - startIndex);
+                splitArray.setElement(
+                        stringToSplit.substr(startIndex,
+                                             stringToSplitIndex - startIndex),
+                        splitArrayIndex); // TODO: NOTE: "rvalue" "set"
                 splitArrayIndex++;
                 startIndex = stringToSplitIndex + 1;
             }
