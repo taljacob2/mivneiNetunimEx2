@@ -67,12 +67,16 @@ class Input {
      */
     static StaticArray<std::string> getTestArray() {
         auto testArray = StaticArray<std::string>(getValidTestArraySize());
+
+        // TODO: print
+        std::cout << "heloo" << std::endl;
+
         // StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
 
         // // TODO: print
-        std::cout << *(testArray.getElement(0)) << std::endl;
+        // std::cout << *(testArray.getElement(0)) << std::endl;
 
         return testArray;
     }
@@ -113,8 +117,11 @@ class Input {
     static void initializeTestArray(StaticArray<std::string> &testArray) {
         unsigned long sizeCounter = 0;
 
+        // TODO: print
+        std::cout << "size: " << testArray.size() << std::endl;
+
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            auto *line = new std::string(getLine(std::cin));
+            auto *line = new std::string(getLine(std::cin)); // FIXME:
             testArray.setElement(line, i);
             sizeCounter++;
         }

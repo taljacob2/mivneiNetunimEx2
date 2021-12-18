@@ -5,6 +5,8 @@
 #include "BaseArray.h"
 
 /**
+ * @note DEVELOPER NOTE: You must ensure that the `BaseArray<E>::_physicalSize`
+ *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  * @version 1.0.1
  */
@@ -19,8 +21,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
             (char *) "StaticArray: array is full.";
 
   public:
-    explicit StaticArray(unsigned long physicalSize)
-        : BaseArray<E>(physicalSize) {}
+    explicit StaticArray(unsigned long size) : BaseArray<E>(size + 1) {}
 
   protected:
     unsigned long _logicalSize = 0;
