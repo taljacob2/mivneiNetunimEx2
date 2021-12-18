@@ -18,7 +18,7 @@
  * array afterwards.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.1
+ * @version 1.0.2
  */
 template<typename E> class BaseArray {
 
@@ -39,17 +39,6 @@ template<typename E> class BaseArray {
 
   protected:
     unsigned long _physicalSize = 100;
-
-  protected:
-    bool _deleteFromHeapAfterUse = false;
-
-  public:
-    bool isDeleteFromHeapAfterUse() const { return _deleteFromHeapAfterUse; }
-
-  public:
-    void setDeleteFromHeapAfterUse(bool deleteFromHeapAfterUse) {
-        _deleteFromHeapAfterUse = deleteFromHeapAfterUse;
-    }
 
   public:
     unsigned long size() const { return _physicalSize; }

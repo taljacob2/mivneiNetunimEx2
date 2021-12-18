@@ -36,7 +36,7 @@
  * @note DEVELOPER NOTE: You must ensure that the `BaseArray<E>::_physicalSize`
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
- * @version 1.0.1
+ * @version 1.0.2
  */
 template<typename E> class StaticArray : public BaseArray<E> {
 

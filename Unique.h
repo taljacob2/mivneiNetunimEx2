@@ -49,14 +49,7 @@ template<typename E> class Unique {
      * Allow *implicit* conversions.
      * @return the element instance.
      */
-    operator E *() const { return _element; }
-
-  public:
-    /**
-     * Allow *implicit* conversions.
-     * @return the element instance.
-     */
-    operator E() const { return *_element; }
+    explicit operator E () const { return *getElement(); }
 };
 
 #endif // UNIQUE_H
