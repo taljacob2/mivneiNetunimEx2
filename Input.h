@@ -113,13 +113,13 @@ class Input {
     static void initializeTestArray(StaticArray<std::string> &testArray) {
         int sizeCounter = 0;
 
-        for (unsigned long i = 0; i < testArray.getPhysicalSize(); i++) {
+        for (unsigned long i = 0; i < testArray.size(); i++) {
             auto *line = new std::string(getLine(std::cin));
             testArray.setElement(line, i);
             sizeCounter++;
         }
 
-        if (sizeCounter != (int) testArray.getPhysicalSize()) {
+        if (sizeCounter != (int) testArray.size()) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
