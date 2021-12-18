@@ -24,7 +24,7 @@ class TestRunner {
             delete[] test;
         }
 
-        // TODO: debug print. bug here
+        // FIXME: debug print. bug here
         // priorityQueueAdt.print(std::cout);
     }
 
