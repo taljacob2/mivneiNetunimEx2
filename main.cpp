@@ -14,7 +14,7 @@ int main() {
         auto testArray = Input::getTestArray();
 
         // TODO: print
-        std::cout << testArray << std::endl;
+        // std::cout << testArray << std::endl;
 
         TestRunner::runAllTests<Entry<int, std::string>>(testArray);
 

@@ -20,7 +20,7 @@ class TestRunner {
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            runTest<E>(test, priorityQueueAdt);
+            // runTest<E>(test, priorityQueueAdt); // TODO: debug disabled
         }
 
         // FIXME: debug print. bug here
