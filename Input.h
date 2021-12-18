@@ -111,7 +111,7 @@ class Input {
      * @param testArraySize the size of the given @p testArray.
      */
     static void initializeTestArray(StaticArray<std::string> &testArray) {
-        int sizeCounter = 0;
+        unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             auto *line = new std::string(getLine(std::cin));
@@ -119,7 +119,7 @@ class Input {
             sizeCounter++;
         }
 
-        if (sizeCounter != (int) testArray.size()) {
+        if (sizeCounter != testArray.size()) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
