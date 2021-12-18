@@ -121,6 +121,23 @@ template<typename E> class StaticArray : public BaseArray<E> {
     }
 
   public:
+    StaticArray<E> &forEach(const std::function<void(E *)> &callBack,
+                            unsigned long sizeToIterateOnTo) override {
+        return BaseArray<E>::forEach(callBack, _logicalSize);
+    }
+
+  public:
+    StaticArray<E> &filter(const std::function<bool(E *)> &predicate,
+                           unsigned long sizeToIterateOnTo) override {
+        return BaseArray<E>::filter(predicate, _logicalSize);
+    }
+
+  protected:
+    bool isOutOfRange(unsigned long index) override {
+        return BaseArray<E>::isOutOfRangeStatic(index, _logicalSize);
+    }
+
+  public:
     friend std::ostream &operator<<(std::ostream &     os,
                                     const StaticArray &array) {
         array.print(os, array, array._logicalSize);
