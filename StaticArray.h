@@ -67,7 +67,8 @@ template<typename E> class StaticArray : public BaseArray<E> {
 
         // May throw here.
         BaseArray<E>::setElement(element, index, isAnonymous);
-        _logicalSize++;
+
+        if (index >= _logicalSize) { _logicalSize = index + 1; }
     }
 
   public:
@@ -77,7 +78,8 @@ template<typename E> class StaticArray : public BaseArray<E> {
         }
 
         BaseArray<E>::setElement((E &&) element, index); // May throw here.
-        _logicalSize++;
+
+        if (index >= _logicalSize) { _logicalSize = index + 1; }
     }
 
   public:
@@ -120,18 +122,21 @@ template<typename E> class StaticArray : public BaseArray<E> {
         return lastElement;
     }
 
+    // FIXME: parent method doesn't work
   public:
     StaticArray<E> &forEach(const std::function<void(E *)> &callBack,
                             unsigned long sizeToIterateOnTo = 0) override {
-        return BaseArray<E>::forEach(callBack, _logicalSize);
+        return (StaticArray<E> &) BaseArray<E>::forEach(callBack, _logicalSize);
     }
 
+    // FIXME: parent method doesn't work
   public:
     StaticArray<E> &filter(const std::function<bool(E *)> &predicate,
                            unsigned long sizeToIterateOnTo = 0) override {
-        return BaseArray<E>::filter(predicate, _logicalSize);
+        return (StaticArray<E> &) BaseArray<E>::filter(predicate, _logicalSize);
     }
 
+    // FIXME: parent method doesn't work
     /**
      * @note DEVELOPER NOTE: "map" is not `virtual`.
      */
@@ -142,6 +147,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
         return this->map(mapFunction, isAnonymous, _logicalSize);
     }
 
+    // FIXME: parent method doesn't work
     /**
      * @note DEVELOPER NOTE: "map" is not `virtual`.
      */
@@ -153,7 +159,10 @@ template<typename E> class StaticArray : public BaseArray<E> {
 
   protected:
     bool isOutOfRange(unsigned long index) override {
-        return BaseArray<E>::isOutOfRangeStatic(index, _logicalSize);
+        unsigned long minimumSize = _logicalSize + 1 < this->_physicalSize
+                                    ? _logicalSize + 1
+                                    : this->_physicalSize;
+        return BaseArray<E>::isOutOfRangeStatic(index, minimumSize);
     }
 
   public:
