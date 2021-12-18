@@ -121,7 +121,7 @@ class Input {
             // Example: "inline rvalue"
             testArray.push(getLine(std::cin));
             std::cout << testArray << std::endl;
-            std::cout << testArray.getElement(0) << std::endl;
+            // std::cout << testArray.getElement(0) << std::endl;
             std::cout << testArray << std::endl;
 
             // // Example: "normal lvalue"
