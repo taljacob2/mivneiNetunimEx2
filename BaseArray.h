@@ -18,7 +18,7 @@
  * array afterwards.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.2
+ * @version 1.0.3
  */
 template<typename E> class BaseArray {
 
