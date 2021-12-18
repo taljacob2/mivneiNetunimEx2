@@ -22,16 +22,13 @@ template<typename E> class StaticArray : public BaseArray<E> {
 
   public:
     explicit StaticArray(unsigned long size)
-        : BaseArray<E>(size + 1), _logicalSize(size) {}
+        : BaseArray<E>(size), _logicalSize(size - 1) {}
 
   protected:
     unsigned long _logicalSize = 0;
 
-  public:
-    unsigned long size() const { return _logicalSize; }
-
-  public:
-    unsigned long getPhysicalSize() = delete; // Disable from use.
+  protected:
+    unsigned long getLogicalSize() const { return _logicalSize; }
 
   public:
     void setElement(E *element, unsigned long index) override {
