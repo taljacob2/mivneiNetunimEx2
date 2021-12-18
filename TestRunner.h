@@ -24,8 +24,8 @@ class TestRunner {
             delete[] test;
         }
 
-        // TODO: debug print
-        priorityQueueAdt.print(std::cout);
+        // TODO: debug print. bug here
+        // priorityQueueAdt.print(std::cout);
     }
 
   private:
