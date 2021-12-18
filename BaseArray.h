@@ -31,6 +31,10 @@ template<typename E> class BaseArray {
             (char *) "BaseArray: out of range.";
 
   protected:
+    static constexpr char *SIZE_OUT_OF_RANGE_MESSAGE =
+            (char *) "BaseArray: size is out of range.";
+
+  protected:
     static constexpr char *ELEMENT_IS_NULL_MESSAGE =
             (char *) "BaseArray: Element is `nullptr`.";
 
@@ -97,6 +101,12 @@ template<typename E> class BaseArray {
     }
 
   public:
+    /**
+     * @param isAnonymous in case the element as an "inline anonymous heap
+     *                    allocated lvalue" then, you should set the
+     *                    @p isAnonymous to `true`. And that way, `this` array
+     *                    will know to `delete` it after its use automatically.
+     */
     virtual void setElement(E *element, unsigned long index, bool isAnonymous) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
@@ -127,7 +137,6 @@ template<typename E> class BaseArray {
         return elementDeleted;
     }
 
-    // FIXME: make virtual // FIXME: change to unique
   public:
     /**
      * @brief This method will *invoke* the given @p callBack function on
@@ -140,15 +149,14 @@ template<typename E> class BaseArray {
      *                        for you to use this method.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    BaseArray<E> &forEach(const std::function<void(E *)> &callBack) {
+    virtual BaseArray<E> &forEach(const std::function<void(E *)> &callBack) {
         for (unsigned long i = 0; i < _physicalSize; i++) {
-            callBack((E *) _array[i]);
+            callBack(_array[i]->getElement());
         }
 
         return *this;
     }
 
-    // FIXME: change to unique
   public:
     /**
      * @brief This method will *filter* out from the array the elements that
@@ -157,23 +165,13 @@ template<typename E> class BaseArray {
      * @param predicate a `bool` function such that only the elements that
      *                  are returning `true` to this @p predicate function
      *                  would remain in the array. The others would be
-     *                  `deleted` from the array. And based on the given @p
-     *                  deleteFilteredElements parameter, they may also be
-     *                  `deleted` from the heap.
+     *                  `deleted` from the array.
      *                  @note You are suggested to use a "lambda" function
      *                        for this function - so that it will be quicker
      *                        for you to use this method.
-     * @param deleteFilteredElements set this parameter to `true` if the
-     *                               elements in `this` array are allocated
-     *                               via the heap, so that this method will
-     *                               `delete` them if they are filtered out.
-     *                               Else, it means you allocated the elements
-     *                               locally, and in this case set this
-     *                               parameter to `false`.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    BaseArray<E> &filter(const std::function<bool(E *)> &predicate,
-                         bool deleteFilteredElements = false) {
+    virtual BaseArray<E> &filter(const std::function<bool(E *)> &predicate) {
         unsigned long newArraySize = 0;
 
         /*
@@ -182,33 +180,41 @@ template<typename E> class BaseArray {
          * 1. Count the `newArraySize`.
          * 2. - `insert` the elements that are `true` with the predicate
          *      given to `newArray`.
-         *    - `delete` elements that are `false` with the predicate
-         *      given from `_array`.
          */
         for (int i = 0; i < this->_physicalSize; i++) {
-            if (predicate(getElement(i))) { newArraySize++; }
+            if (predicate(_array[i]->getElement())) { newArraySize++; }
         }
 
-        E **newArray = new E *[newArraySize];
+        Unique<E> **newArray = new Unique<E> *[newArraySize];
         for (unsigned long i = 0; i < _physicalSize; i++) {
-            E &element = getElement(i);
+            E *element = _array[i]->getElement();
             if (predicate(element)) {
-                newArray[i] = element;
+
+                /*
+                 * - If element is originally a "lvalue", then shallow-copy the
+                 *   pointer.
+                 * - else if the element is originally a "rvalue", then
+                 *   deep-copy the pointer.
+                 */
+                if (!_array[i]->isNeedToDeleteElement()) {
+
+                    // Shallow-Copy the pointer within unique.
+                    newArray[i] = _array[i];
+                } else if (_array[i]->isNeedToDeleteElement()) {
+
+                    // Deep-Copy the pointer within unique.
+                    newArray[i] = new Unique<E>(_array[i]);
+                }
                 continue;
             }
-
-            /**
-             * This element should be filtered out from the array.
-             * `delete` the element if the user required to.
-             */
-            if (deleteFilteredElements) { delete element; }
         }
 
-        update(newArraySize, newArray);
+        deleteThis();
+        _array        = newArray;
+        _physicalSize = newArraySize;
         return *this;
     }
 
-    // FIXME: change to unique
   public:
     /**
      * @brief This method will *map* out another `Array` from `this` array.
@@ -218,46 +224,93 @@ template<typename E> class BaseArray {
      *                    the array will be invoked with, and *maps* that element
      *                    to another object of type `E2`.
      *                    Afterwards, the elements in `this` array would be
-     *                    `deleted` from the array. And based on the given @p
-     *                    deleteOriginalArrayElements parameter,
-     *                    they may also be `deleted` from the heap.
+     *                    `deleted` from the array.
      *                    @note You are suggested to use a "lambda" function
      *                          for this function - so that it will be
      *                          quicker for you to use this method.
-     * @param deleteOriginalArrayElements set this parameter to `true` if the
-     *                                    elements in `this` array are allocated
-     *                                    via the heap, so that this method will
-     *                                    `delete` them if they are filtered out.
-     *                                    Else, it means you allocated the elements
-     *                                    locally, and in this case set this
-     *                                    parameter to `false`.
+     * @param sizeToIterate you may pick a different size to-iterate on the
+     *                      array. The default size is its physical size, so
+     *                      it will iterate on all of it.
      * @return the array of type `E2` mapped by `this` array. This way, you
      *         may also "chain" this method with another.
      */
     template<typename E2>
-    BaseArray<E2> &map(const std::function<E2 &(const E &)> &mapFunction,
-                       bool deleteOriginalArrayElements = false) {
+    BaseArray<E2> &map(const std::function<E2 *(E *)> &mapFunction,
+                       bool                            isAnonymous   = false,
+                       unsigned long                   sizeToIterate = 0) {
+        unsigned long size = _physicalSize;
+        if (sizeToIterate) {
+            if (isOutOfRange(sizeToIterate - 1)) {
+                std::string msg = (char *) SIZE_OUT_OF_RANGE_MESSAGE;
+                std::string msg2 =
+                        (char *) "You picked a size that is larger than the "
+                                 "current `physicalSize` of :" +
+                        _physicalSize;
+                throw std::out_of_range(msg + " " + msg2);
+            }
+            size = sizeToIterate;
+        }
 
         /*
          * Must iterate over the array once.
          * The `for-loop`'s content is:
          * - `insert` the new mapped-elements to `newArray`.
-         * - `delete` elements from `_array`.
          */
-
-        BaseArray<E2> e2Array(_physicalSize);
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            E &element = getElement(i);
-            e2Array.setElement(mapFunction(element));
-
-            /**
-             * This element should be filtered out from the array.
-             * `delete` the element if the user required to.
-             */
-            if (deleteOriginalArrayElements) { delete element; }
+        BaseArray<E2> e2Array(size);
+        for (unsigned long i = 0; i < size; i++) {
+            E *element = _array[i]->getElement();
+            e2Array.setElement(mapFunction(element), i, isAnonymous);
         }
 
-        deleteThis();
+        return e2Array;
+    }
+
+  public:
+    /**
+     * @brief This method will *map* out another `Array` from `this` array.
+     *
+     * @tparam E2 the type of `element`s in the returned `Array`.
+     * @param mapFunction a `E2`-return-type function that each element in
+     *                    the array will be invoked with, and *maps* that element
+     *                    to another object of type `E2`.
+     *                    Afterwards, the elements in `this` array would be
+     *                    `deleted` from the array.
+     *                    @note You are suggested to use a "lambda" function
+     *                          for this function - so that it will be
+     *                          quicker for you to use this method.
+     * @param sizeToIterate you may pick a different size to-iterate on the
+     *                      array. The default size is its physical size, so
+     *                      it will iterate on all of it.
+     * @return the array of type `E2` mapped by `this` array. This way, you
+     *         may also "chain" this method with another.
+     */
+    template<typename E2>
+    BaseArray<E2> &map(const std::function<E2 && (E *)> &mapFunction,
+                       unsigned long                     sizeToIterate = 0) {
+        unsigned long size = _physicalSize;
+        if (sizeToIterate) {
+            if (isOutOfRange(sizeToIterate - 1)) {
+                std::string msg = (char *) SIZE_OUT_OF_RANGE_MESSAGE;
+                std::string msg2 =
+                        (char *) "You picked a size that is larger than the "
+                                 "current `physicalSize` of :" +
+                        _physicalSize;
+                throw std::out_of_range(msg + " " + msg2);
+            }
+            size = sizeToIterate;
+        }
+
+        /*
+         * Must iterate over the array once.
+         * The `for-loop`'s content is:
+         * - `insert` the new mapped-elements to `newArray`.
+         */
+        BaseArray<E2> e2Array(size);
+        for (unsigned long i = 0; i < size; i++) {
+            E *element = _array[i]->getElement();
+            e2Array.setElement((E &&) mapFunction(element), i);
+        }
+
         return e2Array;
     }
 
@@ -274,18 +327,6 @@ template<typename E> class BaseArray {
         }
 
         return copyArray;
-    }
-
-  protected:
-    /**
-     * @brief Update the fields of `this` object.
-     * @param newArraySize .
-     * @param newArray .
-     */
-    void update(unsigned long newArraySize, E **newArray) {
-        deleteThis();
-        _array        = newArray;
-        _physicalSize = newArraySize;
     }
 
   protected:
