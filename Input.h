@@ -117,7 +117,6 @@ class Input {
         for (unsigned long i = 0; i < testArray.size(); i++) {
             auto *line = new std::string(getLine(std::cin)); // FIXME:
             testArray.setElement(line, i);
-            std::cout << "element: " << testArray << std::endl;
             sizeCounter++;
         }
 
@@ -126,7 +125,7 @@ class Input {
         }
 
         // TODO: print
-        std::cout << testArray << std::endl;
+        // std::cout << testArray << std::endl;
     }
 
   private:
