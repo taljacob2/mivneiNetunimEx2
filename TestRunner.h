@@ -13,8 +13,8 @@ class TestRunner {
   public:
     template<typename E>
     static void runAllTests(StaticArray<std::string> &testArray) {
-        auto  priorityQueue = PriorityQueue<E>();
-        auto &priorityQueueAdt =
+        auto                 priorityQueue = PriorityQueue<E>();
+        PriorityQueueAdt<E> &priorityQueueAdt =
                 Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
                                              PriorityQueue<E>>(priorityQueue);
 
@@ -23,6 +23,9 @@ class TestRunner {
             runTest<E>(test, priorityQueueAdt);
             delete[] test;
         }
+
+        // TODO: debug print
+        priorityQueueAdt.print(std::cout);
     }
 
   private:
@@ -63,7 +66,8 @@ class TestRunner {
              * Should occur when trying to delete and the priority-queue is
              * already empty.
              */
-            std::cout << Constants::WRONG_INPUT << std::endl;
+            // std::cout << Constants::WRONG_INPUT << std::endl;
+            throw;
         }
     }
 };

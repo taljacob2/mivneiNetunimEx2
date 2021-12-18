@@ -238,15 +238,27 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
   private:
     static std::ostream &printThis(std::ostream &          os,
                                    const PriorityQueue<E> &priorityQueue) {
+        constexpr char *PRINT_WHEN_EMPTY = (char *) "empty.";
+
         os << "---------------------------- ";
         os << "_lessOrEqualToMedianDoubleHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._lessOrEqualToMedianDoubleHeap->print(std::cout);
+        if (priorityQueue._lessOrEqualToMedianDoubleHeap->getMinHeap()
+                    ->getLogicalSize()) {
+            priorityQueue._lessOrEqualToMedianDoubleHeap->print(std::cout);
+        } else {
+            os << PRINT_WHEN_EMPTY;
+        }
 
         os << "---------------------------- ";
         os << "_greaterThanMedianDoubleHeap:";
         os << " ----------------------------" << std::endl;
-        priorityQueue._greaterThanMedianDoubleHeap->print(std::cout);
+        if (priorityQueue._greaterThanMedianDoubleHeap->getMinHeap()
+                    ->getLogicalSize()) {
+            priorityQueue._greaterThanMedianDoubleHeap->print(std::cout);
+        } else {
+            os << PRINT_WHEN_EMPTY;
+        }
 
         return os;
     }
