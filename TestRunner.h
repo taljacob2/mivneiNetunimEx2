@@ -25,7 +25,7 @@ class TestRunner {
         }
 
         // FIXME: debug print. bug here
-        // priorityQueueAdt.print(std::cout);
+        priorityQueueAdt.print(std::cout);
     }
 
   private:

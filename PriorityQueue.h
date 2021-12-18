@@ -87,21 +87,21 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                              &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
-        MinHeapWhenAlsoHavingMaxHeap<E> minHeapWhenAlsoHavingMaxHeap;
-        MinHeap<EWrapper> &             minHeapWhenAlsoHavingMaxHeapBase =
+        auto minHeapWhenAlsoHavingMaxHeap = MinHeapWhenAlsoHavingMaxHeap<E>();
+        MinHeap<EWrapper> &minHeapWhenAlsoHavingMaxHeapBase =
                 Polymorpher::polymorphLValue<MinHeap<EWrapper>,
                                              MinHeapWhenAlsoHavingMaxHeap<E>>(
                         minHeapWhenAlsoHavingMaxHeap);
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
-        MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap;
-        MaxHeap<EWrapper> &             maxHeapWhenAlsoHavingMinHeapBase =
+        auto maxHeapWhenAlsoHavingMinHeap = MaxHeapWhenAlsoHavingMinHeap<E>();
+        MaxHeap<EWrapper> &maxHeapWhenAlsoHavingMinHeapBase =
                 Polymorpher::polymorphLValue<MaxHeap<EWrapper>,
                                              MaxHeapWhenAlsoHavingMinHeap<E>>(
                         maxHeapWhenAlsoHavingMinHeap);
 
         // Construct `DoublePointerMinHeapAndMaxHeapComponent`.
-        DoublePointerMinHeapAndMaxHeapComponent<E> doubleHeap(
+        auto doubleHeap = DoublePointerMinHeapAndMaxHeapComponent<E>(
                 &minHeapWhenAlsoHavingMaxHeapBase,
                 &maxHeapWhenAlsoHavingMinHeapBase);
 
@@ -116,23 +116,23 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             unsigned long physicalSize) {
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
-        MinHeapWhenAlsoHavingMaxHeap<E> minHeapWhenAlsoHavingMaxHeap(
-                physicalSize);
+        auto minHeapWhenAlsoHavingMaxHeap =
+                MinHeapWhenAlsoHavingMaxHeap<E>(physicalSize);
         MinHeap<EWrapper> &minHeapWhenAlsoHavingMaxHeapBase =
                 Polymorpher::polymorphLValue<MinHeap<EWrapper>,
                                              MinHeapWhenAlsoHavingMaxHeap<E>>(
                         minHeapWhenAlsoHavingMaxHeap);
 
         // Polymorph `MinHeapWhenAlsoHavingMaxHeap` to `MinHeap<EWrapper>`.
-        MaxHeapWhenAlsoHavingMinHeap<E> maxHeapWhenAlsoHavingMinHeap(
-                physicalSize);
+        auto maxHeapWhenAlsoHavingMinHeap =
+                MaxHeapWhenAlsoHavingMinHeap<E>(physicalSize);
         MaxHeap<EWrapper> &maxHeapWhenAlsoHavingMinHeapBase =
                 Polymorpher::polymorphLValue<MaxHeap<EWrapper>,
                                              MaxHeapWhenAlsoHavingMinHeap<E>>(
                         maxHeapWhenAlsoHavingMinHeap);
 
         // Construct `DoublePointerMinHeapAndMaxHeapComponent`.
-        DoublePointerMinHeapAndMaxHeapComponent<E> doubleHeap(
+        auto doubleHeap = DoublePointerMinHeapAndMaxHeapComponent<E>(
                 &minHeapWhenAlsoHavingMaxHeapBase,
                 &maxHeapWhenAlsoHavingMinHeapBase);
 
