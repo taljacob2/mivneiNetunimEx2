@@ -2,9 +2,10 @@
 #ifndef UNIQUE_H
 #define UNIQUE_H
 
+#include "Object.h"
 #include <iostream>
 
-template<typename E> class Unique {
+template<typename E> class Unique : public Object {
 
   protected:
     E *_element = nullptr;
