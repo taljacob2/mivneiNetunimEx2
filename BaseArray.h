@@ -2,6 +2,7 @@
 #ifndef BASE_ARRAY_H
 #define BASE_ARRAY_H
 
+#include "Object.h"
 #include "Unique.h"
 #include <functional>
 #include <iostream>
@@ -51,7 +52,7 @@
  *
  * @version 1.0.3
  */
-template<typename E> class BaseArray {
+template<typename E> class BaseArray : public Object {
 
   protected:
     static constexpr char *PHYSICAL_SIZE_MESSAGE =
@@ -97,12 +98,12 @@ template<typename E> class BaseArray {
     }
 
     // FIXME:
-  // public:
-  //   BaseArray(const BaseArray &other) { *this = other; }
+    // public:
+    //   BaseArray(const BaseArray &other) { *this = other; }
 
     // FIXME:
-  // public:
-  //   BaseArray(BaseArray &&other) noexcept { *this = std::move(other); }
+    // public:
+    //   BaseArray(BaseArray &&other) noexcept { *this = std::move(other); }
 
   public:
     virtual ~BaseArray() { deleteThis(); }
@@ -573,51 +574,51 @@ template<typename E> class BaseArray {
     }
 
     // FIXME:
-  // public:
-  //   BaseArray &operator=(const BaseArray &other) {
-  //
-  //       // Guard self assignment
-  //       if (this == &other) { return *this; }
-  //
-  //       // Free the existing resource.
-  //       deleteThis();
-  //
-  //       // Copy the data pointer and its size from the source object.
-  //       this->_physicalSize = other._physicalSize;
-  //       for (unsigned long i = 0; i < _physicalSize; i++) {
-  //           _array[i] = other._array[i]; // Shallow-Copy the reference.
-  //       }
-  //
-  //       return *this;
-  //   }
+    // public:
+    //   BaseArray &operator=(const BaseArray &other) {
+    //
+    //       // Guard self assignment
+    //       if (this == &other) { return *this; }
+    //
+    //       // Free the existing resource.
+    //       deleteThis();
+    //
+    //       // Copy the data pointer and its size from the source object.
+    //       this->_physicalSize = other._physicalSize;
+    //       for (unsigned long i = 0; i < _physicalSize; i++) {
+    //           _array[i] = other._array[i]; // Shallow-Copy the reference.
+    //       }
+    //
+    //       return *this;
+    //   }
 
     // FIXME:
-  // public:
-  //   BaseArray &operator=(BaseArray &&other) noexcept {
-  //
-  //       // Guard self assignment
-  //       if (this != &other) {
-  //
-  //           // Free the existing resource.
-  //           deleteThis();
-  //
-  //           // Copy the data pointer and its size from the source object.
-  //           this->_physicalSize = other._physicalSize;
-  //           _array              = new Unique<E> *[_physicalSize];
-  //           initUniqueArray(_array, _physicalSize);
-  //
-  //           copyArraysStatic(other._array, _array, _physicalSize);
-  //
-  //           /*
-  //            * Release the data pointer from the source object so that
-  //            * the destructor does not free the memory multiple times.
-  //            */
-  //           // other.forEach([&other](auto *e) { e = nullptr; });
-  //           other._physicalSize = 0;
-  //           other._array        = nullptr;
-  //       }
-  //       return *this;
-  //   }
+    // public:
+    //   BaseArray &operator=(BaseArray &&other) noexcept {
+    //
+    //       // Guard self assignment
+    //       if (this != &other) {
+    //
+    //           // Free the existing resource.
+    //           deleteThis();
+    //
+    //           // Copy the data pointer and its size from the source object.
+    //           this->_physicalSize = other._physicalSize;
+    //           _array              = new Unique<E> *[_physicalSize];
+    //           initUniqueArray(_array, _physicalSize);
+    //
+    //           copyArraysStatic(other._array, _array, _physicalSize);
+    //
+    //           /*
+    //            * Release the data pointer from the source object so that
+    //            * the destructor does not free the memory multiple times.
+    //            */
+    //           // other.forEach([&other](auto *e) { e = nullptr; });
+    //           other._physicalSize = 0;
+    //           other._array        = nullptr;
+    //       }
+    //       return *this;
+    //   }
 
   public:
     friend std::ostream &operator<<(std::ostream &os, const BaseArray &array) {

@@ -13,10 +13,12 @@ class TestRunner {
   public:
     template<typename E>
     static void runAllTests(BaseArray<std::string> &testArray) {
-        auto                 priorityQueue = PriorityQueue<E>();
-        PriorityQueueAdt<E> &priorityQueueAdt =
-                Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
-                                             PriorityQueue<E>>(priorityQueue);
+
+        // TODO: debug disabled
+        // auto                 priorityQueue = PriorityQueue<E>();
+        // PriorityQueueAdt<E> &priorityQueueAdt =
+        //         Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
+        //                                      PriorityQueue<E>>(priorityQueue);
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
