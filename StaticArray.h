@@ -122,14 +122,33 @@ template<typename E> class StaticArray : public BaseArray<E> {
 
   public:
     StaticArray<E> &forEach(const std::function<void(E *)> &callBack,
-                            unsigned long sizeToIterateOnTo) override {
+                            unsigned long sizeToIterateOnTo = 0) override {
         return BaseArray<E>::forEach(callBack, _logicalSize);
     }
 
   public:
     StaticArray<E> &filter(const std::function<bool(E *)> &predicate,
-                           unsigned long sizeToIterateOnTo) override {
+                           unsigned long sizeToIterateOnTo = 0) override {
         return BaseArray<E>::filter(predicate, _logicalSize);
+    }
+
+    /**
+     * @note DEVELOPER NOTE: "map" is not `virtual`.
+     */
+    template<typename E2>
+    StaticArray<E2> map(const std::function<E2 *(E *)> &mapFunction,
+                        bool                            isAnonymous = false,
+                        unsigned long                   sizeToIterateOnTo = 0) {
+        return this->map(mapFunction, isAnonymous, _logicalSize);
+    }
+
+    /**
+     * @note DEVELOPER NOTE: "map" is not `virtual`.
+     */
+    template<typename E2>
+    BaseArray<E2> map(const std::function<E2 && (E *)> &mapFunction,
+                      unsigned long                     sizeToIterateOnTo = 0) {
+        return this->map(mapFunction, _logicalSize);
     }
 
   protected:
