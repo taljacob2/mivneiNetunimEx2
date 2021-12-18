@@ -73,7 +73,8 @@ template<typename E> class BaseArray {
     Unique<E> **_array = nullptr;
 
   protected:
-    unsigned long _physicalSize = 100;
+    /// *Must* be `0` for `move` operation.
+    unsigned long _physicalSize = 0;
 
   public:
     unsigned long size() const { return _physicalSize; }
@@ -328,8 +329,23 @@ template<typename E> class BaseArray {
   protected:
     void copyArraysBasedOnPredicate(const std::function<bool(E *)> &predicate,
                                     Unique<E> **                    newArray) {
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            E *element = _array[i]->getElement();
+        copyArraysBasedOnPredicateStatic(_array, newArray, _physicalSize,
+                                         predicate);
+    }
+
+  protected:
+    void copyArraysStatic(Unique<E> **source, Unique<E> **destination,
+                          unsigned long size) {
+        copyArraysBasedOnPredicateStatic(source, destination, size,
+                                         [](auto *) { return true; });
+    }
+
+  protected:
+    static void copyArraysBasedOnPredicateStatic(
+            Unique<E> **source, Unique<E> **destination, unsigned long size,
+            const std::function<bool(E *)> &predicate) {
+        for (unsigned long i = 0; i < size; i++) {
+            E *element = source[i]->getElement();
             if (predicate(element)) {
 
                 /*
@@ -338,14 +354,14 @@ template<typename E> class BaseArray {
                  * - else if the element is originally a "rvalue", then
                  *   deep-copy the pointer.
                  */
-                if (!_array[i]->isNeedToDeleteElement()) {
+                if (!source[i]->isNeedToDeleteElement()) {
 
                     // Shallow-Copy the pointer within unique.
-                    newArray[i] = _array[i];
-                } else if (_array[i]->isNeedToDeleteElement()) {
+                    destination[i] = source[i];
+                } else if (source[i]->isNeedToDeleteElement()) {
 
                     // Deep-Copy the pointer within unique.
-                    newArray[i] = new Unique<E>(*_array[i]);
+                    destination[i] = new Unique<E>(*source[i]);
                 }
                 continue;
             }
@@ -583,16 +599,13 @@ template<typename E> class BaseArray {
 
             // Copy the data pointer and its size from the source object.
             this->_physicalSize = other._physicalSize;
-            for (unsigned long i = 0; i < _physicalSize; i++) {
-                _array[i] = other._array[i]; // Shallow-Copy the reference.
-            }
+            _array              = new Unique<E> *[_physicalSize];
+            initUniqueArray(_array, _physicalSize);
 
-            /*
-             * Release the data pointer from the source object so that
-             * the destructor does not free the memory multiple times.
-             */
-            other._physicalSize = 0;
-            other._array        = nullptr;
+            copyArraysStatic(other._array, _array, _physicalSize);
+
+            // Delete `other`.
+            other.deleteThis();
         }
         return *this;
     }

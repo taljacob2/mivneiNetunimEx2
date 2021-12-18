@@ -180,7 +180,6 @@ class Input {
 
             assertSplit(i, splitArraySize, testArray, splitArray);
 
-            // delete[] splitArray;
             return splitArray;
         } catch (std::exception &e) { throw; }
     }
