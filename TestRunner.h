@@ -19,9 +19,8 @@ class TestRunner {
                                              PriorityQueue<E>>(priorityQueue);
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            std::string *test = Input::getTest(testArray, ' ', i);
+            BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
             runTest<E>(test, priorityQueueAdt);
-            delete[] test;
         }
 
         // FIXME: debug print. bug here
@@ -33,8 +32,8 @@ class TestRunner {
 
   private:
     template<typename E>
-    static void runTest(std::string *&       test,
-                        PriorityQueueAdt<E> &priorityQueueAdt) {
+    static void runTest(BaseArray<std::string> &test,
+                        PriorityQueueAdt<E> &   priorityQueueAdt) {
         // TODO: do something with `test` here...
         invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
                 test, priorityQueueAdt);
@@ -43,12 +42,13 @@ class TestRunner {
   private:
     template<typename E>
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
-            std::string *&test, PriorityQueueAdt<E> &priorityQueueAdt) {
+            BaseArray<std::string> &test,
+            PriorityQueueAdt<E> &   priorityQueueAdt) {
         // TODO: print debug
         // std::cout << test;
 
         try {
-            char methodLetterToInvokeInPriorityQueue = test[0][0];
+            char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
                 std::cout << priorityQueueAdt.max();
             } else if (methodLetterToInvokeInPriorityQueue == 'b') {
@@ -60,7 +60,8 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'e') {
                 priorityQueueAdt.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
-                Entry<int, std::string> entry(stoi(test[1]), test[2]);
+                Entry<int, std::string> entry(stoi(test.getElement(1)),
+                                              test.getElement(1));
                 priorityQueueAdt.insert(&entry);
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueueAdt.median();

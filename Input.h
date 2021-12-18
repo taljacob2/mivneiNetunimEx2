@@ -149,7 +149,7 @@ class Input {
             // Split the current line by ' ' delimiter.
             int                    splitArraySize = 0;
             BaseArray<std::string> splitArray =
-                    split(*testArray.getElement(i), delimiter);
+                    split(testArray.getElement(i), delimiter);
 
             assertSplit(i, splitArraySize, testArray, splitArray);
         } catch (std::exception &e) { throw; }
@@ -169,30 +169,26 @@ class Input {
      * @see validateTest(std::string *&, char &, int)
      * @todo delete [] splitArray.
      */
-    static std::string *getTest(BaseArray<std::string> &testArray,
-                                char delimiter, unsigned long i) {
-        std::string *splitArray = nullptr;
+    static BaseArray<std::string> getTest(BaseArray<std::string> &testArray,
+                                          char delimiter, unsigned long i) {
         try {
 
             // Split the current line by ' ' delimiter.
-            int splitArraySize = 0;
-            split(*testArray.getElement(i), delimiter, splitArray,
-                  splitArraySize);
+            int                    splitArraySize = 0;
+            BaseArray<std::string> splitArray =
+                    split(testArray.getElement(i), delimiter);
 
             assertSplit(i, splitArraySize, testArray, splitArray);
 
             // delete[] splitArray;
             return splitArray;
-        } catch (std::exception &e) {
-            delete[] splitArray;
-            throw;
-        }
+        } catch (std::exception &e) { throw; }
     }
 
   private:
     static void assertSplit(unsigned long i, int splitArraySize,
                             BaseArray<std::string> &testArray,
-                            BaseArray<std::string>&          splitArray) {
+                            BaseArray<std::string> &splitArray) {
 
         // Assert first letter.
         assertFirstLetter(i, testArray, splitArray);
@@ -206,26 +202,27 @@ class Input {
   private:
     static void assertFirstLetter(unsigned long           i,
                                   BaseArray<std::string> &testArray,
-                                  BaseArray<std::string>&          splitArray) {
+                                  BaseArray<std::string> &splitArray) {
         if (i == 0) {
-            if (!((testArray.getElement(i)->length() == 1) &&
-                  (*testArray.getElement(i))[0] == FIRST_LETTER)) {
+            if (!((testArray.getElement(i).length() == 1) &&
+                  (testArray.getElement(i))[0] == FIRST_LETTER)) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         } else {
-            if (!predicateIsValidLetter(splitArray[0]) ||
-                (*testArray.getElement(i))[0] == FIRST_LETTER) {
+            if (!predicateIsValidLetter(splitArray.getElement(0)) ||
+                (testArray.getElement(i))[0] == FIRST_LETTER) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         }
     }
 
   private:
-    static void assertAllowedTwoParameters(std::string *&splitArray,
-                                           int           splitArraySize) {
+    static void assertAllowedTwoParameters(BaseArray<std::string> &splitArray,
+                                           int splitArraySize) {
 
         // Allow only the letter `ALLOWED_TWO_PARAMETERS_LETTER`.
-        if (splitArray[0].c_str()[0] != ALLOWED_TWO_PARAMETERS_LETTER) {
+        if (splitArray.getElement(0).c_str()[0] !=
+            ALLOWED_TWO_PARAMETERS_LETTER) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
@@ -241,7 +238,7 @@ class Input {
         }
 
         // First parameter must be an `int` number.
-        if (!predicateIsStringAnInt(splitArray[1])) {
+        if (!predicateIsStringAnInt(splitArray.getElement(1))) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
     }
@@ -252,10 +249,11 @@ class Input {
      *        split strings of it to one.
      */
     static void mergeLastParameterWhenThereAreMoreThanThreeElements(
-            std::string *&splitArray, int &splitArraySize) {
+            BaseArray<std::string> &splitArray, int &splitArraySize) {
         if (splitArraySize > 3) {
-            for (int i = 3; i < splitArraySize; i++) {
-                splitArray[2] += splitArray[i];
+            for (unsigned long i = 3; i < splitArray.size(); i++) {
+                splitArray.setElement(
+                        splitArray.getElement(2) + splitArray.getElement(i), 2);
             }
             splitArraySize = 3;
         }
@@ -399,8 +397,10 @@ class Input {
 
         // There is no delimiter after the last string, so create a special case
         if (stringToSplit[stringToSplitIndex - 1] != delimiter) {
-            splitArray[splitArrayIndex] = stringToSplit.substr(
-                    startIndex, stringToSplitIndex - startIndex);
+            splitArray.setElement(
+                    stringToSplit.substr(startIndex,
+                                         stringToSplitIndex - startIndex),
+                    splitArrayIndex);
         }
     }
 
