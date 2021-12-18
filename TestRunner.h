@@ -25,7 +25,8 @@ class TestRunner {
         }
 
         // FIXME: debug print. bug here
-        std::cout << testArray;
+        // std::cout << testArray;
+        // std::cout << testArray.getLogicalSize();
 
         // priorityQueueAdt.print(std::cout);
     }

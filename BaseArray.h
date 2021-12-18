@@ -61,9 +61,7 @@ template<typename E> class BaseArray {
     virtual ~BaseArray() { deleteThis(); }
 
   protected:
-    void deleteThis() {
-        delete[] _array;
-    }
+    void deleteThis() { delete[] _array; }
 
   public:
     virtual E *getElement(unsigned long index) {
@@ -83,6 +81,18 @@ template<typename E> class BaseArray {
         this->_array[index] = element;
     }
 
+  public:
+    virtual void deleteElement(unsigned long index) {
+        setElement(nullptr, index);
+    }
+
+  public:
+    virtual void deleteElementAndDeleteFromHeap(unsigned long index) {
+        delete getElement(index);
+        deleteElement(index);
+    }
+
+    // FIXME: make virtual
   public:
     /**
      * @brief This method will *invoke* the given @p callBack function on

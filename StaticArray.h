@@ -20,7 +20,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
 
   public:
     explicit StaticArray(unsigned long physicalSize)
-            : BaseArray<E>(physicalSize) {}
+        : BaseArray<E>(physicalSize) {}
 
   protected:
     unsigned long _logicalSize = 0;
@@ -29,25 +29,48 @@ template<typename E> class StaticArray : public BaseArray<E> {
     unsigned long getLogicalSize() const { return _logicalSize; }
 
   public:
-    void push(E *element) {
+    void setElement(E *element, unsigned long index) override {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
         }
 
-        // May throw here.
-        this->setElement(element, _logicalSize);
+        BaseArray<E>::setElement(element, index); // May throw here.
         _logicalSize++;
     }
 
   public:
-    E *pop() {
+    E *getElement(unsigned long index) override {
+        if (!_logicalSize) { throw std::runtime_error(IS_EMPTY_MESSAGE); }
+        if (_logicalSize == this->_physicalSize) {
+            throw std::runtime_error(IS_FULL_MESSAGE);
+        }
+
+        return BaseArray<E>::getElement(index);
+    }
+
+  public:
+    void push(E *element) {
+        setElement(element, _logicalSize); // May throw here.
+    }
+
+  public:
+    E *peek() {
         if (!_logicalSize) { throw std::runtime_error(IS_EMPTY_MESSAGE); }
 
         // May throw here.
         E *returnValue = this->getElement(_logicalSize - 1);
+
+        return returnValue;
+    }
+
+  public:
+    E *pop() {
+        E *lastElement = peek(); // Get last element. May throw here.
+
+        this->deleteElement(_logicalSize - 1); // Delete last element.
         _logicalSize--;
 
-        return this->getElement(returnValue);
+        return lastElement;
     }
 };
 

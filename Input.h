@@ -66,9 +66,14 @@ class Input {
      * @todo delete[] testArray.
      */
     static StaticArray<std::string> getTestArray() {
-        StaticArray<std::string> testArray(getValidTestArraySize());
+        auto testArray = StaticArray<std::string>(getValidTestArraySize());
+        // StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
+
+        // // TODO: print
+        std::cout << *(testArray.getElement(0)) << std::endl;
+
         return testArray;
     }
 
@@ -109,14 +114,17 @@ class Input {
         int sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.getPhysicalSize(); i++) {
-            std::string line = getLine(std::cin);
-            testArray.setElement(&line, i);
+            auto *line = new std::string(getLine(std::cin));
+            testArray.setElement(line, i);
             sizeCounter++;
         }
 
         if (sizeCounter != (int) testArray.getPhysicalSize()) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
+
+        // TODO: print
+        // std::cout << testArray;
     }
 
   private:

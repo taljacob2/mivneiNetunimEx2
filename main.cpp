@@ -12,9 +12,23 @@
 int main() {
     try {
         auto testArray = Input::getTestArray();
-        TestRunner::runAllTests<Entry<int, std::string>>(testArray);
+
+        // TODO: print
+        std::cout << testArray << std::endl;
+
+        // TestRunner::runAllTests<Entry<int, std::string>>(testArray);
+
+        // testArray.forEach([testArray](std::string *s) { delete s; });
+
+        // // TODO: this works
+        // for (unsigned long i = 0; i < testArray.getPhysicalSize(); i++) {
+        //     std::cout << *testArray.getElement(i) << std::endl;
+        //     delete testArray.getElement(i);
+        // }
+
     } catch (std::exception &e) {
         std::cout << Constants::WRONG_INPUT << std::endl;
+        // testArray.forEach([testArray](std::string *s) { delete s; });
         return Constants::MAIN_ERROR;
     }
 
