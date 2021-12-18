@@ -74,9 +74,12 @@ template<typename E> class BaseArray {
     virtual ~BaseArray() { deleteThis(); }
 
   protected:
-    void deleteThis() {
-        for (unsigned long i = 0; i < size(); i++) { delete _array[i]; }
-        delete[] _array;
+    void deleteThis() { deleteUniqueArray(_array, _physicalSize); }
+
+  protected:
+    static void deleteUniqueArray(Unique<E> **&array, unsigned long size) {
+        for (unsigned long i = 0; i < size; i++) { delete array[i]; }
+        delete[] array;
     }
 
   public:
@@ -122,6 +125,10 @@ template<typename E> class BaseArray {
 
         auto *unique = new Unique<E>(element);
         if (isAnonymous) { unique->setNeedToDeleteElement(true); }
+
+        // Delete old element if is alive.
+        delete this->_array[index];
+
         this->_array[index] = unique;
     }
 
@@ -132,6 +139,10 @@ template<typename E> class BaseArray {
         }
 
         auto *unique        = new Unique<E>((E &&) element);
+
+        // Delete old element if is alive.
+        delete this->_array[index];
+
         this->_array[index] = unique;
     }
 
@@ -157,9 +168,13 @@ template<typename E> class BaseArray {
      *                        for you to use this method.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    virtual BaseArray<E> &forEach(const std::function<void(E *)> &callBack) {
-        for (unsigned long i = 0; i < _physicalSize; i++) {
-            callBack(_array[i]->getElement());
+    virtual BaseArray<E> &forEach(const std::function<void(E *)> &callBack,
+                                  unsigned long sizeToIterateOnTo = 0) {
+        unsigned long sizeToIterateOnToDynamic =
+                getSizeToIterateOnToDynamic(sizeToIterateOnTo);
+
+        for (unsigned long i = 0; i < sizeToIterateOnToDynamic; i++) {
+            callBack(this->_array[i]->getElement());
         }
 
         return *this;
@@ -170,6 +185,25 @@ template<typename E> class BaseArray {
      * @brief This method will *filter* out from the array the elements that
      *        do not return `true` the given @p predicate function.
      *
+     * @note in case all of the array got filtered out, then this method will
+     *       return an array of physicalSize of `1` with `nullptr` as its
+     *       first element.
+     *
+     * For example:
+     * @code
+     * BaseArray<std::string> baseArray(3);
+     * std::cout << baseArray << std::endl;
+     * baseArray.filter([&baseArray](auto *s) { return s != nullptr; });
+     * // You may also use the explicit option of:
+     * // baseArray.filter([&baseArray](std::string *s) { return s != nullptr; });
+     * std::cout << baseArray << std::endl;
+     * @endcode
+     * will result with the output of:
+     * @code
+     * [nullptr ,nullptr ,nullptr]
+     * [nullptr]
+     * @endcode
+     *
      * @param predicate a `bool` function such that only the elements that
      *                  are returning `true` to this @p predicate function
      *                  would remain in the array. The others would be
@@ -179,8 +213,12 @@ template<typename E> class BaseArray {
      *                        for you to use this method.
      * @return `this` object. So that you may "chain" this method with another.
      */
-    virtual BaseArray<E> &filter(const std::function<bool(E *)> &predicate) {
-        unsigned long newArraySize = 0;
+    virtual BaseArray<E> &filter(const std::function<bool(E *)> &predicate,
+                                 unsigned long sizeToIterateOnTo = 0) {
+        unsigned long sizeToIterateOnToDynamic =
+                getSizeToIterateOnToDynamic(sizeToIterateOnTo);
+
+        unsigned long newArrayPhysicalSize = 0;
 
         /*
          * Must iterate over the array twice.
@@ -189,13 +227,28 @@ template<typename E> class BaseArray {
          * 2. - `insert` the elements that are `true` with the predicate
          *      given to `newArray`.
          */
-        for (unsigned long i = 0; i < this->_physicalSize; i++) {
-            if (predicate(_array[i]->getElement())) { newArraySize++; }
+        for (unsigned long i = 0; i < sizeToIterateOnToDynamic; i++) {
+            if (predicate(this->_array[i]->getElement())) {
+                newArrayPhysicalSize++;
+            }
         }
 
-        Unique<E> **newArray = new Unique<E> *[newArraySize];
-        initUniqueArray(newArray, newArraySize);
+        if (!newArrayPhysicalSize) { newArrayPhysicalSize = 1; }
 
+        Unique<E> **newArray = new Unique<E> *[newArrayPhysicalSize];
+        initUniqueArray(newArray, newArrayPhysicalSize);
+
+        copyArraysBasedOnPredicate(predicate, newArray);
+
+        this->deleteThis();
+        this->_array        = newArray;
+        this->_physicalSize = newArrayPhysicalSize;
+        return *this;
+    }
+
+  protected:
+    void copyArraysBasedOnPredicate(const std::function<bool(E *)> &predicate,
+                                    Unique<E> **                    newArray) {
         for (unsigned long i = 0; i < _physicalSize; i++) {
             E *element = _array[i]->getElement();
             if (predicate(element)) {
@@ -218,11 +271,6 @@ template<typename E> class BaseArray {
                 continue;
             }
         }
-
-        deleteThis();
-        _array        = newArray;
-        _physicalSize = newArraySize;
-        return *this;
     }
 
   public:
@@ -238,37 +286,27 @@ template<typename E> class BaseArray {
      *                    @note You are suggested to use a "lambda" function
      *                          for this function - so that it will be
      *                          quicker for you to use this method.
-     * @param sizeToIterate you may pick a different size to-iterate on the
+     * @param sizeToIterateOnTo you may pick a different size to-iterate on the
      *                      array. The default size is its physical size, so
      *                      it will iterate on all of it.
      * @return the array of type `E2` mapped by `this` array. This way, you
      *         may also "chain" this method with another.
      */
     template<typename E2>
-    BaseArray<E2> &map(const std::function<E2 *(E *)> &mapFunction,
-                       bool                            isAnonymous   = false,
-                       unsigned long                   sizeToIterate = 0) {
-        unsigned long size = _physicalSize;
-        if (sizeToIterate) {
-            if (isOutOfRange(sizeToIterate - 1)) {
-                std::string msg = (char *) SIZE_OUT_OF_RANGE_MESSAGE;
-                std::string msg2 =
-                        (char *) "You picked a size that is larger than the "
-                                 "current `physicalSize` of :" +
-                        _physicalSize;
-                throw std::out_of_range(msg + " " + msg2);
-            }
-            size = sizeToIterate;
-        }
+    BaseArray<E2> map(const std::function<E2 *(E *)> &mapFunction,
+                      bool                            isAnonymous       = false,
+                      unsigned long                   sizeToIterateOnTo = 0) {
+        unsigned long sizeToIterateOnToDynamic =
+                getSizeToIterateOnToDynamic(sizeToIterateOnTo);
 
         /*
          * Must iterate over the array once.
          * The `for-loop`'s content is:
          * - `insert` the new mapped-elements to `newArray`.
          */
-        BaseArray<E2> e2Array(size);
-        for (unsigned long i = 0; i < size; i++) {
-            E *element = _array[i]->getElement();
+        BaseArray<E2> e2Array(sizeToIterateOnToDynamic);
+        for (unsigned long i = 0; i < sizeToIterateOnToDynamic; i++) {
+            E *element = this->_array[i]->getElement();
             e2Array.setElement(mapFunction(element), i, isAnonymous);
         }
 
@@ -288,40 +326,47 @@ template<typename E> class BaseArray {
      *                    @note You are suggested to use a "lambda" function
      *                          for this function - so that it will be
      *                          quicker for you to use this method.
-     * @param sizeToIterate you may pick a different size to-iterate on the
+     * @param sizeToIterateOnTo you may pick a different size to-iterate on the
      *                      array. The default size is its physical size, so
      *                      it will iterate on all of it.
      * @return the array of type `E2` mapped by `this` array. This way, you
      *         may also "chain" this method with another.
      */
     template<typename E2>
-    BaseArray<E2> &map(const std::function<E2 && (E *)> &mapFunction,
-                       unsigned long                     sizeToIterate = 0) {
-        unsigned long size = _physicalSize;
-        if (sizeToIterate) {
-            if (isOutOfRange(sizeToIterate - 1)) {
-                std::string msg = (char *) SIZE_OUT_OF_RANGE_MESSAGE;
-                std::string msg2 =
-                        (char *) "You picked a size that is larger than the "
-                                 "current `physicalSize` of :" +
-                        _physicalSize;
-                throw std::out_of_range(msg + " " + msg2);
-            }
-            size = sizeToIterate;
-        }
+    BaseArray<E2> map(const std::function<E2 && (E *)> &mapFunction,
+                      unsigned long                     sizeToIterateOnTo = 0) {
+        unsigned long sizeToIterateOnToDynamic =
+                getSizeToIterateOnToDynamic(sizeToIterateOnTo);
 
         /*
          * Must iterate over the array once.
          * The `for-loop`'s content is:
          * - `insert` the new mapped-elements to `newArray`.
          */
-        BaseArray<E2> e2Array(size);
-        for (unsigned long i = 0; i < size; i++) {
-            E *element = _array[i]->getElement();
-            e2Array.setElement((E &&) mapFunction(element), i);
+        BaseArray<E2> e2Array(sizeToIterateOnToDynamic);
+        for (unsigned long i = 0; i < sizeToIterateOnToDynamic; i++) {
+            E *element = this->_array[i]->getElement();
+            e2Array.setElement(mapFunction(element), i);
         }
 
         return e2Array;
+    }
+
+  private:
+    unsigned long getSizeToIterateOnToDynamic(unsigned long sizeToIterateOnTo) {
+        unsigned long sizeToIterateOnToDynamic = this->_physicalSize;
+        if (sizeToIterateOnTo) {
+            if (this->isOutOfRange(sizeToIterateOnTo - 1)) {
+                std::string msg = (char *) this->SIZE_OUT_OF_RANGE_MESSAGE;
+                std::string msg2 =
+                        (char *) "You picked a size that is larger than the "
+                                 "current `physicalSize` of :" +
+                        this->_physicalSize;
+                throw std::out_of_range(msg + " " + msg2);
+            }
+            sizeToIterateOnToDynamic = sizeToIterateOnTo;
+        }
+        return sizeToIterateOnToDynamic;
     }
 
   public:
@@ -417,7 +462,7 @@ template<typename E> class BaseArray {
         }
         for (unsigned long i = 1; i < array._physicalSize; i++) {
             os << " ,";
-            printElement(os, (array._array[0])->getElement());
+            printElement(os, (array._array[i])->getElement());
         }
         os << ']';
         return os;
