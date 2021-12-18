@@ -138,7 +138,7 @@ template<typename E> class BaseArray {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        auto *unique        = new Unique<E>((E &&) element);
+        auto *unique = new Unique<E>((E &&) element);
 
         // Delete old element.
         delete this->_array[index];
@@ -346,6 +346,24 @@ template<typename E> class BaseArray {
      *                return new ObjectTest(std::atoi(s->c_str()));
      *            },
      *            true);
+     *    std::cout << mappedBaseArray << std::endl;
+     * @endcode
+     * will result with the output of:
+     * @code
+     * [32 ,455 ,7678]
+     * [_arbitraryInt: 32 ,_arbitraryInt: 455 ,_arbitraryInt: 7678]
+     * @endcode
+     *
+     * Another exmaple:
+     * @code
+     *    BaseArray<int> baseArray(3);
+     *    baseArray.setElement(32, 0);
+     *    baseArray.setElement(455, 1);
+     *    baseArray.setElement(7678, 2);
+     *    std::cout << baseArray << std::endl;
+     *
+     *    auto mappedBaseArray = baseArray.map<ObjectTest>(
+     *            [&baseArray](auto *i) { return new ObjectTest(*i); }, true);
      *    std::cout << mappedBaseArray << std::endl;
      * @endcode
      * will result with the output of:
