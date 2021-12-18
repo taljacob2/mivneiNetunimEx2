@@ -26,7 +26,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
     unsigned long _logicalSize = 0;
 
   public:
-    unsigned long getLogicalSize() const { return _logicalSize; }
+    unsigned long size() const { return _logicalSize; }
 
   public:
     unsigned long getPhysicalSize() = delete; // Disable from use.

@@ -18,7 +18,7 @@ class TestRunner {
                 Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
                                              PriorityQueue<E>>(priorityQueue);
 
-        for (unsigned long i = 0; i < testArray.getLogicalSize(); i++) {
+        for (unsigned long i = 0; i < testArray.size(); i++) {
             std::string *test = Input::getTest(testArray, ' ', i);
             runTest<E>(test, priorityQueueAdt);
             delete[] test;

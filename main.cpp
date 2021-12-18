@@ -21,7 +21,7 @@ int main() {
         // testArray.forEach([testArray](std::string *s) { delete s; });
 
         // // TODO: this works
-        for (unsigned long i = 0; i < testArray.getLogicalSize(); i++) {
+        for (unsigned long i = 0; i < testArray.size(); i++) {
             std::cout << *testArray.getElement(i) << std::endl;
             delete testArray.getElement(i);
         }
