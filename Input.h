@@ -110,7 +110,7 @@ class Input {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            testArray.setElement(new std::string(getLine(std::cin)), i, true);
+            testArray.setElement(getLine(std::cin), i); // TODO: "rvalue" set
             sizeCounter++;
         }
 
