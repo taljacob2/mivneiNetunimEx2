@@ -11,7 +11,13 @@ template<typename E> class Unique {
     explicit Unique(E &&element) { _element = new E(element); }
 
   public:
-    virtual ~Unique() { delete _element; }
+    virtual ~Unique() {
+
+        // TODO: debug print
+        std::cout << "unique is dead" << std::endl;
+
+        // delete _element;
+    }
 
   public:
     E *getElement() const { return _element; }

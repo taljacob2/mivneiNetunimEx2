@@ -2,6 +2,7 @@
 #ifndef BASE_ARRAY_H
 #define BASE_ARRAY_H
 
+#include "Unique.h"
 #include <functional>
 #include <iostream>
 
@@ -39,6 +40,17 @@ template<typename E> class BaseArray {
   protected:
     unsigned long _physicalSize = 100;
 
+  protected:
+    bool _deleteFromHeapAfterUse = false;
+
+  public:
+    bool isDeleteFromHeapAfterUse() const { return _deleteFromHeapAfterUse; }
+
+  public:
+    void setDeleteFromHeapAfterUse(bool deleteFromHeapAfterUse) {
+        _deleteFromHeapAfterUse = deleteFromHeapAfterUse;
+    }
+
   public:
     unsigned long size() const { return _physicalSize; }
 
@@ -61,7 +73,12 @@ template<typename E> class BaseArray {
     virtual ~BaseArray() { deleteThis(); }
 
   protected:
-    void deleteThis() { delete[] _array; }
+    void deleteThis() {
+        if (_deleteFromHeapAfterUse) {
+            for (unsigned long i = 0; i < size(); i++) { delete _array[i]; }
+        }
+        delete[] _array;
+    }
 
   public:
     virtual E *getElement(unsigned long index) {
@@ -79,6 +96,21 @@ template<typename E> class BaseArray {
         }
 
         this->_array[index] = element;
+    }
+
+  public:
+
+    /**
+     * @param element an `rvalue` element.
+     * @param index the index to set this element at.
+     * @todo `delete` element.
+     */
+    virtual void setElement(E &&element, unsigned long index) {
+        if (isOutOfRange(index)) {
+            throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
+        }
+
+        this->_array[index] = new E(element);
     }
 
   public:

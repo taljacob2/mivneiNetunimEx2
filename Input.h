@@ -126,9 +126,16 @@ class Input {
             // std::string *pLine = &line; // Polymorph pointer and reference.
             // testArray.setElement(pLine, i);
 
-            std::string  line  = Unique<std::string>(getLine(std::cin)); // FIXME:
-            std::string *pLine = &line; // Polymorph pointer and reference.
-            testArray.setElement(pLine, i);
+            // std::string  line  = Unique<std::string>(getLine(std::cin)); // FIXME:
+            // std::string *pLine = &line; // Polymorph pointer and reference.
+            // testArray.setElement(pLine, i);
+            // std::cout << testArray << std::endl;
+
+            // FIXME:
+            std::string *line =
+                    Unique<std::string>(getLine(std::cin)).getElement();
+            std::cout << "got element" << std::endl;
+            testArray.setElement(line, i);
             std::cout << testArray << std::endl;
 
             sizeCounter++;
