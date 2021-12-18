@@ -68,15 +68,8 @@ class Input {
      */
     static BaseArray<std::string> getTestArray() {
         auto testArray = BaseArray<std::string>(getValidTestArraySize());
-
-        // StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
-
-        // // TODO: print
-        // std::cout << *(testArray.getElement(0)) << std::endl;
-        // std::cout << testArray << std::endl; // TODO: print debug
-
         return testArray;
     }
 
@@ -117,39 +110,13 @@ class Input {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-
-            // Example: "inline rvalue"
             testArray.setElement(getLine(std::cin), i);
-            std::cout << testArray << std::endl;
-            // std::cout << testArray.getElement(0) << std::endl;
-            std::cout << testArray << std::endl;
-
-            // // Example: "normal lvalue"
-            // std::string str = getLine(std::cin);
-            // testArray.push(&str);
-            // std::cout << testArray << std::endl;
-            //
-            // // Example: "inline anonymous heap allocated lvalue"
-            // testArray.push(new std::string(getLine(std::cin)), true);
-            // std::cout << testArray << std::endl;
-            //
-            // // Example: "external heap allocated lvalue"
-            // std::string *str = new std::string(getLine(std::cin));
-            // testArray.push(str);
-            // std::cout << testArray << std::endl;
-            // delete str;
-
-
-
             sizeCounter++;
         }
 
         if (sizeCounter != testArray.size()) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
-
-        // TODO: print
-        // std::cout << testArray << std::endl;
     }
 
   private:
