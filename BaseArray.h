@@ -79,6 +79,19 @@ template<typename E> class BaseArray {
     }
 
   public:
+    /**
+     * @warning in case the element you are trying to get was originally a
+     *          `rvalue`, you will get the *one and only* reference to that element,
+     *          and `this` array won't have access to it anymore.
+     *          Thus, in case you need the reference to this element more than
+     *          once, you **must catch** the return value of this method,
+     *          or else nobody will have a reference for this element anymore,
+     *          and it will be destroyed.
+     *          @note as said before, in case the element you are trying to get
+     *                was originally a `rvalue`, you will get the *one and only* reference to
+     *                this element - and then, `this` array will replace its
+     *                presence with `nullptr` (to mark it as "deleted").
+     */
     virtual E *getElement(unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
