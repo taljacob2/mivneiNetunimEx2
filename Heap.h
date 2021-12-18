@@ -81,7 +81,9 @@ template<typename E> class Heap : public HeapAdt<E> {
     explicit Heap(unsigned long physicalSize) {
         this->_physicalSize = physicalSize;
         this->_array        = new E *[physicalSize];
-        for (int i = 0; i < _physicalSize; i++) { _array[i] = nullptr; }
+        for (unsigned long i = 0; i < _physicalSize; i++) {
+            _array[i] = nullptr;
+        }
     }
 
   public:
