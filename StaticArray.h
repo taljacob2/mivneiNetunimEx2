@@ -11,6 +11,8 @@
  * use the `delete` keyword.
  *
  * @code
+ *           auto testArray = StaticArray<std::string>(1);
+ *
  *           // Example: "inline rvalue"
  *           testArray.push(getLine(std::cin));
  *           std::cout << testArray << std::endl;
