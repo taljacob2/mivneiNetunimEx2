@@ -604,8 +604,13 @@ template<typename E> class BaseArray {
 
             copyArraysStatic(other._array, _array, _physicalSize);
 
-            // Delete `other`.
-            other.deleteThis();
+            /*
+             * Release the data pointer from the source object so that
+             * the destructor does not free the memory multiple times.
+             */
+            // other.forEach([&other](auto *e) { e = nullptr; });
+            other._physicalSize = 0;
+            other._array        = nullptr;
         }
         return *this;
     }
