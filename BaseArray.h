@@ -451,14 +451,22 @@ template<typename E> class BaseArray {
 
   private:
     unsigned long getSizeToIterateOnToDynamic(unsigned long sizeToIterateOnTo) {
-        unsigned long sizeToIterateOnToDynamic = this->_physicalSize;
+        return getSizeToIterateOnToDynamicStatic(sizeToIterateOnTo,
+                                                 _physicalSize);
+    }
+
+  public:
+    static unsigned long
+    getSizeToIterateOnToDynamicStatic(unsigned long sizeToIterateOnTo,
+                                      unsigned long physicalSize) {
+        unsigned long sizeToIterateOnToDynamic = physicalSize;
         if (sizeToIterateOnTo) {
-            if (this->isOutOfRange(sizeToIterateOnTo - 1)) {
-                std::string msg = (char *) this->SIZE_OUT_OF_RANGE_MESSAGE;
+            if (isOutOfRangeStatic(sizeToIterateOnTo - 1, physicalSize)) {
+                std::string msg = (char *) SIZE_OUT_OF_RANGE_MESSAGE;
                 std::string msg2 =
                         (char *) "You picked a size that is larger than the "
                                  "current `physicalSize` of :" +
-                        this->_physicalSize;
+                        physicalSize;
                 throw std::out_of_range(msg + " " + msg2);
             }
             sizeToIterateOnToDynamic = sizeToIterateOnTo;
@@ -482,9 +490,15 @@ template<typename E> class BaseArray {
 
   protected:
     virtual bool isOutOfRange(unsigned long index) {
+        return isOutOfRangeStatic(index, _physicalSize);
+    }
+
+  public:
+    static bool isOutOfRangeStatic(unsigned long index,
+                                   unsigned long physicalSize) {
 
         // `_physicalSize` *must* be at least 1.
-        return !((0 <= index) && (index < _physicalSize));
+        return !((0 <= index) && (index < physicalSize));
     }
 
   protected:
@@ -547,17 +561,22 @@ template<typename E> class BaseArray {
         return print(os, array);
     }
 
-  private:
+  public:
     /**
      * @note This method is `nullptr` resistant - Instead of crashing, it prints
      *       "nullptr".
      */
-    static std::ostream &print(std::ostream &os, const BaseArray &array) {
+    static std::ostream &print(std::ostream &os, const BaseArray &array,
+                               unsigned long sizeToIterateOnTo = 0) {
+        unsigned long sizeToIterateOnToDynamic =
+                getSizeToIterateOnToDynamicStatic(sizeToIterateOnTo,
+                                                  array._physicalSize);
+
         os << '[';
-        if (array._physicalSize) {
+        if (sizeToIterateOnToDynamic) {
             printElement(os, (array._array[0])->getElement());
         }
-        for (unsigned long i = 1; i < array._physicalSize; i++) {
+        for (unsigned long i = 1; i < sizeToIterateOnToDynamic; i++) {
             os << " ,";
             printElement(os, (array._array[i])->getElement());
         }

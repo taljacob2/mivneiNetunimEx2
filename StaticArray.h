@@ -3,6 +3,7 @@
 #define STATIC_ARRAY_H
 
 #include "BaseArray.h"
+#include <ostream>
 
 /**
  * For example:
@@ -36,7 +37,7 @@
  * @note DEVELOPER NOTE: You must ensure that the `BaseArray<E>::_physicalSize`
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
- * @version 1.0.2
+ * @version 1.0.3
  */
 template<typename E> class StaticArray : public BaseArray<E> {
 
@@ -49,8 +50,7 @@ template<typename E> class StaticArray : public BaseArray<E> {
             (char *) "StaticArray: array is full.";
 
   public:
-    explicit StaticArray(unsigned long size)
-            : BaseArray<E>(size), _logicalSize(size - 1) {}
+    explicit StaticArray(unsigned long size) : BaseArray<E>(size) {}
 
   protected:
     unsigned long _logicalSize = 0;
@@ -118,6 +118,13 @@ template<typename E> class StaticArray : public BaseArray<E> {
         _logicalSize--;
 
         return lastElement;
+    }
+
+  public:
+    friend std::ostream &operator<<(std::ostream &     os,
+                                    const StaticArray &array) {
+        array.print(os, array, array._logicalSize);
+        return os;
     }
 };
 
