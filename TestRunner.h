@@ -25,7 +25,9 @@ class TestRunner {
         }
 
         // FIXME: debug print. bug here
-        priorityQueueAdt.print(std::cout);
+        std::cout << testArray;
+
+        // priorityQueueAdt.print(std::cout);
     }
 
   private:
@@ -41,6 +43,9 @@ class TestRunner {
     template<typename E>
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
             std::string *&test, PriorityQueueAdt<E> &priorityQueueAdt) {
+        // TODO: print debug
+        // std::cout << test;
+
         try {
             char methodLetterToInvokeInPriorityQueue = test[0][0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
