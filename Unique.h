@@ -49,7 +49,13 @@ template<typename E> class Unique {
      * Allow *implicit* conversions.
      * @return the element instance.
      */
-    explicit operator E () const { return *getElement(); }
+    explicit operator E() const { return *getElement(); }
+
+  public:
+    friend std::ostream &operator<<(std::ostream &os, const Unique &unique) {
+        os << (E) unique;
+        return os;
+    }
 };
 
 #endif // UNIQUE_H
