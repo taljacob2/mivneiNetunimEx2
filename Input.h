@@ -68,9 +68,6 @@ class Input {
     static StaticArray<std::string> getTestArray() {
         auto testArray = StaticArray<std::string>(getValidTestArraySize());
 
-        // TODO: print
-        std::cout << "heloo" << std::endl;
-
         // StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
@@ -117,9 +114,6 @@ class Input {
     static void initializeTestArray(StaticArray<std::string> &testArray) {
         unsigned long sizeCounter = 0;
 
-        // TODO: print
-        std::cout << "size: " << testArray.size() << std::endl;
-
         for (unsigned long i = 0; i < testArray.size(); i++) {
             auto *line = new std::string(getLine(std::cin)); // FIXME:
             testArray.setElement(line, i);
@@ -131,7 +125,7 @@ class Input {
         }
 
         // TODO: print
-        // std::cout << testArray;
+        std::cout << testArray << std::endl;
     }
 
   private:
@@ -211,7 +205,7 @@ class Input {
     }
 
   private:
-    static void assertSplit(int i, int splitArraySize,
+    static void assertSplit(unsigned long i, int splitArraySize,
                             StaticArray<std::string> &testArray,
                             std::string *&            splitArray) {
 
@@ -225,8 +219,9 @@ class Input {
     }
 
   private:
-    static void assertFirstLetter(int i, StaticArray<std::string> &testArray,
-                                  std::string *&splitArray) {
+    static void assertFirstLetter(unsigned long             i,
+                                  StaticArray<std::string> &testArray,
+                                  std::string *&            splitArray) {
         if (i == 0) {
             if (!((testArray.getElement(i)->length() == 1) &&
                   (*testArray.getElement(i))[0] == FIRST_LETTER)) {
