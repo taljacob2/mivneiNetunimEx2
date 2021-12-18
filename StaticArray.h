@@ -21,7 +21,8 @@ template<typename E> class StaticArray : public BaseArray<E> {
             (char *) "StaticArray: array is full.";
 
   public:
-    explicit StaticArray(unsigned long size) : BaseArray<E>(size + 1) {}
+    explicit StaticArray(unsigned long size)
+        : BaseArray<E>(size + 1), _logicalSize(size) {}
 
   protected:
     unsigned long _logicalSize = 0;
