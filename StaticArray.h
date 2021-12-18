@@ -29,6 +29,9 @@ template<typename E> class StaticArray : public BaseArray<E> {
     unsigned long getLogicalSize() const { return _logicalSize; }
 
   public:
+    unsigned long getPhysicalSize() = delete; // Disable from use.
+
+  public:
     void setElement(E *element, unsigned long index) override {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
