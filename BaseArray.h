@@ -18,7 +18,7 @@
  * array afterwards.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.2
+ * @version 1.0.3
  */
 template<typename E> class BaseArray {
 
@@ -126,7 +126,7 @@ template<typename E> class BaseArray {
         auto *unique = new Unique<E>(element);
         if (isAnonymous) { unique->setNeedToDeleteElement(true); }
 
-        // Delete old element if is alive.
+        // Delete old element.
         delete this->_array[index];
 
         this->_array[index] = unique;
@@ -140,7 +140,7 @@ template<typename E> class BaseArray {
 
         auto *unique        = new Unique<E>((E &&) element);
 
-        // Delete old element if is alive.
+        // Delete old element.
         delete this->_array[index];
 
         this->_array[index] = unique;
@@ -160,6 +160,26 @@ template<typename E> class BaseArray {
     /**
      * @brief This method will *invoke* the given @p callBack function on
      *        each element in the array.
+     *
+     * For example:
+     * @code
+     *    BaseArray<std::string> baseArray(3);
+     *    baseArray.setElement("32", 0);
+     *    baseArray.setElement("455", 1);
+     *    baseArray.setElement("7678", 2);
+     *    std::cout << baseArray << std::endl;
+     *
+     *    baseArray.forEach([&baseArray](auto *s) { *s = s->substr(0, 1); });
+     *    // You may also use the explicit option of:
+     *    // baseArray.forEach([&baseArray](std::string *s) { *s = s->substr(0, 1); });
+     *
+     *    std::cout << baseArray << std::endl;
+     * @endcode
+     * will result with the output of:
+     * @code
+     * [32 ,455 ,7678]
+     * [3 ,4 ,7]
+     * @endcode
      *
      * @param callBack a `void` function that each element in the array will
      *                 be invoked with.
@@ -277,6 +297,45 @@ template<typename E> class BaseArray {
     /**
      * @brief This method will *map* out another `Array` from `this` array.
      *
+     * For exmaple:
+     * @code
+     *    class ObjectTest {
+     *
+     *      private:
+     *        int _arbitraryInt = 0;
+     *
+     *      public:
+     *        explicit ObjectTest(int arbitraryInt) { _arbitraryInt = arbitraryInt; }
+     *
+     *      public:
+     *        friend std::ostream &operator<<(std::ostream &    os,
+     *                                        const ObjectTest &object) {
+     *            os << "_arbitraryInt: " << object._arbitraryInt;
+     *            return os;
+     *        }
+     *    };
+     *
+     * // ------------------------------------------------
+     *
+     *    BaseArray<std::string> baseArray(3);
+     *    baseArray.setElement("32", 0);
+     *    baseArray.setElement("455", 1);
+     *    baseArray.setElement("7678", 2);
+     *    std::cout << baseArray << std::endl;
+     *
+     *    auto mappedBaseArray = baseArray.map<ObjectTest>(
+     *            [&baseArray](std::string *s) {
+     *                return new ObjectTest(std::atoi(s->c_str()));
+     *            },
+     *            true);
+     *    std::cout << mappedBaseArray << std::endl;
+     * @endcode
+     * will result with the output of:
+     * @code
+     * [32 ,455 ,7678]
+     * [_arbitraryInt: 32 ,_arbitraryInt: 455 ,_arbitraryInt: 7678]
+     * @endcode
+     *
      * @tparam E2 the type of `element`s in the returned `Array`.
      * @param mapFunction a `E2`-return-type function that each element in
      *                    the array will be invoked with, and *maps* that element
@@ -314,6 +373,8 @@ template<typename E> class BaseArray {
     }
 
   public:
+    // FIXME: need to fix.
+    //  this doesn't work for example with: `std::string` "map &&" to `int`
     /**
      * @brief This method will *map* out another `Array` from `this` array.
      *
