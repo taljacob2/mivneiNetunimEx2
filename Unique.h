@@ -16,9 +16,6 @@ template<typename E> class Unique {
     explicit Unique(E &&element) {
         _needToDeleteElement = true;
         _element             = new E(element);
-
-        // TODO: debug
-        std::cout << element << std::endl;
     }
 
   public:
@@ -34,6 +31,15 @@ template<typename E> class Unique {
 
   public:
     bool isNeedToDeleteElement() const { return _needToDeleteElement; }
+
+  public:
+    /**
+     * @warning use with caution.
+     * @param needToDeleteElement .
+     */
+    void setNeedToDeleteElement(bool needToDeleteElement) {
+        _needToDeleteElement = needToDeleteElement;
+    }
 
   public:
     E *getElement() const { return _element; }

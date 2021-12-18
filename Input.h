@@ -75,7 +75,7 @@ class Input {
 
         // // TODO: print
         // std::cout << *(testArray.getElement(0)) << std::endl;
-        std::cout << testArray << std::endl; // TODO: print debug
+        // std::cout << testArray << std::endl; // TODO: print debug
 
         return testArray;
     }
@@ -139,8 +139,27 @@ class Input {
             // testArray.setElement(line, i);
             // std::cout << testArray << std::endl;
 
+            // Example: "inline rvalue"
             testArray.push(getLine(std::cin));
-            std::cout << testArray << std::endl; // TODO: print debug
+            std::cout << testArray << std::endl;
+
+            // Example: "normal lvalue"
+            std::string str = getLine(std::cin);
+            testArray.push(&str);
+            std::cout << testArray << std::endl;
+
+            // Example: "inline anonymous heap allocated lvalue"
+            testArray.push(new std::string(getLine(std::cin)), true);
+            std::cout << testArray << std::endl;
+
+            // Example: "external heap allocated lvalue"
+            std::string *str = new std::string(getLine(std::cin));
+            testArray.push(str);
+            std::cout << testArray << std::endl;
+            delete str;
+
+
+
 
             sizeCounter++;
         }
@@ -150,7 +169,7 @@ class Input {
         }
 
         // TODO: print
-        std::cout << testArray << std::endl;
+        // std::cout << testArray << std::endl;
     }
 
   private:

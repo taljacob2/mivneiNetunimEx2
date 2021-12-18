@@ -5,6 +5,32 @@
 #include "BaseArray.h"
 
 /**
+ * For example:
+ * How to use this class:
+ * All the below examples work perfectly, and you don't need to ever again
+ * use the `delete` keyword.
+ *
+ * @code
+ *           // Example: "inline rvalue"
+ *           testArray.push(getLine(std::cin));
+ *           std::cout << testArray << std::endl;
+ *
+ *           // Example: "normal lvalue"
+ *           std::string str = getLine(std::cin);
+ *           testArray.push(&str);
+ *           std::cout << testArray << std::endl;
+ *
+ *           // Example: "inline anonymous heap allocated lvalue"
+ *           testArray.push(new std::string(getLine(std::cin)), true);
+ *           std::cout << testArray << std::endl;
+ *
+ *           // Example: "external heap allocated lvalue"
+ *           std::string *str = new std::string(getLine(std::cin));
+ *           testArray.push(str);
+ *           std::cout << testArray << std::endl;
+ *           delete str;
+ * @endcode
+ *
  * @note DEVELOPER NOTE: You must ensure that the `BaseArray<E>::_physicalSize`
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
@@ -31,12 +57,14 @@ template<typename E> class StaticArray : public BaseArray<E> {
     unsigned long getLogicalSize() const { return _logicalSize; }
 
   public:
-    void setElement(E *element, unsigned long index) override {
+    void setElement(E *element, unsigned long index,
+                    bool isAnonymous = false) override {
         if (_logicalSize == this->_physicalSize) {
             throw std::runtime_error(IS_FULL_MESSAGE);
         }
 
-        BaseArray<E>::setElement(element, index); // May throw here.
+        // May throw here.
+        BaseArray<E>::setElement(element, index, isAnonymous);
         _logicalSize++;
     }
 
@@ -61,8 +89,8 @@ template<typename E> class StaticArray : public BaseArray<E> {
     }
 
   public:
-    void push(E *element) {
-        setElement(element, _logicalSize); // May throw here.
+    void push(E *element, bool isAnonymous = false) {
+        setElement(element, _logicalSize, isAnonymous); // May throw here.
     }
 
   public:

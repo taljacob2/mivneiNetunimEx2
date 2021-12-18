@@ -95,12 +95,13 @@ template<typename E> class BaseArray {
     }
 
   public:
-    virtual void setElement(E *element, unsigned long index) {
+    virtual void setElement(E *element, unsigned long index, bool isAnonymous) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        auto *unique        = new Unique<E>(element);
+        auto *unique = new Unique<E>(element);
+        if (isAnonymous) { unique->setNeedToDeleteElement(true); }
         this->_array[index] = unique;
     }
 
