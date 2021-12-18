@@ -35,7 +35,7 @@ template<typename E> class BaseArray {
             (char *) "BaseArray: Element is `nullptr`.";
 
   protected:
-    E **_array = nullptr;
+    Unique<E> **_array = nullptr;
 
   protected:
     unsigned long _physicalSize = 100;
@@ -60,7 +60,7 @@ template<typename E> class BaseArray {
             throw std::invalid_argument(PHYSICAL_SIZE_MESSAGE);
         }
         _physicalSize = physicalSize;
-        _array        = new E *[_physicalSize]();
+        _array        = new Unique<E> *[_physicalSize]();
     }
 
   public:
@@ -74,9 +74,7 @@ template<typename E> class BaseArray {
 
   protected:
     void deleteThis() {
-        if (_deleteFromHeapAfterUse) {
-            for (unsigned long i = 0; i < size(); i++) { delete _array[i]; }
-        }
+        for (unsigned long i = 0; i < size(); i++) { delete _array[i]; }
         delete[] _array;
     }
 
@@ -86,7 +84,14 @@ template<typename E> class BaseArray {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        return _array[index];
+        E *element = _array[index]->getElement(); // Shallow copy pointer.
+
+        if (_array[index]->isNeedToDeleteElement()) {
+            delete _array[index]; // Delete the old unique pointer.
+            _array[index] = new Unique<E>(nullptr);
+        }
+
+        return element;
     }
 
   public:
@@ -95,36 +100,31 @@ template<typename E> class BaseArray {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = element;
+        auto *unique        = new Unique<E>(element);
+        this->_array[index] = unique;
     }
 
   public:
-
-    /**
-     * @param element an `rvalue` element.
-     * @param index the index to set this element at.
-     * @todo `delete` element.
-     */
     virtual void setElement(E &&element, unsigned long index) {
         if (isOutOfRange(index)) {
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
 
-        this->_array[index] = new E(element);
+        auto *unique        = new Unique<E>((E &&) element);
+        this->_array[index] = unique;
     }
 
   public:
-    virtual void deleteElement(unsigned long index) {
-        setElement(nullptr, index);
+    virtual E *deleteElement(unsigned long index) {
+        Unique<E> *uniqueDeleted  = _array[index];
+        E *        elementDeleted = uniqueDeleted->getElement();
+        if (!uniqueDeleted->isNeedToDeleteElement()) {
+            uniqueDeleted = nullptr;
+        }
+        return elementDeleted;
     }
 
-  public:
-    virtual void deleteElementAndDeleteFromHeap(unsigned long index) {
-        delete getElement(index);
-        deleteElement(index);
-    }
-
-    // FIXME: make virtual
+    // FIXME: make virtual // FIXME: change to unique
   public:
     /**
      * @brief This method will *invoke* the given @p callBack function on
@@ -139,12 +139,13 @@ template<typename E> class BaseArray {
      */
     BaseArray<E> &forEach(const std::function<void(E *)> &callBack) {
         for (unsigned long i = 0; i < _physicalSize; i++) {
-            callBack(_array[i]);
+            callBack((E *) _array[i]);
         }
 
         return *this;
     }
 
+    // FIXME: change to unique
   public:
     /**
      * @brief This method will *filter* out from the array the elements that
@@ -204,6 +205,7 @@ template<typename E> class BaseArray {
         return *this;
     }
 
+    // FIXME: change to unique
   public:
     /**
      * @brief This method will *map* out another `Array` from `this` array.
@@ -256,6 +258,7 @@ template<typename E> class BaseArray {
         return e2Array;
     }
 
+    // FIXME: change to unique
   public:
     /**
      * @brief Shallow-Copying `this` object.
@@ -356,17 +359,19 @@ template<typename E> class BaseArray {
      */
     static std::ostream &print(std::ostream &os, const BaseArray &array) {
         os << '[';
-        if (array._physicalSize) { printElement(os, array._array[0]); }
+        if (array._physicalSize) {
+            printElement(os, (array._array[0])->getElement());
+        }
         for (unsigned long i = 1; i < array._physicalSize; i++) {
             os << " ,";
-            printElement(os, array._array[i]);
+            printElement(os, (array._array[0])->getElement());
         }
         os << ']';
         return os;
     }
 
   protected:
-    static void printElement(std::ostream &os, const E *element) {
+    static void printElement(std::ostream &os, E *element) {
         if (element == nullptr) {
             os << "nullptr";
         } else {

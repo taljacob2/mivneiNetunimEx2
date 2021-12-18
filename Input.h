@@ -75,6 +75,7 @@ class Input {
 
         // // TODO: print
         // std::cout << *(testArray.getElement(0)) << std::endl;
+        std::cout << testArray << std::endl; // TODO: print debug
 
         return testArray;
     }
@@ -116,7 +117,7 @@ class Input {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            // auto *line = new std::string(getLine(std::cin)); // FIXME:
+            // auto *line = new std::string(getLine(std::cin)); // FIXME: works
             // testArray.setElement(line, i);
 
             // auto line = getLine(std::cin); // FIXME:
@@ -131,12 +132,15 @@ class Input {
             // testArray.setElement(pLine, i);
             // std::cout << testArray << std::endl;
 
-            // FIXME:
-            std::string *line =
-                    Unique<std::string>(getLine(std::cin)).getElement();
-            std::cout << "got element" << std::endl;
-            testArray.setElement(line, i);
-            std::cout << testArray << std::endl;
+            // // FIXME:
+            // std::string *line =
+            //         Unique<std::string>(getLine(std::cin)).getElement();
+            // std::cout << "got element" << std::endl;
+            // testArray.setElement(line, i);
+            // std::cout << testArray << std::endl;
+
+            testArray.push(getLine(std::cin));
+            std::cout << testArray << std::endl; // TODO: print debug
 
             sizeCounter++;
         }
@@ -146,7 +150,7 @@ class Input {
         }
 
         // TODO: print
-        // std::cout << testArray << std::endl;
+        std::cout << testArray << std::endl;
     }
 
   private:

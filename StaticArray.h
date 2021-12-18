@@ -41,6 +41,16 @@ template<typename E> class StaticArray : public BaseArray<E> {
     }
 
   public:
+    void setElement(E &&element, unsigned long index) override {
+        if (_logicalSize == this->_physicalSize) {
+            throw std::runtime_error(IS_FULL_MESSAGE);
+        }
+
+        BaseArray<E>::setElement((E &&) element, index); // May throw here.
+        _logicalSize++;
+    }
+
+  public:
     E *getElement(unsigned long index) override {
         if (!_logicalSize) { throw std::runtime_error(IS_EMPTY_MESSAGE); }
         if (_logicalSize == this->_physicalSize) {
@@ -53,6 +63,11 @@ template<typename E> class StaticArray : public BaseArray<E> {
   public:
     void push(E *element) {
         setElement(element, _logicalSize); // May throw here.
+    }
+
+  public:
+    void push(E &&element) {
+        setElement((E &&) element, _logicalSize); // May throw here.
     }
 
   public:
