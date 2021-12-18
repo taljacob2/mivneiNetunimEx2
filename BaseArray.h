@@ -26,21 +26,21 @@
  *           auto testArray = BaseArray<std::string>(1);
  *
  *           // Example: "inline rvalue"
- *           testArray.push(getLine(std::cin));
+ *           testArray.setElement(getLine(std::cin), 0);
  *           std::cout << testArray << std::endl;
  *
  *           // Example: "normal lvalue"
  *           std::string str = getLine(std::cin);
- *           testArray.push(&str);
+ *           testArray.setElement(&str, 0);
  *           std::cout << testArray << std::endl;
  *
  *           // Example: "inline anonymous heap allocated lvalue"
- *           testArray.push(new std::string(getLine(std::cin)), true);
+ *           testArray.setElement(new std::string(getLine(std::cin)), 0, true);
  *           std::cout << testArray << std::endl;
  *
  *           // Example: "external heap allocated lvalue"
  *           std::string *str = new std::string(getLine(std::cin));
- *           testArray.push(str);
+ *           testArray.setElement(str, 0);
  *           std::cout << testArray << std::endl;
  *           delete str;
  * @endcode

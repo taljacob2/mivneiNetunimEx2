@@ -66,8 +66,8 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static StaticArray<std::string> getTestArray() {
-        auto testArray = StaticArray<std::string>(getValidTestArraySize());
+    static BaseArray<std::string> getTestArray() {
+        auto testArray = BaseArray<std::string>(getValidTestArraySize());
 
         // StaticArray<std::string> testArray(getValidTestArraySize());
         initializeTestArray(testArray);
@@ -113,13 +113,13 @@ class Input {
      *                  with all the tests the user inputted.
      * @param testArraySize the size of the given @p testArray.
      */
-    static void initializeTestArray(StaticArray<std::string> &testArray) {
+    static void initializeTestArray(BaseArray<std::string> &testArray) {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
 
             // Example: "inline rvalue"
-            testArray.push(getLine(std::cin));
+            testArray.setElement(getLine(std::cin), i);
             std::cout << testArray << std::endl;
             // std::cout << testArray.getElement(0) << std::endl;
             std::cout << testArray << std::endl;
@@ -161,7 +161,7 @@ class Input {
      * @see initializeTestArray(std::string *&, int)
      * @see assertSplit(int, int, std::string *&, std::string *&)
      */
-    static void validateTestArray(StaticArray<std::string> &testArray,
+    static void validateTestArray(BaseArray<std::string> &testArray,
                                   int                       testArraySize) {
         for (int i = 0; i < testArraySize; i++) {
             validateTest(testArray, ' ', i);
@@ -175,7 +175,7 @@ class Input {
      * @throws std::runtime_error in case the `testArray[i]` is not valid.
      * @see getTest(std::string *&, char &, int)
      */
-    static void validateTest(StaticArray<std::string> &testArray,
+    static void validateTest(BaseArray<std::string> &testArray,
                              char delimiter, int i) {
         std::string *splitArray = nullptr;
         try {
@@ -208,7 +208,7 @@ class Input {
      * @see validateTest(std::string *&, char &, int)
      * @todo delete [] splitArray.
      */
-    static std::string *getTest(StaticArray<std::string> &testArray,
+    static std::string *getTest(BaseArray<std::string> &testArray,
                                 char delimiter, unsigned long i) {
         std::string *splitArray = nullptr;
         try {
@@ -230,7 +230,7 @@ class Input {
 
   private:
     static void assertSplit(unsigned long i, int splitArraySize,
-                            StaticArray<std::string> &testArray,
+                            BaseArray<std::string> &testArray,
                             std::string *&            splitArray) {
 
         // Assert first letter.
@@ -244,7 +244,7 @@ class Input {
 
   private:
     static void assertFirstLetter(unsigned long             i,
-                                  StaticArray<std::string> &testArray,
+                                  BaseArray<std::string> &testArray,
                                   std::string *&            splitArray) {
         if (i == 0) {
             if (!((testArray.getElement(i)->length() == 1) &&
