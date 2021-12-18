@@ -18,7 +18,7 @@
  * array afterwards.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.3
+ * @version 1.0.2
  */
 template<typename E> class BaseArray {
 
@@ -179,6 +179,24 @@ template<typename E> class BaseArray {
      * @code
      * [32 ,455 ,7678]
      * [3 ,4 ,7]
+     * @endcode
+     *
+     * Another example:
+     * @code
+     *    BaseArray<int> baseArray(3);
+     *    baseArray.setElement(32, 0);
+     *    baseArray.setElement(455, 1);
+     *    baseArray.setElement(7678, 2);
+     *    std::cout << baseArray << std::endl;
+     *
+     *    baseArray.forEach([&baseArray](auto *i) { *i += 1; });
+     *
+     *    std::cout << baseArray << std::endl;
+     * @endcode
+     * will result with the output of:
+     * @code
+     * [32 ,455 ,7678]
+     * [33 ,456 ,7679]
      * @endcode
      *
      * @param callBack a `void` function that each element in the array will
