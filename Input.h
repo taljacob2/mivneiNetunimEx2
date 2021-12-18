@@ -4,6 +4,7 @@
 
 #include "Constants.h"
 #include "StaticArray.h"
+#include "Unique.h"
 #include <exception>
 #include <functional>
 #include <iostream>
@@ -115,8 +116,21 @@ class Input {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            auto *line = new std::string(getLine(std::cin)); // FIXME:
-            testArray.setElement(line, i);
+            // auto *line = new std::string(getLine(std::cin)); // FIXME:
+            // testArray.setElement(line, i);
+
+            // auto line = getLine(std::cin); // FIXME:
+            // testArray.setElement(&line, i);
+
+            // std::string line = getLine(std::cin); // FIXME:
+            // std::string *pLine = &line; // Polymorph pointer and reference.
+            // testArray.setElement(pLine, i);
+
+            std::string  line  = Unique<std::string>(getLine(std::cin)); // FIXME:
+            std::string *pLine = &line; // Polymorph pointer and reference.
+            testArray.setElement(pLine, i);
+            std::cout << testArray << std::endl;
+
             sizeCounter++;
         }
 
