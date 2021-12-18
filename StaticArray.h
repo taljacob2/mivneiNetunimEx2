@@ -38,6 +38,8 @@
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  * @version 1.0.3
+ * @deprecated the methods `forEach`, `filter`, `map *` and `map &&` don't
+ *             work properly when calling their parent methods. Need to fix.
  */
 template<typename E> class StaticArray : public BaseArray<E> {
 

@@ -16,6 +16,37 @@
  * @endcode
  * to *avoid* concerning yourself with the need to `delete` the allocated
  * array afterwards.
+ *
+ * For example:
+ * How to use this class:
+ * All the below examples work perfectly, and you don't need to ever again
+ * use the `delete` keyword.
+ *
+ * @code
+ *           auto testArray = BaseArray<std::string>(1);
+ *
+ *           // Example: "inline rvalue"
+ *           testArray.push(getLine(std::cin));
+ *           std::cout << testArray << std::endl;
+ *
+ *           // Example: "normal lvalue"
+ *           std::string str = getLine(std::cin);
+ *           testArray.push(&str);
+ *           std::cout << testArray << std::endl;
+ *
+ *           // Example: "inline anonymous heap allocated lvalue"
+ *           testArray.push(new std::string(getLine(std::cin)), true);
+ *           std::cout << testArray << std::endl;
+ *
+ *           // Example: "external heap allocated lvalue"
+ *           std::string *str = new std::string(getLine(std::cin));
+ *           testArray.push(str);
+ *           std::cout << testArray << std::endl;
+ *           delete str;
+ * @endcode
+ *
+ * @note DEVELOPER NOTE: You must ensure that the `BaseArray<E>::_physicalSize`
+ *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  *
  * @version 1.0.3
