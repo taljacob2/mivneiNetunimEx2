@@ -174,26 +174,13 @@ class Input {
         try {
 
             // Split the current line by ' ' delimiter.
-            int                    splitArraySize = 0;
+            int splitArraySize = 0;
+            BaseArray<std::string> splitArray =
+                    split(testArray.getElement(i), delimiter);
 
-            // TODO: debug disabled
-            // BaseArray<std::string> splitArray =
-            //         split(testArray.getElement(i), delimiter);
+            assertSplit(i, splitArraySize, testArray, splitArray);
 
-            // TODO: debug exit
-            // std::cout << splitArray << std::endl;
-
-            // TODO: debug
-            delete  &testArray;
-            exit(111);
-
-            // TODO: debug disabled
-            // assertSplit(i, splitArraySize, testArray, splitArray);
-
-            // TODO: debug disabled
-            // return splitArray;
-
-
+            return splitArray;
         } catch (std::exception &e) { throw; }
     }
 

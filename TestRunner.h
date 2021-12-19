@@ -22,6 +22,12 @@ class TestRunner {
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
+
+            // TODO: debug
+            // delete &test;
+            delete &testArray;
+            exit(111);
+
             // runTest<E>(test, priorityQueueAdt); // TODO: debug disabled
         }
 
