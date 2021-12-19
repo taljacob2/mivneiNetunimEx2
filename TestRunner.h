@@ -11,19 +11,20 @@
 class TestRunner {
 
   public:
-    template<typename E>
     static void runAllTests(BaseArray<std::string> &testArray) {
         // TODO: polymorph with adt
-        PriorityQueue<E> priorityQueue;
+        auto *priorityQueue = new PriorityQueue<Entry<int, std::string>>();
         // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
 
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            runTest<E>(test, priorityQueue);
+            // runTest<Entry<int, std::string>>(test, *priorityQueue);
         }
 
-        priorityQueue.print(std::cout); // TODO: bug here.
+
+        // priorityQueue.print(std::cout); // TODO: bug here.
+        delete priorityQueue;
     }
 
   private:
@@ -36,9 +37,9 @@ class TestRunner {
     }
 
   private:
-    template<typename E>
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
-            BaseArray<std::string> &test, PriorityQueue<E> &priorityQueue) {
+            BaseArray<std::string> &                test,
+            PriorityQueue<Entry<int, std::string>> &priorityQueue) {
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
@@ -54,8 +55,8 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
                 Entry<int, std::string> entry(stoi(test.getElement(1)),
                                               test.getElement(2));
-                priorityQueue.insert(&entry);
-                priorityQueue.print(std::cout); // TODO: debug
+                // priorityQueue.insert(&entry); // TODO: debug disabled
+                // priorityQueue.print(std::cout); // TODO: debug
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
             }

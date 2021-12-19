@@ -16,12 +16,12 @@ class MaxHeapWhenAlsoHavingMinHeap
 
   public:
     explicit MaxHeapWhenAlsoHavingMinHeap(unsigned long physicalSize)
-        : MinHeap<E>(physicalSize) {}
+        : MinHeap<EWrapper>(physicalSize) {}
 
   public:
     MaxHeapWhenAlsoHavingMinHeap(EWrapper *    arrayToBuildFrom,
                                  unsigned long sizeOfArrayToBuildFrom)
-        : MinHeap<E>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
+        : MinHeap<EWrapper>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   protected:
     void

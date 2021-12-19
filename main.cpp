@@ -16,7 +16,7 @@ int main() {
         // TODO: print
         std::cout << testArray << std::endl;
 
-        TestRunner::runAllTests<Entry<int, std::string>>(testArray);
+        TestRunner::runAllTests(testArray);
 
         // testArray.forEach([testArray](std::string *s) { delete s; });
 

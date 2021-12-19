@@ -47,18 +47,22 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *          request given by the customer ( = the course lecturer).
      */
     // TODO: remove debug with `createEmpty`
-    PriorityQueue() = default;
-    // PriorityQueue() {
-    //     createEmpty();
-    // }
+    // PriorityQueue() = default;
+    PriorityQueue() {
+        createEmpty();
+    }
 
   public:
     virtual ~PriorityQueue() { deleteThis(); }
 
   protected:
     void deleteThis() const {
-        delete _lessOrEqualToMedianDoubleHeap;
-        delete _greaterThanMedianDoubleHeap;
+        if (_lessOrEqualToMedianDoubleHeap != nullptr) {
+            delete _lessOrEqualToMedianDoubleHeap;
+        }
+        if (_greaterThanMedianDoubleHeap != nullptr) {
+            delete _greaterThanMedianDoubleHeap;
+        }
     }
 
   public:
@@ -96,31 +100,30 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     createDoubleHeap(DoublePointerMinHeapAndMaxHeapComponent<E> *
                              &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
 
-        auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>();
+        auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>(100);
 
-        auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>();
-
-        // Polymorphing `MinHeap` and `MaxHeap` through parameters.
-        fieldOfDoublePointerMinHeapAndMaxHeapComponent =
-                new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        (MinHeap<EWrapper> *) minHeap,
-                        (MaxHeap<EWrapper> *) maxHeap);
-    }
-
-  protected:
-    void createDoubleHeapWithPhysicalSize(
-            DoublePointerMinHeapAndMaxHeapComponent<E> *
-                    &     fieldOfDoublePointerMinHeapAndMaxHeapComponent,
-            unsigned long physicalSize) {
+        auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>(100);
 
         // Polymorphing `MinHeap` and `MaxHeap` through parameters.
         fieldOfDoublePointerMinHeapAndMaxHeapComponent =
-                new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        (MinHeap<EWrapper> *) new MinHeapWhenAlsoHavingMaxHeap<
-                                EWrapper>(physicalSize),
-                        (MaxHeap<EWrapper> *) new MaxHeapWhenAlsoHavingMinHeap<
-                                EWrapper>(physicalSize));
+                new DoublePointerMinHeapAndMaxHeapComponent<E>(minHeap,
+                                                               maxHeap);
     }
+
+  // protected:
+  //   void createDoubleHeapWithPhysicalSize(
+  //           DoublePointerMinHeapAndMaxHeapComponent<E> *
+  //                   &     fieldOfDoublePointerMinHeapAndMaxHeapComponent,
+  //           unsigned long physicalSize) {
+  //
+  //       // Polymorphing `MinHeap` and `MaxHeap` through parameters.
+  //       fieldOfDoublePointerMinHeapAndMaxHeapComponent =
+  //               new DoublePointerMinHeapAndMaxHeapComponent<E>(
+  //                       (MinHeap<EWrapper> *) new MinHeapWhenAlsoHavingMaxHeap<
+  //                               EWrapper>(physicalSize),
+  //                       (MaxHeap<EWrapper> *) new MaxHeapWhenAlsoHavingMinHeap<
+  //                               EWrapper>(physicalSize));
+  //   }
 
   public:
     void insert(E *element) override {

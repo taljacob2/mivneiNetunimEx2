@@ -17,14 +17,15 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
 
   protected:
-    MinHeap<EWrapper> *minHeap = nullptr;
+    MinHeapWhenAlsoHavingMaxHeap<E> *minHeap = nullptr;
 
   protected:
-    MaxHeap<EWrapper> *maxHeap = nullptr;
+    MaxHeapWhenAlsoHavingMinHeap<E> *maxHeap = nullptr;
 
   public:
-    DoublePointerMinHeapAndMaxHeapComponent(MinHeap<EWrapper> *minHeap,
-                                            MaxHeap<EWrapper> *maxHeap)
+    DoublePointerMinHeapAndMaxHeapComponent(
+            MinHeapWhenAlsoHavingMaxHeap<E> *minHeap,
+            MaxHeapWhenAlsoHavingMinHeap<E> *maxHeap)
         : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
@@ -32,17 +33,26 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
     void deleteThis() const {
-        while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
+        try {
+            while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
+        } catch (std::exception &e) {
+            // ignored.
+        }
         delete minHeap;
-        while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
+
+        try {
+            while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
+        } catch (std::exception &e) {
+            // ignored.
+        }
         delete maxHeap;
     }
 
   public:
-    MinHeap<EWrapper> *getMinHeap() { return minHeap; }
+    MinHeapWhenAlsoHavingMaxHeap<E> *getMinHeap() { return minHeap; }
 
   public:
-    MaxHeap<EWrapper> *getMaxHeap() { return maxHeap; }
+    MaxHeapWhenAlsoHavingMinHeap<E> *getMaxHeap() { return maxHeap; }
 
   public:
     void insertToBothHeaps(E *element) {
