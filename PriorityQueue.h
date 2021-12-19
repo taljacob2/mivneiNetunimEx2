@@ -144,7 +144,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         } else {
 
             // TODO: debug
-            std::cout << "inside insert. element is:" << *element;
+            std::cout << "inside insert. element is:" << *element << std::endl;
 
 
             // Insert the given EWrapper to the "less" heap.
@@ -248,7 +248,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         }
 
         os << " ----------------------------------------"
-              "--------------------------------------------" << std::endl;
+              "--------------------------------------------"
+           << std::endl;
 
         return os;
     }

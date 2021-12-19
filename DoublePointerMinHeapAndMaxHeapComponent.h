@@ -32,7 +32,9 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
     void deleteThis() const {
+        while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
         delete minHeap;
+        while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
         delete maxHeap;
     }
 
@@ -44,9 +46,9 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   public:
     void insertToBothHeaps(E *element) {
-        EWrapper eWrapper(element);
-        minHeap->insert(&eWrapper);
-        maxHeap->insert(&eWrapper);
+        auto *eWrapper = new EWrapper(element);
+        minHeap->insert(eWrapper);
+        maxHeap->insert(eWrapper);
     }
 
   public:
