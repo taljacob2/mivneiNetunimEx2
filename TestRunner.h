@@ -29,7 +29,7 @@ class TestRunner {
             // std::cout << test.size() << std::endl;
             // std::cout << test.getElement(0) << std::endl;
             // std::cout << testArray << std::endl;
-            // delete &test;
+            delete &test;
             delete &testArray;
             exit(111);
 

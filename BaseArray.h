@@ -50,7 +50,7 @@
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.3
+ * @version 1.0.4
  */
 template<typename E> class BaseArray : public Object {
 
@@ -98,12 +98,12 @@ template<typename E> class BaseArray : public Object {
     }
 
     // FIXME:
-    public:
-      BaseArray(const BaseArray &other) { *this = other; }
+    // public:
+    //   BaseArray(const BaseArray &other) { *this = other; }
 
     // FIXME:
-    // public:
-    //   BaseArray(BaseArray &&other) noexcept { *this = std::move(other); }
+  public:
+    BaseArray(BaseArray &&other) noexcept { *this = std::move(other); }
 
   public:
     virtual ~BaseArray() { deleteThis(); }
@@ -573,55 +573,62 @@ template<typename E> class BaseArray : public Object {
         }
     }
 
-    // FIXME:
-    public:
-      BaseArray &operator=(const BaseArray &other) {
-
-          // Guard self assignment
-          if (this == &other) { return *this; }
-
-          // Free the existing resource.
-          deleteThis();
-
-          // Copy the data pointer and its size from the source object.
-          this->_physicalSize = other._physicalSize;
-          this->_array = other._array; // Shallow-Copy the pointer's reference.
-          for (unsigned long i = 0; i < _physicalSize; i++) {
-              _array[i] = other._array[i]; // Shallow-Copy the pointer's reference.
-              // // TODO :debug
-              // std::cout << *_array[i] << std::endl;
-          }
-
-          return *this;
-      }
-
-    // FIXME:
+    // // FIXME:
     // public:
-    //   BaseArray &operator=(BaseArray &&other) noexcept {
+    //   BaseArray &operator=(const BaseArray &other) {
     //
     //       // Guard self assignment
-    //       if (this != &other) {
+    //       if (this == &other) { return *this; }
     //
-    //           // Free the existing resource.
-    //           deleteThis();
+    //       // Free the existing resource.
+    //       deleteThis();
     //
-    //           // Copy the data pointer and its size from the source object.
-    //           this->_physicalSize = other._physicalSize;
-    //           _array              = new Unique<E> *[_physicalSize];
-    //           initUniqueArray(_array, _physicalSize);
-    //
-    //           copyArraysStatic(other._array, _array, _physicalSize);
-    //
-    //           /*
-    //            * Release the data pointer from the source object so that
-    //            * the destructor does not free the memory multiple times.
-    //            */
-    //           // other.forEach([&other](auto *e) { e = nullptr; });
-    //           other._physicalSize = 0;
-    //           other._array        = nullptr;
+    //       // Copy the data pointer and its size from the source object.
+    //       this->_physicalSize = other._physicalSize;
+    //       // this->_array = other._array; // Shallow-Copy the pointer's reference.
+    //       this->_array = new Unique<E> *[_physicalSize];
+    //       for (unsigned long i = 0; i < _physicalSize; i++) {
+    //           _array[i] = new Unique<E>(*other._array[i]);
+    //           // // TODO :debug
+    //           // std::cout << *_array[i] << std::endl;
     //       }
+    //
+    //       /*
+    //        * `other` is deleted automatically here.
+    //        * So, you must "deep copy" (or "move") each pointers' reference,
+    //        * or else the references will be `deleted`.
+    //        */
     //       return *this;
     //   }
+
+  public:
+    BaseArray &operator=(BaseArray &&other) noexcept {
+
+        // Guard self assignment
+        if (this != &other) {
+
+            // Free the existing resource.
+            deleteThis();
+
+            // Copy the all pointers and primitives  from the source object.
+            this->_physicalSize = other._physicalSize;
+            _array              = other._array;
+            for (unsigned long i = 0; i < _physicalSize; i++) {
+                _array[i] = other._array[i];
+                // TODO :debug
+                std::cout << *_array[i] << std::endl;
+            }
+
+            /*
+               * Release the data pointer from the source object so that
+               * the destructor does not free the memory multiple times.
+               */
+            other.forEach([&other](auto *e) { e = nullptr; });
+            other._physicalSize = 0;
+            other._array        = nullptr;
+        }
+        return *this;
+    }
 
   public:
     friend std::ostream &operator<<(std::ostream &os, const BaseArray &array) {
