@@ -46,7 +46,11 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *          @li This kind of implementation is served only because of a
      *          request given by the customer ( = the course lecturer).
      */
-    PriorityQueue() = default;
+     // TODO: remove debug with `createEmpty`
+    // PriorityQueue() = default;
+    PriorityQueue() {
+        createEmpty();
+    }
 
   public:
     virtual ~PriorityQueue() { deleteThis(); }
@@ -92,13 +96,15 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     createDoubleHeap(DoublePointerMinHeapAndMaxHeapComponent<E> *
                              &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
 
+        auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>();
+
+        auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>();
+
         // Polymorphing `MinHeap` and `MaxHeap` through parameters.
         fieldOfDoublePointerMinHeapAndMaxHeapComponent =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        (MinHeap<EWrapper> *) new MinHeapWhenAlsoHavingMaxHeap<
-                                EWrapper>(),
-                        (MaxHeap<EWrapper> *) new MaxHeapWhenAlsoHavingMinHeap<
-                                EWrapper>());
+                        (MinHeap<EWrapper> *) minHeap,
+                        (MaxHeap<EWrapper> *) maxHeap);
     }
 
   protected:

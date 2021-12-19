@@ -13,56 +13,56 @@ class TestRunner {
   public:
     template<typename E>
     static void runAllTests(BaseArray<std::string> &testArray) {
-        auto                 priorityQueue = PriorityQueue<E>();
-        PriorityQueueAdt<E> &priorityQueueAdt =
-                Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
-                                             PriorityQueue<E>>(priorityQueue);
+        PriorityQueue<E> priorityQueue;
+        // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
+
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            runTest<E>(test, priorityQueueAdt);
+            // runTest<E>(test, priorityQueue);
         }
 
-        // priorityQueueAdt.print(std::cout); // TODO: bug here.
+        priorityQueue.print(std::cout); // TODO: bug here.
     }
 
   private:
     template<typename E>
     static void runTest(BaseArray<std::string> &test,
-                        PriorityQueueAdt<E> &   priorityQueueAdt) {
+                        PriorityQueue<E> &      priorityQueue) {
         // TODO: do something with `test` here...
         invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
-                test, priorityQueueAdt);
+                test, priorityQueue);
     }
 
   private:
     template<typename E>
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
             BaseArray<std::string> &test,
-            PriorityQueueAdt<E> &   priorityQueueAdt) {
+            PriorityQueue<E> &priorityQueue) {
 
         // TODO: print debug
         std::cout << test << std::endl;
-        std::cout << priorityQueueAdt << std::endl;
+        // std::cout << priorityQueueAdt << std::endl;
+        priorityQueue.print(std::cout);
 
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
-                std::cout << priorityQueueAdt.max();
+                std::cout << priorityQueue.max();
             } else if (methodLetterToInvokeInPriorityQueue == 'b') {
-                std::cout << priorityQueueAdt.deleteMax();
+                std::cout << priorityQueue.deleteMax();
             } else if (methodLetterToInvokeInPriorityQueue == 'c') {
-                std::cout << priorityQueueAdt.min();
+                std::cout << priorityQueue.min();
             } else if (methodLetterToInvokeInPriorityQueue == 'd') {
-                std::cout << priorityQueueAdt.deleteMin();
+                std::cout << priorityQueue.deleteMin();
             } else if (methodLetterToInvokeInPriorityQueue == 'e') {
-                priorityQueueAdt.createEmpty();
+                priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
                 Entry<int, std::string> entry(stoi(test.getElement(1)),
                                               test.getElement(1));
-                priorityQueueAdt.insert(&entry);
+                priorityQueue.insert(&entry);
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
-                std::cout << priorityQueueAdt.median();
+                std::cout << priorityQueue.median();
             }
         } catch (std::exception &e) {
 
