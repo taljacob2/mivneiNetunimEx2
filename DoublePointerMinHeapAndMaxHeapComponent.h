@@ -35,18 +35,18 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
     void deleteThis() const {
-        try {
+        // try {
             while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
-        } catch (std::exception &e) {
-            // ignored.
-        }
+        // } catch (std::exception &e) {
+        //     // ignored.
+        // }
         delete minHeap;
 
-        try {
+        // try {
             while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
-        } catch (std::exception &e) {
-            // ignored.
-        }
+        // } catch (std::exception &e) {
+        //     // ignored.
+        // }
         delete maxHeap;
     }
 
