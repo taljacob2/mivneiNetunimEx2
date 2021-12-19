@@ -46,11 +46,11 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *          @li This kind of implementation is served only because of a
      *          request given by the customer ( = the course lecturer).
      */
-     // TODO: remove debug with `createEmpty`
-    // PriorityQueue() = default;
-    PriorityQueue() {
-        createEmpty();
-    }
+    // TODO: remove debug with `createEmpty`
+    PriorityQueue() = default;
+    // PriorityQueue() {
+    //     createEmpty();
+    // }
 
   public:
     virtual ~PriorityQueue() { deleteThis(); }
@@ -230,7 +230,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                     ->getLogicalSize()) {
             priorityQueue._lessOrEqualToMedianDoubleHeap->print(std::cout);
         } else {
-            os << PRINT_WHEN_EMPTY;
+            os << PRINT_WHEN_EMPTY << std::endl;
         }
 
         os << "---------------------------- ";
@@ -240,8 +240,11 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                     ->getLogicalSize()) {
             priorityQueue._greaterThanMedianDoubleHeap->print(std::cout);
         } else {
-            os << PRINT_WHEN_EMPTY;
+            os << PRINT_WHEN_EMPTY << std::endl;
         }
+
+        os << " ----------------------------------------"
+              "--------------------------------------------" << std::endl;
 
         return os;
     }

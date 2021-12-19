@@ -19,7 +19,7 @@ class TestRunner {
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            // runTest<E>(test, priorityQueue);
+            runTest<E>(test, priorityQueue);
         }
 
         priorityQueue.print(std::cout); // TODO: bug here.
@@ -39,12 +39,6 @@ class TestRunner {
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
             BaseArray<std::string> &test,
             PriorityQueue<E> &priorityQueue) {
-
-        // TODO: print debug
-        std::cout << test << std::endl;
-        // std::cout << priorityQueueAdt << std::endl;
-        priorityQueue.print(std::cout);
-
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
@@ -61,6 +55,7 @@ class TestRunner {
                 Entry<int, std::string> entry(stoi(test.getElement(1)),
                                               test.getElement(1));
                 priorityQueue.insert(&entry);
+                priorityQueue.print(std::cout); // TODO: debug
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
             }
