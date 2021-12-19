@@ -40,8 +40,10 @@ class TestRunner {
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
             BaseArray<std::string> &test,
             PriorityQueueAdt<E> &   priorityQueueAdt) {
+
         // TODO: print debug
-        // std::cout << test;
+        std::cout << test << std::endl;
+        std::cout << priorityQueueAdt << std::endl;
 
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];

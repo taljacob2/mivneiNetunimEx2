@@ -2,6 +2,7 @@
 #ifndef PRIORITY_QUEUE_ADT_H
 #define PRIORITY_QUEUE_ADT_H
 
+#include <ostream>
 /**
  * @brief An interface for a Priority-Queue.
  *        Each element in this data-structure is represented by a an `Entry`
@@ -105,6 +106,13 @@ template<typename E> class PriorityQueueAdt {
      * @return the given @p os.
      */
     virtual std::ostream &print(std::ostream &os) const = 0;
+
+  public:
+    friend std::ostream &operator<<(std::ostream &          os,
+                                    const PriorityQueueAdt &adt) {
+        adt.print(os);
+        return os;
+    }
 };
 
 #endif // PRIORITY_QUEUE_ADT_H

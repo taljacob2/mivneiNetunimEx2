@@ -162,6 +162,12 @@ template<typename E> class HeapAdt {
      * @return the given @p os.
      */
     virtual std::ostream &print(std::ostream &os) const = 0;
+
+  public:
+    friend std::ostream &operator<<(std::ostream &os, const HeapAdt &adt) {
+        adt.print(os);
+        return os;
+    }
 };
 
 #endif // HEAP_ADT_H
