@@ -91,10 +91,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     void
     createDoubleHeap(DoublePointerMinHeapAndMaxHeapComponent<E> *
                              &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
+
+        // Polymorphing `MinHeap` and `MaxHeap` through parameters.
         fieldOfDoublePointerMinHeapAndMaxHeapComponent =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<EWrapper>(),
-                        new MaxHeapWhenAlsoHavingMinHeap<EWrapper>());
+                        (MinHeap<EWrapper> *) new MinHeapWhenAlsoHavingMaxHeap<
+                                EWrapper>(),
+                        (MaxHeap<EWrapper> *) new MaxHeapWhenAlsoHavingMinHeap<
+                                EWrapper>());
     }
 
   protected:
@@ -102,12 +106,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             DoublePointerMinHeapAndMaxHeapComponent<E> *
                     &     fieldOfDoublePointerMinHeapAndMaxHeapComponent,
             unsigned long physicalSize) {
+
+        // Polymorphing `MinHeap` and `MaxHeap` through parameters.
         fieldOfDoublePointerMinHeapAndMaxHeapComponent =
                 new DoublePointerMinHeapAndMaxHeapComponent<E>(
-                        new MinHeapWhenAlsoHavingMaxHeap<EWrapper>(
-                                physicalSize),
-                        new MaxHeapWhenAlsoHavingMinHeap<EWrapper>(
-                                physicalSize));
+                        (MinHeap<EWrapper> *) new MinHeapWhenAlsoHavingMaxHeap<
+                                EWrapper>(physicalSize),
+                        (MaxHeap<EWrapper> *) new MaxHeapWhenAlsoHavingMinHeap<
+                                EWrapper>(physicalSize));
     }
 
   public:
