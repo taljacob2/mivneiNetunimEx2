@@ -17,9 +17,12 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
 
   protected:
+    // TODO: polymorph
     MinHeapWhenAlsoHavingMaxHeap<E> *minHeap = nullptr;
 
   protected:
+
+    // TODO: polymorph
     MaxHeapWhenAlsoHavingMinHeap<E> *maxHeap = nullptr;
 
   public:
