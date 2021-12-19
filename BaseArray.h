@@ -615,14 +615,12 @@ template<typename E> class BaseArray : public Object {
             _array              = other._array;
             for (unsigned long i = 0; i < _physicalSize; i++) {
                 _array[i] = other._array[i];
-                // TODO :debug
-                std::cout << *_array[i] << std::endl;
             }
 
             /*
-               * Release the data pointer from the source object so that
-               * the destructor does not free the memory multiple times.
-               */
+             * Release the data pointer from the source object so that
+             * the destructor does not free the memory multiple times.
+             */
             other.forEach([&other](auto *e) { e = nullptr; });
             other._physicalSize = 0;
             other._array        = nullptr;
