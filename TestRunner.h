@@ -13,6 +13,7 @@ class TestRunner {
   public:
     template<typename E>
     static void runAllTests(BaseArray<std::string> &testArray) {
+        // TODO: polymorph with adt
         PriorityQueue<E> priorityQueue;
         // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
 
@@ -37,8 +38,7 @@ class TestRunner {
   private:
     template<typename E>
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
-            BaseArray<std::string> &test,
-            PriorityQueue<E> &priorityQueue) {
+            BaseArray<std::string> &test, PriorityQueue<E> &priorityQueue) {
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
