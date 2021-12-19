@@ -541,7 +541,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @return boolean value of *true* if the heap is empty, or else, *false* if
      *         the heap is not empty.
      */
-    bool isEmpty() override { return this->_logicalSize; }
+    bool isEmpty() override { return !(this->_logicalSize); }
 
   public:
     void makeEmpty() override { this->_logicalSize = 0; }

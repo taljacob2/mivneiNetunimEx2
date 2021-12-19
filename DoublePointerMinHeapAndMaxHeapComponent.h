@@ -28,11 +28,7 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     DoublePointerMinHeapAndMaxHeapComponent(
             MinHeapWhenAlsoHavingMaxHeap<E> *minHeap,
             MaxHeapWhenAlsoHavingMinHeap<E> *maxHeap)
-        : minHeap(minHeap), maxHeap(maxHeap) {
-
-        // TODO: debug
-        std::cout << "LOGICAL SIZE" << *minHeap << std::endl;
-    }
+        : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
     virtual ~DoublePointerMinHeapAndMaxHeapComponent() { deleteThis(); }
@@ -40,26 +36,14 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
   protected:
     void deleteThis() const {
         try {
-            while (!minHeap->isEmpty()) {
-
-                // TODO: debug
-                std::cout << "DELETED ELEMENT IN `minHeap`"<< std::endl;
-
-                delete minHeap->deleteRoot();
-            }
+            while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
         } catch (std::exception &e) {
             // ignored.
         }
         delete minHeap;
 
         try {
-            while (!maxHeap->isEmpty()) {
-
-                // TODO: debug
-                std::cout << "DELETED ELEMENT IN `maxHeap`"<< std::endl;
-
-                delete maxHeap->deleteRoot();
-            }
+            while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
         } catch (std::exception &e) {
             // ignored.
         }
