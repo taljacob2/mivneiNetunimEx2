@@ -25,10 +25,12 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     long int _minHeapIndex = 0;
 
   public:
-    explicit ElementInMinHeapAndMaxHeap(E *element) : _element(element) {}
+    explicit ElementInMinHeapAndMaxHeap(E *element) {
+        _element = new E(*element);
+    }
 
   public:
-    virtual ~ElementInMinHeapAndMaxHeap() = default;
+    virtual ~ElementInMinHeapAndMaxHeap() { delete _element; }
 
   public:
     E *getElement() const { return _element; }
