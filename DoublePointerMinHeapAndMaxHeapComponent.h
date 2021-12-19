@@ -21,7 +21,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     MinHeapWhenAlsoHavingMaxHeap<E> *minHeap = nullptr;
 
   protected:
-
     // TODO: polymorph
     MaxHeapWhenAlsoHavingMinHeap<E> *maxHeap = nullptr;
 
@@ -71,12 +70,15 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     }
 
   public:
-    EWrapper deleteFromBothHeaps(EWrapper *eWrapper) {
+    /**
+     * @todo `delete` `deepCopiedEWrapper`.
+     */
+    EWrapper *deleteFromBothHeaps(EWrapper *eWrapper) {
 
         // Backup fields of the given `eWrapper`.
-        auto     lessMinHeapIndex   = eWrapper->getMinHeapIndex();
-        auto     lessMaxHeapIndex   = eWrapper->getMaxHeapIndex();
-        EWrapper deepCopiedEWrapper = deepCopyEWrapper(eWrapper);
+        auto  lessMinHeapIndex   = eWrapper->getMinHeapIndex();
+        auto  lessMaxHeapIndex   = eWrapper->getMaxHeapIndex();
+        auto *deepCopiedEWrapper = new EWrapper(eWrapper->getElement());
 
         // Delete the pointer to the element.
         eWrapper->setElement(nullptr);
@@ -88,19 +90,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
          * with its indexes reset to 0.
          */
         return deepCopiedEWrapper;
-    }
-
-  protected:
-    EWrapper deepCopyEWrapper(EWrapper *eWrapper) const {
-
-        // Extract the old pointer from the given `eWrapper`.
-        E *copiedElement = (eWrapper->getElement());
-
-        // Construct a new `lvalue` object from that pointer.
-        EWrapper copiedEWrapper(copiedElement);
-
-        // Return the new `lvalue` object.
-        return copiedEWrapper;
     }
 
   public:

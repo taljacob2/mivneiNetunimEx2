@@ -163,13 +163,13 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
          * Delete the EWrapper from both "less" heaps and
          * also get a deep-copy of it.
          */
-        EWrapper eWrapperToTransferToGreater =
+        EWrapper *eWrapperToTransferToGreater =
                 _lessOrEqualToMedianDoubleHeap->deleteFromBothHeaps(
                         lessMaximumEWrapper);
 
         // Transfer the deep-copied EWrapper to the "greater" heap.
         _greaterThanMedianDoubleHeap->insertToBothHeaps(
-                &eWrapperToTransferToGreater);
+                eWrapperToTransferToGreater);
     }
 
   public:
