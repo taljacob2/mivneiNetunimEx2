@@ -23,11 +23,7 @@ class TestRunner {
             runTest<E>(test, priorityQueueAdt);
         }
 
-        // FIXME: debug print. bug here
-        // std::cout << testArray;
-        // std::cout << testArray.getLogicalSize();
-
-        // priorityQueueAdt.print(std::cout);
+        // priorityQueueAdt.print(std::cout); // TODO: bug here.
     }
 
   private:
