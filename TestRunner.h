@@ -53,7 +53,7 @@ class TestRunner {
                 priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
                 Entry<int, std::string> entry(stoi(test.getElement(1)),
-                                              test.getElement(1));
+                                              test.getElement(2));
                 priorityQueue.insert(&entry);
                 priorityQueue.print(std::cout); // TODO: debug
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {

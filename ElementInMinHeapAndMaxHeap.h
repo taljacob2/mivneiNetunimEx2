@@ -74,7 +74,7 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     friend std::ostream &
     operator<<(std::ostream &                    os,
                const ElementInMinHeapAndMaxHeap &entryInMinHeapAndMaxHeap) {
-        os << entryInMinHeapAndMaxHeap._element;
+        os << *entryInMinHeapAndMaxHeap._element;
         return os;
     }
 };

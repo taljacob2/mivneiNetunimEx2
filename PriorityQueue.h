@@ -143,6 +143,10 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             }
         } else {
 
+            // TODO: debug
+            std::cout << "inside insert. element is:" << *element;
+
+
             // Insert the given EWrapper to the "less" heap.
             _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
         }
