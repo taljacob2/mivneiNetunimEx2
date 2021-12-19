@@ -98,8 +98,8 @@ template<typename E> class BaseArray : public Object {
     }
 
     // FIXME:
-    // public:
-    //   BaseArray(const BaseArray &other) { *this = other; }
+    public:
+      BaseArray(const BaseArray &other) { *this = other; }
 
     // FIXME:
     // public:
@@ -574,23 +574,26 @@ template<typename E> class BaseArray : public Object {
     }
 
     // FIXME:
-    // public:
-    //   BaseArray &operator=(const BaseArray &other) {
-    //
-    //       // Guard self assignment
-    //       if (this == &other) { return *this; }
-    //
-    //       // Free the existing resource.
-    //       deleteThis();
-    //
-    //       // Copy the data pointer and its size from the source object.
-    //       this->_physicalSize = other._physicalSize;
-    //       for (unsigned long i = 0; i < _physicalSize; i++) {
-    //           _array[i] = other._array[i]; // Shallow-Copy the reference.
-    //       }
-    //
-    //       return *this;
-    //   }
+    public:
+      BaseArray &operator=(const BaseArray &other) {
+
+          // Guard self assignment
+          if (this == &other) { return *this; }
+
+          // Free the existing resource.
+          deleteThis();
+
+          // Copy the data pointer and its size from the source object.
+          this->_physicalSize = other._physicalSize;
+          this->_array = other._array; // Shallow-Copy the pointer's reference.
+          for (unsigned long i = 0; i < _physicalSize; i++) {
+              _array[i] = other._array[i]; // Shallow-Copy the pointer's reference.
+              // // TODO :debug
+              // std::cout << *_array[i] << std::endl;
+          }
+
+          return *this;
+      }
 
     // FIXME:
     // public:

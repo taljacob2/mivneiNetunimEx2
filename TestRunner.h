@@ -26,7 +26,9 @@ class TestRunner {
             // TODO: debug
             // test is an unallocated array!
             // std::cout << test << std::endl;
-            std::cout << testArray << std::endl;
+            // std::cout << test.size() << std::endl;
+            // std::cout << test.getElement(0) << std::endl;
+            // std::cout << testArray << std::endl;
             // delete &test;
             delete &testArray;
             exit(111);
