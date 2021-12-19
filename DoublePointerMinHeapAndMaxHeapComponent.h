@@ -35,18 +35,17 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   protected:
     void deleteThis() const {
-        // try {
-            while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
-        // } catch (std::exception &e) {
-        //     // ignored.
-        // }
+
+        while (!minHeap->isEmpty()) { delete minHeap->deleteRoot(); }
+
         delete minHeap;
 
-        // try {
-            while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
-        // } catch (std::exception &e) {
-        //     // ignored.
-        // }
+
+        // FIXME: bug. element is already free'd by the above `minHeap`.
+        //  need to delete (with marking as `nullptr only(!)` from the maxHeap
+        //  at once when deleting from `minHeap`
+        while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
+
         delete maxHeap;
     }
 
