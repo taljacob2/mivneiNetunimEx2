@@ -13,18 +13,17 @@ class TestRunner {
   public:
     static void runAllTests(BaseArray<std::string> &testArray) {
         // TODO: polymorph with adt
-        auto *priorityQueue = new PriorityQueue<Entry<int, std::string>>();
+        PriorityQueue<Entry<int, std::string>> priorityQueue;
         // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
 
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            // runTest<Entry<int, std::string>>(test, *priorityQueue);
+            runTest<Entry<int, std::string>>(test, priorityQueue);
         }
 
 
         // priorityQueue.print(std::cout); // TODO: bug here.
-        delete priorityQueue;
     }
 
   private:

@@ -47,8 +47,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *          request given by the customer ( = the course lecturer).
      */
     // TODO: remove debug with `createEmpty`
-    // PriorityQueue() = default;
-    PriorityQueue() { createEmpty(); }
+    PriorityQueue() = default;
+    // PriorityQueue() { createEmpty(); }
 
   public:
     virtual ~PriorityQueue() { deleteThis(); }
