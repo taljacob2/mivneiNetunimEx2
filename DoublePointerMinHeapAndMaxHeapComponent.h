@@ -5,6 +5,7 @@
 #include "MaxHeap.h"
 #include "MaxHeapWhenAlsoHavingMinHeap.h"
 #include "MinHeapWhenAlsoHavingMaxHeap.h"
+#include <ostream>
 
 /**
  * @see MinHeap
@@ -27,7 +28,13 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         : minHeap(minHeap), maxHeap(maxHeap) {}
 
   public:
-    virtual ~DoublePointerMinHeapAndMaxHeapComponent() = default;
+    virtual ~DoublePointerMinHeapAndMaxHeapComponent() { deleteThis(); }
+
+  protected:
+    void deleteThis() const {
+        delete minHeap;
+        delete maxHeap;
+    }
 
   public:
     MinHeap<EWrapper> *getMinHeap() { return minHeap; }
@@ -79,6 +86,14 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
         // Return the new `lvalue` object.
         return copiedEWrapper;
+    }
+
+  public:
+    friend std::ostream &
+    operator<<(std::ostream &                                 os,
+               const DoublePointerMinHeapAndMaxHeapComponent &component) {
+        component.print(os);
+        return os;
     }
 
   public:
