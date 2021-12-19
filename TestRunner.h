@@ -54,8 +54,8 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
                 Entry<int, std::string> entry(stoi(test.getElement(1)),
                                               test.getElement(2));
-                // priorityQueue.insert(&entry); // TODO: debug disabled
-                // priorityQueue.print(std::cout); // TODO: debug
+                priorityQueue.insert(&entry); // TODO: debug disabled
+                priorityQueue.print(std::cout); // TODO: debug
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
             }

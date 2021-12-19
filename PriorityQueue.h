@@ -20,6 +20,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
     typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
 
+  private:
+    static constexpr unsigned long SIZE = 100;
+
   protected:
     DoublePointerMinHeapAndMaxHeapComponent<E> *_lessOrEqualToMedianDoubleHeap =
             nullptr;
@@ -94,9 +97,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     createDoubleHeap(DoublePointerMinHeapAndMaxHeapComponent<E> *
                              &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
 
-        auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>(100);
+        auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>(SIZE);
 
-        auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>(100);
+        auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>(SIZE);
 
         // Polymorphing `MinHeap` and `MaxHeap` through parameters.
         fieldOfDoublePointerMinHeapAndMaxHeapComponent =
