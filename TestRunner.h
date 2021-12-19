@@ -13,26 +13,14 @@ class TestRunner {
   public:
     template<typename E>
     static void runAllTests(BaseArray<std::string> &testArray) {
-
-        // TODO: debug disabled
-        // auto                 priorityQueue = PriorityQueue<E>();
-        // PriorityQueueAdt<E> &priorityQueueAdt =
-        //         Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
-        //                                      PriorityQueue<E>>(priorityQueue);
+        auto                 priorityQueue = PriorityQueue<E>();
+        PriorityQueueAdt<E> &priorityQueueAdt =
+                Polymorpher::polymorphLValue<PriorityQueueAdt<E>,
+                                             PriorityQueue<E>>(priorityQueue);
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-
-            // // TODO: debug
-            // // std::cout << test << std::endl;
-            // std::cout << test.size() << std::endl;
-            // std::cout << test.getElement(0) << std::endl;
-            // // std::cout << testArray << std::endl;
-            // delete &test;
-            // delete &testArray;
-            // exit(111);
-
-            // runTest<E>(test, priorityQueueAdt); // TODO: debug disabled
+            runTest<E>(test, priorityQueueAdt);
         }
 
         // FIXME: debug print. bug here
