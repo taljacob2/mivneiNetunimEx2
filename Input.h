@@ -357,7 +357,6 @@ class Input {
     /**
      * @brief splits a given string by a given delimiter.
      *
-     * @note requires `#include <cstring>`.
      * @param str the `std::string` to split by the given @p delimiter.
      * @param delimiter a `std::string` that the given @p str will be
      *                  split by.
