@@ -45,8 +45,8 @@ template<typename E> class MaxHeap : public Heap<E> {
     }
 
   private:
-    bool predicateIsSwapNeeded(E element1, E element2) override {
-        return element1 < element2;
+    bool predicateIsSwapNeeded(E *element1, E *element2) override {
+        return *element1 < *element2;
     }
 };
 

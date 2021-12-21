@@ -61,14 +61,23 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         auto *eWrapper = new EWrapper((E &&) element);
 
         // TODO: debug print
-        std::cout << *eWrapper << std::endl;
+        std::cout << "created:" << *eWrapper << std::endl;
         insertToBothHeaps(eWrapper);
     }
 
   public:
     void insertToBothHeaps(EWrapper *&eWrapper) {
-        minHeap->insert(eWrapper); // FIXME: bug here.
-        maxHeap->insert(eWrapper);
+        EWrapper *eWrapperCopy1 = eWrapper;
+        EWrapper *eWrapperCopy2 = eWrapper;
+        minHeap->insert(eWrapperCopy1); // FIXME: bug here.
+
+        // TODO: debug print
+        std::cout << "created1:" << *eWrapperCopy1 << std::endl;
+
+        // TODO: debug print
+        std::cout << "created2:" << *eWrapperCopy2 << std::endl;
+
+        maxHeap->insert(eWrapperCopy2);
     }
 
   protected:

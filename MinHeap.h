@@ -37,16 +37,17 @@ template<typename E> class MinHeap : public Heap<E> {
     virtual ~MinHeap() = default;
 
   private:
-    unsigned long getIndexOfChildToSwapWithParent(E **array, unsigned long size,
-                                         unsigned long indexToElement1,
-                                         unsigned long indexToElement2) override {
+    unsigned long
+    getIndexOfChildToSwapWithParent(E **array, unsigned long size,
+                                    unsigned long indexToElement1,
+                                    unsigned long indexToElement2) override {
         return my_algorithms::min(array, size, indexToElement1,
                                   indexToElement2);
     }
 
   private:
-    bool predicateIsSwapNeeded(E element1, E element2) override {
-        return element1 > element2;
+    bool predicateIsSwapNeeded(E *element1, E *element2) override {
+        return *element1 > *element2;
     }
 };
 

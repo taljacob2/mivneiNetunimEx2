@@ -441,8 +441,8 @@ template<typename E> class Heap : public HeapAdt<E> {
                  * the heap as a `Heap`.
                  */
                 if (predicateIsSwapNeeded(
-                            *_array[currentIndex],
-                            *_array[indexOfSwappableChildOfCurrentRoot])) {
+                            _array[currentIndex],
+                            _array[indexOfSwappableChildOfCurrentRoot])) {
                     onSwapIsNeeded(currentIndex,
                                    indexOfSwappableChildOfCurrentRoot);
 
@@ -504,9 +504,11 @@ template<typename E> class Heap : public HeapAdt<E> {
 
   protected:
     /**
+     * @attention *must* pass by pointer, so that the elements won't destruct
+     *            themselves.
      * @see fixHeapWhile(unsigned long, Direction)
      */
-    virtual bool predicateIsSwapNeeded(E element1, E element2) = 0;
+    virtual bool predicateIsSwapNeeded(E *element1, E *element2) = 0;
 
   public:
     /**
@@ -561,8 +563,8 @@ template<typename E> class Heap : public HeapAdt<E> {
              * them, in order to ensure validity of the heap, as a `Heap`.
              */
             if (predicateIsSwapNeeded(
-                        *this->_array[getParentIndex(currentIndex)],
-                        *this->_array[currentIndex])) {
+                        this->_array[getParentIndex(currentIndex)],
+                        this->_array[currentIndex])) {
                 onSwapIsNeeded(currentIndex, getParentIndex(currentIndex));
 
                 /* Step upwards to the parent of the element. */
