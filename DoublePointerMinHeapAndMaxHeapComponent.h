@@ -52,7 +52,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         }
 
         delete minHeap;
-
         delete maxHeap;
     }
 
