@@ -147,11 +147,10 @@ class Input {
         try {
 
             // Split the current line by ' ' delimiter.
-            int                    splitArraySize = 0;
             BaseArray<std::string> splitArray =
                     split(testArray.getElement(i), delimiter);
 
-            assertSplit(i, splitArraySize, testArray, splitArray);
+            assertSplit(i, testArray, splitArray);
         } catch (std::exception &e) { throw; }
     }
 
@@ -174,28 +173,24 @@ class Input {
         try {
 
             // Split the current line by ' ' delimiter.
-            int splitArraySize = 0;
             BaseArray<std::string> splitArray =
                     split(testArray.getElement(i), delimiter);
 
-            assertSplit(i, splitArraySize, testArray, splitArray);
+            assertSplit(i, testArray, splitArray);
 
             return splitArray;
         } catch (std::exception &e) { throw; }
     }
 
   private:
-    static void assertSplit(unsigned long i, int splitArraySize,
-                            BaseArray<std::string> &testArray,
+    static void assertSplit(unsigned long i, BaseArray<std::string> &testArray,
                             BaseArray<std::string> &splitArray) {
 
         // Assert first letter.
         assertFirstLetter(i, testArray, splitArray);
 
         // Assert parameters after first letter.
-        if (splitArraySize > 1) {
-            assertAllowedTwoParameters(splitArray, splitArraySize);
-        }
+        if (splitArray.size() > 1) { assertAllowedTwoParameters(splitArray); }
     }
 
   private:
@@ -204,20 +199,19 @@ class Input {
                                   BaseArray<std::string> &splitArray) {
         if (i == 0) {
             if (!((testArray.getElement(i).length() == 1) &&
-                  (testArray.getElement(i))[0] == FIRST_LETTER)) {
+                  testArray.getElement(i)[0] == FIRST_LETTER)) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         } else {
             if (!predicateIsValidLetter(splitArray.getElement(0)) ||
-                (testArray.getElement(i))[0] == FIRST_LETTER) {
+                testArray.getElement(i)[0] == FIRST_LETTER) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         }
     }
 
   private:
-    static void assertAllowedTwoParameters(BaseArray<std::string> &splitArray,
-                                           int splitArraySize) {
+    static void assertAllowedTwoParameters(BaseArray<std::string> &splitArray) {
 
         // Allow only the letter `ALLOWED_TWO_PARAMETERS_LETTER`.
         if (splitArray.getElement(0).c_str()[0] !=
@@ -225,14 +219,13 @@ class Input {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
-        mergeLastParameterWhenThereAreMoreThanThreeElements(splitArray,
-                                                            splitArraySize);
+        mergeLastParameterWhenThereAreMoreThanThreeElements(splitArray);
 
         /*
          * Assert having exactly two parameters after the allowed letter,
          * while allowing the last parameter to contain ' ' chars within it.
          */
-        if (splitArraySize != 3) {
+        if (splitArray.size() != 3) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
@@ -248,15 +241,15 @@ class Input {
      *        split strings of it to one.
      */
     static void mergeLastParameterWhenThereAreMoreThanThreeElements(
-            BaseArray<std::string> &splitArray, int &splitArraySize) {
-        if (splitArraySize > 3) {
-            for (unsigned long i = 3; i < splitArray.size(); i++) {
-                splitArray.setElement(
-                        splitArray.getElement(2) + splitArray.getElement(i), 2);
-            }
-            splitArraySize = 3;
+            BaseArray<std::string> &splitArray) {
+        if (splitArray.size() > 3) {
+            splitArray.mergeElements(2, 3, splitArray.size() - 1,
+                                     [&splitArray](auto &s1, auto &s2) {
+                                         return s1 + " " + s2;
+                                     });
         }
     }
+
 
   private:
     /**

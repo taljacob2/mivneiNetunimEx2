@@ -117,34 +117,34 @@ template<typename E> class BaseArray : public Object {
         delete[] array;
     }
 
-  // public:
-  //   /**
-  //    * @warning in case the element you are trying to get was originally a
-  //    *          `rvalue`, you will get the *one and only* reference to that element,
-  //    *          and `this` array won't have access to it anymore.
-  //    *          Thus, in case you need the reference to this element more than
-  //    *          once, you **must catch** the return value of this method,
-  //    *          or else nobody will have a reference for this element anymore,
-  //    *          and it will be destroyed.
-  //    *          @note as said before, in case the element you are trying to get
-  //    *                was originally a `rvalue`, you will get the *one and only* reference to
-  //    *                this element - and then, `this` array will replace its
-  //    *                presence with `nullptr` (to mark it as "deleted").
-  //    */
-  //   virtual E *getElementUnsafe(unsigned long index) {
-  //       if (isOutOfRange(index)) {
-  //           throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
-  //       }
-  //
-  //       E *element = _array[index]->getElement(); // Shallow copy pointer.
-  //
-  //       if (_array[index]->isNeedToDeleteElement()) {
-  //           delete _array[index]; // Delete the old unique pointer.
-  //           _array[index] = new Unique<E>(nullptr);
-  //       }
-  //
-  //       return element;
-  //   }
+    // public:
+    //   /**
+    //    * @warning in case the element you are trying to get was originally a
+    //    *          `rvalue`, you will get the *one and only* reference to that element,
+    //    *          and `this` array won't have access to it anymore.
+    //    *          Thus, in case you need the reference to this element more than
+    //    *          once, you **must catch** the return value of this method,
+    //    *          or else nobody will have a reference for this element anymore,
+    //    *          and it will be destroyed.
+    //    *          @note as said before, in case the element you are trying to get
+    //    *                was originally a `rvalue`, you will get the *one and only* reference to
+    //    *                this element - and then, `this` array will replace its
+    //    *                presence with `nullptr` (to mark it as "deleted").
+    //    */
+    //   virtual E *getElementUnsafe(unsigned long index) {
+    //       if (isOutOfRange(index)) {
+    //           throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
+    //       }
+    //
+    //       E *element = _array[index]->getElement(); // Shallow copy pointer.
+    //
+    //       if (_array[index]->isNeedToDeleteElement()) {
+    //           delete _array[index]; // Delete the old unique pointer.
+    //           _array[index] = new Unique<E>(nullptr);
+    //       }
+    //
+    //       return element;
+    //   }
 
   public:
     virtual E &getElement(unsigned long index) {
@@ -571,6 +571,66 @@ template<typename E> class BaseArray : public Object {
                              " method.";
             throw std::runtime_error(msg + " " + msg2);
         }
+    }
+
+
+  public:
+    void manipulateElementByRangeOfElements(
+            unsigned long indexOfElementToManipulate,
+            unsigned long indexOfFirstElementToManipulateWith,
+            unsigned long indexOfLastElementToManipulateWith,
+            const std::function<E  (E &, E &)> &callBack) {
+        for (unsigned long i = indexOfFirstElementToManipulateWith;
+             i < indexOfLastElementToManipulateWith + 1; i++) {
+            setElement((E)callBack(getElement(indexOfElementToManipulate),
+                                getElement(i)),
+                       indexOfElementToManipulate);
+        }
+    }
+
+  public:
+    void
+    mergeElements(unsigned long indexOfDestinationElement,
+                  unsigned long indexOfFirstElementToMergeToDestinationElement,
+                  unsigned long indexOfLastElementToMergeToDestinationElement,
+                  const std::function<E (E &, E &)> &callBack) {
+        manipulateElementByRangeOfElements(
+                indexOfDestinationElement,
+                indexOfFirstElementToMergeToDestinationElement,
+                indexOfLastElementToMergeToDestinationElement, callBack);
+        shortenArray(indexOfFirstElementToMergeToDestinationElement,
+                     indexOfLastElementToMergeToDestinationElement);
+    }
+
+  public:
+    void shortenArray(unsigned long startIndexToDeleteFrom,
+                      unsigned long endIndexToDeleteTo) {
+        auto sizeOfAllTheElementsMerged =
+                endIndexToDeleteTo + 1 - startIndexToDeleteFrom;
+        auto        newArraySize = _physicalSize - sizeOfAllTheElementsMerged;
+        Unique<E> **newArray     = new Unique<E> *[newArraySize];
+        for (unsigned long i = 0; i < _physicalSize; i++) {
+
+            /*
+             * Shallow-Copy pointers.
+             * If the element is marked for `delete`, then don't copy it.
+             * Instead, `delete` it.
+             */
+            if ((startIndexToDeleteFrom <= i) && (i <= endIndexToDeleteTo)) {
+                delete _array[i];
+            }
+
+            newArray[i] = _array[i];
+        }
+
+        // Delete the old array pointer.
+        delete[] _array;
+
+        // Set the new array pointer to `newArray` pointer.
+        _array = newArray;
+
+        // Set the new _physicalSize to `newArraySize`.
+        _physicalSize = newArraySize;
     }
 
     // // FIXME:
