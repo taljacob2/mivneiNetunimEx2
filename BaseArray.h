@@ -579,11 +579,11 @@ template<typename E> class BaseArray : public Object {
             unsigned long indexOfElementToManipulate,
             unsigned long indexOfFirstElementToManipulateWith,
             unsigned long indexOfLastElementToManipulateWith,
-            const std::function<E  (E &, E &)> &callBack) {
+            const std::function<E(E &, E &)> &callBack) {
         for (unsigned long i = indexOfFirstElementToManipulateWith;
              i < indexOfLastElementToManipulateWith + 1; i++) {
-            setElement((E)callBack(getElement(indexOfElementToManipulate),
-                                getElement(i)),
+            setElement((E) callBack(getElement(indexOfElementToManipulate),
+                                    getElement(i)),
                        indexOfElementToManipulate);
         }
     }
@@ -593,7 +593,7 @@ template<typename E> class BaseArray : public Object {
     mergeElements(unsigned long indexOfDestinationElement,
                   unsigned long indexOfFirstElementToMergeToDestinationElement,
                   unsigned long indexOfLastElementToMergeToDestinationElement,
-                  const std::function<E (E &, E &)> &callBack) {
+                  const std::function<E(E &, E &)> &callBack) {
         manipulateElementByRangeOfElements(
                 indexOfDestinationElement,
                 indexOfFirstElementToMergeToDestinationElement,
@@ -618,6 +618,7 @@ template<typename E> class BaseArray : public Object {
              */
             if ((startIndexToDeleteFrom <= i) && (i <= endIndexToDeleteTo)) {
                 delete _array[i];
+                continue;
             }
 
             newArray[i] = _array[i];
