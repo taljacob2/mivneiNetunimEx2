@@ -103,12 +103,23 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @return the root element, which is the top element in the heap.
      * @throws std::runtime_error in case there are no elements in the heap,
      *         and the user requested to retrieve the root.
+     * @see getElement(unsigned long)
      */
-    E *getRoot() override {
+    E *getRoot() override { return getElement(0); }
+
+  protected:
+    /**
+     * @return an element in the heap corresponds to the given @p index.
+     * @throws std::out_of_range in case the index provided is out of range.
+     * @throws std::runtime_error in case there are no elements in the heap,
+     *         and the user requested to retrieve the root.
+     */
+    E *getElement(unsigned long index) override {
         if (!_logicalSize) {
             throw std::runtime_error(IS_EMPTY_MESSAGE);
         } else {
-            return this->_array[0];
+            assertOutOfRange(index);
+            return this->_array[index];
         }
     }
 
@@ -181,28 +192,52 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                             ensure that the heap is still valid.
      * @see deleteRoot()
      * @see fixHeap(unsigned long)
+     * @see deleteTheIthElementWhenThereAreTwoOrMoreElements(unsigned long, bool)
      */
     void deleteRootWhenThereAreTwoOrMoreElements(bool fixHeapAfterDeletion) {
+        deleteTheIthElementWhenThereAreTwoOrMoreElements(0,
+                                                         fixHeapAfterDeletion);
+    }
+
+  private:
+    /**
+     * @brief This method is a *private* method, that represents the
+     *        case when there are `2` or more elements in the heap.
+     *
+     * @note After removing the *root element* from the heap, this method
+     *       calls the @link fixHeap(indexOfElementToDelete) @endlink method,
+     *       in order to fix the heap afterwards - only if the @p
+     *       fixHeapAfterDeletion parameter is `true`.
+     * @param fixHeapAfterDeletion determines if the method will call the
+     *                             @link fixHeap(indexOfElementToDelete)
+     *                             @endlink method, after deletion, to
+     *                             ensure that the heap is still valid.
+     * @see deleteRoot()
+     * @see fixHeap(unsigned long)
+     */
+    void deleteTheIthElementWhenThereAreTwoOrMoreElements(
+            unsigned long indexOfElementToDelete, bool fixHeapAfterDeletion) {
 
         /*
          * There are at least `2` elements in the heap,
          * so we are able to delete an element.
          */
 
-        /* Set the `first` element in the _array to be the `last` element. */
-        this->_array[0] = this->_array[this->_logicalSize - 1];
+        /* Set the `indexOfElementToDelete` element in the `_array` to be the `last` element. */
+        this->_array[indexOfElementToDelete] =
+                this->_array[this->_logicalSize - 1];
 
         /* Set the `last` element to be `nullptr`. */
         this->_array[this->_logicalSize - 1] = nullptr;
 
         /*
-         * Decrease the `_logicalSize` of the _array by `1`,
-         * before invoking `fixHeap(0)`.
+         * Decrease the `_logicalSize` of the `_array` by `1`,
+         * before invoking `fixHeap(indexOfElementToDelete)`.
          */
         this->_logicalSize--;
 
-        /* After deletion, invoke `fixHeap(0)` to fix the heap. */
-        if (fixHeapAfterDeletion) { fixHeap(0); }
+        /* After deletion, invoke `fixHeap(indexOfElementToDelete)` to fix the heap. */
+        if (fixHeapAfterDeletion) { fixHeap(indexOfElementToDelete); }
     }
 
   public:
@@ -306,9 +341,20 @@ template<typename E> class Heap : public HeapAdt<E> {
     void fixHeap(unsigned long indexToFixFrom, Direction direction) {
 
         /* Check that `indexToFixFrom` is a legal index. */
-        if ((indexToFixFrom < 0) || (this->_logicalSize <= indexToFixFrom)) {
+        assertOutOfRange(indexToFixFrom);
 
-            /* The `indexToFixFrom` is out of range. Throw a message. */
+        fixHeapLegalIndex(indexToFixFrom, direction);
+    }
+
+  private:
+    /**
+     * @param index the index to assert is *not* out of range of the heap's
+     *              logical size.
+     * @throws std::out_of_range in case the index provided is out of range.
+     */
+    void assertOutOfRange(unsigned long index) {
+        if ((index < 0) || (this->_logicalSize <= index)) {
+
             // std::string message;
             // message.append("The index provided is out of range. There are ");
             // message.append(std::to_string(_logicalSize));
@@ -316,7 +362,6 @@ template<typename E> class Heap : public HeapAdt<E> {
 
             throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
         }
-        fixHeapLegalIndex(indexToFixFrom, direction);
     }
 
   private:

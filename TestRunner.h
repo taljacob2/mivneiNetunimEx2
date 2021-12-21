@@ -19,10 +19,6 @@ class TestRunner {
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-
-            // TODO: debug.
-            std::cout << "test = " << test;
-
             runTest<Entry<int, std::string>>(test, priorityQueue);
         }
 
