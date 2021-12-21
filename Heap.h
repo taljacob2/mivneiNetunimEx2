@@ -137,7 +137,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @see fixHeap(unsigned long)
      * @see deleteElement(unsigned long, bool)
      */
-    E *deleteRoot() override { return deleteElement(0, true); }
+    E *deleteRoot() override { return deleteElement(0); }
 
   public:
     /**
