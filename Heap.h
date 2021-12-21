@@ -114,7 +114,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @throws std::runtime_error in case there are no elements in the heap,
      *         and the user requested to retrieve the root.
      */
-    E *getElement(unsigned long index) override {
+    E *getElement(unsigned long index) {
         if (!_logicalSize) {
             throw std::runtime_error(IS_EMPTY_MESSAGE);
         } else {

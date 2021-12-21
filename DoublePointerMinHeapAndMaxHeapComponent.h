@@ -45,17 +45,20 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
             //      logicalSize by 1, and fixHeap(i) as if the element was
             //      deleted successfully.
 
-            delete minHeap->deleteRoot();
+            // Get the root from `minHeap`.
+            ElementInMinHeapAndMaxHeap<E> *minHeapRoot = minHeap->deleteRoot();
 
+            /*
+             * Extract the corresponding index of this root element's from
+             * `maxHeap`, and delete it from the `maxHeap`.
+             */
+            maxHeap->deleteElement(minHeapRoot->getMaxHeapIndex());
+
+            // `delete` the ElementInMinHeapAndMaxHeap<E> from memory.
+            delete minHeapRoot;
         }
 
         delete minHeap;
-
-
-        // FIXME: bug. element is already free'd by the above `minHeap`.
-        //  need to delete (with marking as `nullptr only(!)` from the maxHeap
-        //  at once when deleting from `minHeap`
-        while (!maxHeap->isEmpty()) { delete maxHeap->deleteRoot(); }
 
         delete maxHeap;
     }
