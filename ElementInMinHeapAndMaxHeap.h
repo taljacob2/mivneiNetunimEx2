@@ -31,11 +31,17 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
 
   public:
     explicit ElementInMinHeapAndMaxHeap(E &&element) {
-        _uniqueElement = new Unique<E>(&element);
+        _uniqueElement = new Unique<E>((E &&) element);
     }
 
   public:
-    virtual ~ElementInMinHeapAndMaxHeap() { delete _uniqueElement; }
+    virtual ~ElementInMinHeapAndMaxHeap() {
+
+        // TODO: debug:
+        std::cout << "DELETING EWRAPPER" << *this << std::endl;
+
+        delete _uniqueElement;
+    }
 
   public:
     Unique<E> *getUniqueElement() const { return _uniqueElement; }
