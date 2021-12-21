@@ -105,7 +105,7 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
             unsigned long indexOfEWrapperInMaxHeapToDeleteFromBothHeaps,
             bool          deleteEWrapper = false) const {
 
-        // Get the `EWrapper` to delete from `minHeap`.
+        // Get the `EWrapper` to delete from `maxHeap`.
         EWrapper *eWrapperToDelete = maxHeap->deleteElement(
                 indexOfEWrapperInMaxHeapToDeleteFromBothHeaps);
 
