@@ -31,7 +31,7 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
 
   public:
     explicit ElementInMinHeapAndMaxHeap(E &&element) {
-        _uniqueElement = new Unique<E>(element);
+        _uniqueElement = new Unique<E>(&element);
     }
 
   public:
