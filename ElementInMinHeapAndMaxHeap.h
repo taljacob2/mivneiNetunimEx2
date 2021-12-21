@@ -72,8 +72,16 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     }
 
   public:
+    bool operator==(const ElementInMinHeapAndMaxHeap &rhs) const {
+        return _uniqueElement == rhs._uniqueElement; // Compare by value.
+    }
+    bool operator!=(const ElementInMinHeapAndMaxHeap &rhs) const {
+        return !(rhs == *this);
+    }
+
+  public:
     bool operator<(const ElementInMinHeapAndMaxHeap &rhs) const {
-        return _uniqueElement < rhs._uniqueElement;
+        return *_uniqueElement < *(rhs._uniqueElement); // Compare by value.
     }
     bool operator>(const ElementInMinHeapAndMaxHeap &rhs) const {
         return rhs < *this;
@@ -85,13 +93,6 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
         return !(*this < rhs);
     }
 
-  public:
-    bool operator==(const ElementInMinHeapAndMaxHeap &rhs) const {
-        return _uniqueElement == rhs._uniqueElement;
-    }
-    bool operator!=(const ElementInMinHeapAndMaxHeap &rhs) const {
-        return !(rhs == *this);
-    }
 };
 
 #endif // ELEMENT_IN_MIN_HEAP_AND_MAX_HEAP_H

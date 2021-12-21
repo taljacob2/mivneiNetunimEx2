@@ -63,13 +63,13 @@ template<typename E> class Unique : public Object {
 
   public:
     bool operator==(const Unique &rhs) const {
-        return _element == rhs._element;
+        return *_element == *(rhs._element); // Compare by value.
     }
     bool operator!=(const Unique &rhs) const { return !(rhs == *this); }
 
   public:
     bool operator<(const Unique &rhs) const {
-        return _element < rhs._element;
+        return *_element < *(rhs._element); // Compare by value.
     }
     bool operator>(const Unique &rhs) const { return rhs < *this; }
     bool operator<=(const Unique &rhs) const { return !(rhs < *this); }

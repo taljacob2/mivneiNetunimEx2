@@ -508,7 +508,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *            themselves.
      * @see fixHeapWhile(unsigned long, Direction)
      */
-    virtual bool predicateIsSwapNeeded(E *element1, E *element2) = 0;
+    virtual bool predicateIsSwapNeeded(E *&element1, E *&element2) = 0;
 
   public:
     /**
@@ -565,7 +565,7 @@ template<typename E> class Heap : public HeapAdt<E> {
             if (predicateIsSwapNeeded(
                         this->_array[getParentIndex(currentIndex)],
                         this->_array[currentIndex])) {
-                onSwapIsNeeded(currentIndex, getParentIndex(currentIndex));
+                onSwapIsNeeded(getParentIndex(currentIndex), currentIndex);
 
                 /* Step upwards to the parent of the element. */
                 currentIndex = getParentIndex(currentIndex);
