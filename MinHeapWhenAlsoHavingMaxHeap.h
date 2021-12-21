@@ -39,10 +39,6 @@ class MinHeapWhenAlsoHavingMaxHeap
         // Swap the elements:
         Heap<EWrapper>::onSwapIsNeeded(currentIndex,
                                        indexOfOtherSwappableElement);
-
-        // TODO: debug print
-        std::cout << this->_array[currentIndex] << "+++"
-                  << this->_array[indexOfOtherSwappableElement] << std::endl;
     }
 };
 
