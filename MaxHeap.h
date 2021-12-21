@@ -37,16 +37,16 @@ template<typename E> class MaxHeap : public Heap<E> {
     virtual ~MaxHeap() = default;
 
   private:
-    virtual unsigned long getIndexOfChildToSwapWithParent(E **array, unsigned long
-                                                                      size,
-                                         unsigned long indexToElement1,
-                                         unsigned long indexToElement2) override {
+    unsigned long
+    getIndexOfChildToSwapWithParent(E **array, unsigned long size,
+                                    unsigned long indexToElement1,
+                                    unsigned long indexToElement2) override {
         return my_algorithms::max(array, size, indexToElement1,
                                   indexToElement2);
     }
 
   private:
-    virtual bool predicateIsSwapNeeded(E *&element1, E *&element2) override {
+    bool predicateIsSwapNeeded(E *&element1, E *&element2) override {
         return *element1 < *element2;
     }
 };
