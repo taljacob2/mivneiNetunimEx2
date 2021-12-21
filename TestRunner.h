@@ -23,7 +23,7 @@ class TestRunner {
         }
 
 
-        // priorityQueue.print(std::cout); // TODO: bug here.
+        priorityQueue.print(std::cout); // TODO: bug here.
     }
 
   private:

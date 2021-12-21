@@ -68,47 +68,36 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         maxHeap->insert(eWrapper);
     }
 
-  protected:
+  public:
     /**
      * @return - `nullptr`: when the `EWrapper` was *removed* and `delete`d -
      *           in case @p deleteEWrapper is `true`.
      *         - *EWrapper removed*: when the `EWrapper` was *removed*
      *           without being `delete`d - in case @p deleteEWrapper is `false`.
      */
-    static EWrapper *deleteEWrapperFromBothHeaps(
-            Heap<EWrapper> *heap1, Heap<EWrapper> *heap2,
-            unsigned long indexOfEWrapperGivenHeap1ToDeleteFromBothHeaps,
-            bool          deleteEWrapper = true) {
-
-        // Get the `EWrapper` to delete from `minHeap`.
-        EWrapper *heap1EWrapperToDelete = heap1->deleteElement(
-                indexOfEWrapperGivenHeap1ToDeleteFromBothHeaps);
-
-        /*
-         * Extract the corresponding `indexOfEWrapperInMinHeapToDeleteFromBothHeaps`
-         * of this `heap1EWrapperToDelete`'s element from `heap2`,
-         * and delete it from the `heap2`.
-         */
-        heap2->deleteElement(heap1EWrapperToDelete->getMaxHeapIndex());
-
-        if (deleteEWrapper) {
-
-            // `delete` the `EWrapper` from memory.
-            delete heap1EWrapperToDelete;
-            heap1EWrapperToDelete = nullptr;
-        }
-
-        return heap1EWrapperToDelete;
-    }
-
-  public:
     EWrapper *deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
             unsigned long indexOfEWrapperInMinHeapToDeleteFromBothHeaps,
             bool          deleteEWrapper = false) const {
 
-        return deleteEWrapperFromBothHeaps(
-                minHeap, maxHeap, indexOfEWrapperInMinHeapToDeleteFromBothHeaps,
-                deleteEWrapper);
+        // Get the `EWrapper` to delete from `minHeap`.
+        EWrapper *eWrapperToDelete = minHeap->deleteElement(
+                indexOfEWrapperInMinHeapToDeleteFromBothHeaps);
+
+        /*
+         * Extract the corresponding `indexOfEWrapperInMinHeapToDeleteFromBothHeaps`
+         * of this `eWrapperToDelete`'s element from `maxHeap`,
+         * and delete it from the `maxHeap`.
+         */
+        maxHeap->deleteElement(eWrapperToDelete->getMaxHeapIndex());
+
+        if (deleteEWrapper) {
+
+            // `delete` the `EWrapper` from memory.
+            delete eWrapperToDelete;
+            eWrapperToDelete = nullptr;
+        }
+
+        return eWrapperToDelete;
     }
 
   public:
@@ -116,9 +105,25 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
             unsigned long indexOfEWrapperInMaxHeapToDeleteFromBothHeaps,
             bool          deleteEWrapper = false) const {
 
-        return deleteEWrapperFromBothHeaps(
-                maxHeap, minHeap, indexOfEWrapperInMaxHeapToDeleteFromBothHeaps,
-                deleteEWrapper);
+        // Get the `EWrapper` to delete from `minHeap`.
+        EWrapper *eWrapperToDelete = maxHeap->deleteElement(
+                indexOfEWrapperInMaxHeapToDeleteFromBothHeaps);
+
+        /*
+         * Extract the corresponding `indexOfEWrapperInMaxHeapToDeleteFromBothHeaps`
+         * of this `eWrapperToDelete`'s element from `minHeap`,
+         * and delete it from the `minHeap`.
+         */
+        minHeap->deleteElement(eWrapperToDelete->getMinHeapIndex());
+
+        if (deleteEWrapper) {
+
+            // `delete` the `EWrapper` from memory.
+            delete eWrapperToDelete;
+            eWrapperToDelete = nullptr;
+        }
+
+        return eWrapperToDelete;
     }
 
   public:
