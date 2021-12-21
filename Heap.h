@@ -154,7 +154,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @see fixHeap(unsigned long)
      * @see deleteElement(unsigned long, bool)
      */
-    E *deleteElement(unsigned long index) override {
+    E *deleteElement(unsigned long index) {
         return deleteElement(index, true);
     }
 
