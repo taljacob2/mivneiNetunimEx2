@@ -135,7 +135,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @throws std::runtime_error in case the heap is already empty.
      * @throws std::out_of_range in case the index provided is out of range.
      * @see fixHeap(unsigned long)
-     * @see deleteElement(unsigned long, bool)
+     * @see deleteElement(unsigned long)
      */
     E *deleteRoot() override { return deleteElement(0); }
 
