@@ -36,10 +36,6 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
 
   public:
     virtual ~ElementInMinHeapAndMaxHeap() {
-
-        // TODO: debug:
-        std::cout << "DELETING EWRAPPER" << *this << std::endl;
-
         delete _uniqueElement;
     }
 
