@@ -59,8 +59,7 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
   public:
     void insertToBothHeaps(E &&element) {
         auto *eWrapper = new EWrapper((E &&) element);
-        minHeap->insert(eWrapper);
-        maxHeap->insert(eWrapper);
+        insertToBothHeaps(eWrapper);
     }
 
   public:
