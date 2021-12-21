@@ -16,7 +16,7 @@
 template<typename E> class ElementInMinHeapAndMaxHeap {
 
   protected:
-    E *_element = nullptr;
+    Unique<E> *_uniqueElement = nullptr;
 
   protected:
     long int _maxHeapIndex = 0;
@@ -26,20 +26,24 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
 
   public:
     explicit ElementInMinHeapAndMaxHeap(E *element) {
-        // _element = new E(*element); // TODO: debug
-        _element = element;
+        _uniqueElement = new Unique<E>(element);
     }
 
   public:
-    virtual ~ElementInMinHeapAndMaxHeap() {
-        // delete _element; // TODO: debug
+    explicit ElementInMinHeapAndMaxHeap(E &&element) {
+        _uniqueElement = new Unique<E>(element);
     }
 
   public:
-    E *getElement() const { return _element; }
+    virtual ~ElementInMinHeapAndMaxHeap() { delete _uniqueElement; }
 
   public:
-    void setElement(E *element) { _element = element; }
+    Unique<E> *getUniqueElement() const { return _uniqueElement; }
+
+  public:
+    void setUniqueElement(Unique<E> *uniqueElement) {
+        _uniqueElement = uniqueElement;
+    }
 
   public:
     long getMaxHeapIndex() const { return _maxHeapIndex; }
@@ -54,8 +58,16 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
     void setMinHeapIndex(long minHeapIndex) { _minHeapIndex = minHeapIndex; }
 
   public:
+    friend std::ostream &
+    operator<<(std::ostream &                    os,
+               const ElementInMinHeapAndMaxHeap &entryInMinHeapAndMaxHeap) {
+        os << *(entryInMinHeapAndMaxHeap._uniqueElement);
+        return os;
+    }
+
+  public:
     bool operator<(const ElementInMinHeapAndMaxHeap &rhs) const {
-        return _element < rhs._element;
+        return _uniqueElement < rhs._uniqueElement;
     }
     bool operator>(const ElementInMinHeapAndMaxHeap &rhs) const {
         return rhs < *this;
@@ -69,18 +81,10 @@ template<typename E> class ElementInMinHeapAndMaxHeap {
 
   public:
     bool operator==(const ElementInMinHeapAndMaxHeap &rhs) const {
-        return _element == rhs._element;
+        return _uniqueElement == rhs._uniqueElement;
     }
     bool operator!=(const ElementInMinHeapAndMaxHeap &rhs) const {
         return !(rhs == *this);
-    }
-
-  public:
-    friend std::ostream &
-    operator<<(std::ostream &                    os,
-               const ElementInMinHeapAndMaxHeap &entryInMinHeapAndMaxHeap) {
-        os << *entryInMinHeapAndMaxHeap._element;
-        return os;
     }
 };
 

@@ -123,32 +123,32 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     //   }
 
   public:
-    void insert(E *element) override {
+    void insert(E &&element) override {
         if (getLogicalSize() > 1) {
             if (isLogicalSizeEven()) {
-                if (*median() < *element) {
+                if (*median() < element) {
 
                     // Insert the given EWrapper to the "greater" heap.
-                    _greaterThanMedianDoubleHeap->insertToBothHeaps(element);
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps((E &&)element);
                 } else {
                     transferTheMaxElementFromLessToGreater();
 
                     // Insert the given EWrapper to the "less" heap.
-                    _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
+                    _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&)element);
                 }
             } else if (isLogicalSizeOdd()) {
 
                 // Insert the given EWrapper to the "less" heap.
-                _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
+                _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&)element);
             }
         } else {
 
             // TODO: debug
-            std::cout << "inside insert. element is:" << *element << std::endl;
+            std::cout << "inside insert. element is:" << element << std::endl;
 
 
             // Insert the given EWrapper to the "less" heap.
-            _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(element);
+            _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&)element);
         }
     }
 

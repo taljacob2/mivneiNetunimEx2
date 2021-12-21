@@ -52,9 +52,8 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'e') {
                 priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
-                Entry<int, std::string> entry(stoi(test.getElement(1)),
-                                              test.getElement(2));
-                priorityQueue.insert(&entry); // TODO: debug disabled
+                priorityQueue.insert(Entry<int, std::string>(stoi(test.getElement(1)),
+                                                                   test.getElement(2))); // TODO: debug disabled
                 // FIXME: entry must be allocated in the heap, because of
                 //  invalid read afterwards.
                 // priorityQueue.print(std::cout); // TODO: debug

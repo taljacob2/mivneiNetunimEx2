@@ -60,6 +60,20 @@ template<typename E> class Unique : public Object {
         os << (E) unique;
         return os;
     }
+
+  public:
+    bool operator==(const Unique &rhs) const {
+        return _element == rhs._element;
+    }
+    bool operator!=(const Unique &rhs) const { return !(rhs == *this); }
+
+  public:
+    bool operator<(const Unique &rhs) const {
+        return _element < rhs._element;
+    }
+    bool operator>(const Unique &rhs) const { return rhs < *this; }
+    bool operator<=(const Unique &rhs) const { return !(rhs < *this); }
+    bool operator>=(const Unique &rhs) const { return !(*this < rhs); }
 };
 
 #endif // UNIQUE_H
