@@ -156,15 +156,17 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     void transferTheMaxElementFromLessToGreater() const {
 
         // Get the "less"'s maximum EWrapper.
-        EWrapper *lessMaximumEWrapper =
-                _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot();
+
+        // TODO: disabled. need to replace.
+        // EWrapper *lessMaximumEWrapper =
+        //         _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot();
 
         /**
          * Delete the EWrapper from both "less" heaps and
          * also get a deep-copy of it.
          */
         EWrapper *eWrapperToTransferToGreater =
-                _lessOrEqualToMedianDoubleHeap->deleteFromBothHeaps(
+                _lessOrEqualToMedianDoubleHeap->deleteFromBothHeapsAndClone(
                         lessMaximumEWrapper);
 
         // Transfer the deep-copied EWrapper to the "greater" heap.

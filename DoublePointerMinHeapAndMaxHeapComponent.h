@@ -38,17 +38,12 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
         while (!minHeap->isEmpty()) {
 
-            // Get the root from `minHeap`.
-            ElementInMinHeapAndMaxHeap<E> *minHeapRoot = minHeap->deleteRoot();
-
-            /*
-             * Extract the corresponding index of this root element's from
-             * `maxHeap`, and delete it from the `maxHeap`.
+            /**
+             * - Delete the root from `minHeap`.
+             * - Delete its pointer at `maxHeap`.
+             * - Delete the EWrapper containing the indexes of `minHeap` and `maxHeap`.
              */
-            maxHeap->deleteElement(minHeapRoot->getMaxHeapIndex());
-
-            // `delete` the ElementInMinHeapAndMaxHeap<E> from memory.
-            delete minHeapRoot;
+            deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0, true);
         }
 
         delete minHeap;
@@ -63,7 +58,7 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   public:
     void insertToBothHeaps(E &&element) {
-        auto *eWrapper = new EWrapper((E &&)element);
+        auto *eWrapper = new EWrapper((E &&) element);
         minHeap->insert(eWrapper);
         maxHeap->insert(eWrapper);
     }
@@ -74,27 +69,57 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         maxHeap->insert(eWrapper);
     }
 
-  public:
+  protected:
     /**
-     * @todo `delete` `deepCopiedEWrapper`.
+     * @return - `nullptr`: when the `EWrapper` was *removed* and `delete`d -
+     *           in case @p deleteEWrapper is `true`.
+     *         - *EWrapper removed*: when the `EWrapper` was *removed*
+     *           without being `delete`d - in case @p deleteEWrapper is `false`.
      */
-    EWrapper *deleteFromBothHeaps(EWrapper *eWrapper) {
+    static EWrapper *deleteEWrapperFromBothHeaps(
+            Heap<EWrapper> heap1, Heap<EWrapper> heap2,
+            unsigned long indexOfEWrapperGivenHeap1ToDeleteFromBothHeaps,
+            bool          deleteEWrapper = true) {
 
-        // Backup fields of the given `eWrapper`.
-        auto  lessMinHeapIndex   = eWrapper->getMinHeapIndex();
-        auto  lessMaxHeapIndex   = eWrapper->getMaxHeapIndex();
-        auto *deepCopiedEWrapper = new EWrapper(eWrapper->getElement());
-
-        // Delete the pointer to the element.
-        eWrapper->setElement(nullptr);
-        minHeap->fixHeap(lessMinHeapIndex);
-        maxHeap->fixHeap(lessMaxHeapIndex);
+        // Get the `EWrapper` to delete from `minHeap`.
+        EWrapper *heap1EWrapperToDelete = heap1->deleteElement(
+                indexOfEWrapperGivenHeap1ToDeleteFromBothHeaps);
 
         /*
-         * Return a deep-copy of the given `eWrapper`,
-         * with its indexes reset to 0.
+         * Extract the corresponding `indexOfEWrapperInMinHeapToDeleteFromBothHeaps`
+         * of this `heap1EWrapperToDelete`'s element from `heap2`,
+         * and delete it from the `heap2`.
          */
-        return deepCopiedEWrapper;
+        heap2->deleteElement(heap1EWrapperToDelete->getMaxHeapIndex());
+
+        if (deleteEWrapper) {
+
+            // `delete` the `EWrapper` from memory.
+            delete heap1EWrapperToDelete;
+            heap1EWrapperToDelete = nullptr;
+        }
+
+        return heap1EWrapperToDelete;
+    }
+
+  public:
+    EWrapper *deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
+            unsigned long indexOfEWrapperInMinHeapToDeleteFromBothHeaps,
+            bool          deleteEWrapper = false) const {
+
+        return deleteEWrapperFromBothHeaps(
+                minHeap, maxHeap, indexOfEWrapperInMinHeapToDeleteFromBothHeaps,
+                deleteEWrapper);
+    }
+
+  public:
+    EWrapper *deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
+            unsigned long indexOfEWrapperInMaxHeapToDeleteFromBothHeaps,
+            bool          deleteEWrapper = false) const {
+
+        return deleteEWrapperFromBothHeaps(
+                maxHeap, minHeap, indexOfEWrapperInMaxHeapToDeleteFromBothHeaps,
+                deleteEWrapper);
     }
 
   public:
