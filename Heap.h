@@ -107,7 +107,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      */
     E *getRoot() override { return getElement(0); }
 
-  protected:
+  public:
     /**
      * @return an element in the heap corresponds to the given @p index.
      * @throws std::out_of_range in case the index provided is out of range.
@@ -132,36 +132,60 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @attention in case the `_logicalSize` of the `_array` is `0`,
      *            this method returns `null_ptr`.
      * @return the *root element* removed from the heap.
-     * @throws std::logic_error in case the heap is already empty.
+     * @throws std::runtime_error in case the heap is already empty.
+     * @throws std::out_of_range in case the index provided is out of range.
      * @see fixHeap(unsigned long)
-     * @see deleteRoot(bool)
+     * @see deleteElement(unsigned long, bool)
      */
-    E *deleteRoot() override { return deleteRoot(true); }
+    E *deleteRoot() override { return deleteElement(0, true); }
+
+  public:
+    /**
+     * @brief Deletes the *element* from the heap, and returns it.
+     *
+     * @note After removing the *element* from the heap, this method
+     *       calls the @link fixHeap(index) @endlink method, in order to fix
+     *       the heap afterwards.
+     * @attention in case the `_logicalSize` of the `_array` is `0`,
+     *            this method returns `nullptr`.
+     * @return the *element* removed from the heap.
+     * @throws std::runtime_error in case the heap is already empty.
+     * @throws std::out_of_range in case the index provided is out of range.
+     * @see fixHeap(unsigned long)
+     * @see deleteElement(unsigned long, bool)
+     */
+    E *deleteElement(unsigned long index) override {
+        return deleteElement(index, true);
+    }
 
   private:
     /**
-     * @brief Deletes the *root element* from the heap, and returns it.
+     * @brief Deletes the *element* from the heap, and returns it.
      * @deprecated Caution when setting @p fixHeapAfterDeletion to `false`.
      *
-     * @note After removing the *root element* from the heap, this method
-     *       calls the *fixHeap(0)* method, in order to fix the heap
-     *       afterwards - only if the @p fixHeapAfterDeletion parameter is `true`.
+     * @note After removing the *element* from the heap, this method
+     *       calls the @link fixHeap(index) @endlink method, in order to fix
+     *       the heap afterwards - only if the @p fixHeapAfterDeletion
+     *       parameter is `true`.
      * @attention in case the `_logicalSize` of the `_array` is `0`,
-     *            this method returns `null_ptr`.
+     *            this method returns `nullptr`.
      * @param fixHeapAfterDeletion determines if the method will call the
-     *                             *fixHeap(0)* method, after deletion, to
-     *                             ensure that the heap is still valid.
-     * @return the *root element* removed from the heap.
-     * @throws std::logic_error in case the heap is already empty.
+     *                             @link fixHeap(index) @endlink method, after
+     *                             deletion, to ensure that the heap is still
+     *                             valid.
+     * @return the *element* removed from the heap.
+     * @throws std::runtime_error in case the heap is already empty.
+     * @throws std::out_of_range in case the index provided is out of range.
      * @see fixHeap(unsigned long)
      */
-    E *deleteRoot(bool fixHeapAfterDeletion) {
+    E *deleteElement(unsigned long index, bool fixHeapAfterDeletion) {
 
-        /* Save the value of `root` to return in the end of the method. */
-        E *returnElement = getRoot();
+        /* Save the value of `element` to return in the end of the method. */
+        E *returnElement = getElement(index);
 
         if (this->_logicalSize >= 2) {
-            deleteRootWhenThereAreTwoOrMoreElements(fixHeapAfterDeletion);
+            deleteElementWhenThereAreTwoOrMoreElements(index,
+                                                       fixHeapAfterDeletion);
         } else if (this->_logicalSize > 0) {
 
             /* Delete `_array[0]` manually. */
@@ -169,34 +193,8 @@ template<typename E> class Heap : public HeapAdt<E> {
 
             /* Decrease the `_logicalSize` of the _array by `1`. */
             this->_logicalSize--;
-        } else {
-
-            /* `_logicalSize` is 0. */
-            // throw std::logic_error("You have tried to delete an element from "
-            //                        "an empty heap.\n");
-            throw std::logic_error(IS_EMPTY_MESSAGE);
         }
         return returnElement;
-    }
-
-  private:
-    /**
-     * @brief This method is a *private* method, that represents the
-     *        case when there are `2` or more elements in the heap.
-     *
-     * @note After removing the *root element* from the heap, this method
-     *       calls the *fixHeap(0)* method, in order to fix the heap
-     *       afterwards - only if the @p fixHeapAfterDeletion parameter is `true`.
-     * @param fixHeapAfterDeletion determines if the method will call the
-     *                             *fixHeap(0)* method, after deletion, to
-     *                             ensure that the heap is still valid.
-     * @see deleteRoot()
-     * @see fixHeap(unsigned long)
-     * @see deleteTheIthElementWhenThereAreTwoOrMoreElements(unsigned long, bool)
-     */
-    void deleteRootWhenThereAreTwoOrMoreElements(bool fixHeapAfterDeletion) {
-        deleteTheIthElementWhenThereAreTwoOrMoreElements(0,
-                                                         fixHeapAfterDeletion);
     }
 
   private:
@@ -212,10 +210,9 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                             @link fixHeap(indexOfElementToDelete)
      *                             @endlink method, after deletion, to
      *                             ensure that the heap is still valid.
-     * @see deleteRoot()
      * @see fixHeap(unsigned long)
      */
-    void deleteTheIthElementWhenThereAreTwoOrMoreElements(
+    void deleteElementWhenThereAreTwoOrMoreElements(
             unsigned long indexOfElementToDelete, bool fixHeapAfterDeletion) {
 
         /*
