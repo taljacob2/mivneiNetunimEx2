@@ -77,7 +77,7 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
      *           without being `delete`d - in case @p deleteEWrapper is `false`.
      */
     static EWrapper *deleteEWrapperFromBothHeaps(
-            Heap<EWrapper> heap1, Heap<EWrapper> heap2,
+            Heap<EWrapper> *heap1, Heap<EWrapper> *heap2,
             unsigned long indexOfEWrapperGivenHeap1ToDeleteFromBothHeaps,
             bool          deleteEWrapper = true) {
 

@@ -58,7 +58,7 @@ template<typename E> class PriorityQueueAdt {
      * @brief inserts an element to the data-structure.
      * @param element the element to insert.
      */
-    virtual void insert(E *element) = 0;
+    virtual void insert(E &&element) = 0;
 
   public:
     /**

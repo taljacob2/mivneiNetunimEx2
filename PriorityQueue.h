@@ -68,7 +68,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         // FIXME: check
         return _greaterThanMedianDoubleHeap->getMaxHeap()
                 ->getRoot()
-                ->getElement();
+                ->getUniqueElement()->getElement();
     }
 
   public:
@@ -80,7 +80,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         // FIXME: check
         return _lessOrEqualToMedianDoubleHeap->getMinHeap()
                 ->getRoot()
-                ->getElement();
+                ->getUniqueElement()->getElement();
     }
 
   public:
@@ -189,7 +189,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
         // FIXME: check
         return _lessOrEqualToMedianDoubleHeap->getMaxHeap()
                 ->getRoot()
-                ->getElement();
+                ->getUniqueElement()->getElement();
     }
 
   protected:
