@@ -47,7 +47,7 @@ template<typename E> class MinHeap : public Heap<E> {
 
   private:
     bool predicateIsSwapNeeded(E *&element1, E *&element2) override {
-        return *element1 > *element2; // FIXME: bug.  (3 > 2) is false here.
+        return *element1 > *element2;
     }
 };
 

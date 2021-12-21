@@ -7,7 +7,7 @@
 
 template<typename E>
 class MaxHeapWhenAlsoHavingMinHeap
-    : public MinHeap<ElementInMinHeapAndMaxHeap<E>> {
+    : public MaxHeap<ElementInMinHeapAndMaxHeap<E>> {
 
     typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
 
@@ -16,12 +16,12 @@ class MaxHeapWhenAlsoHavingMinHeap
 
   public:
     explicit MaxHeapWhenAlsoHavingMinHeap(unsigned long physicalSize)
-        : MinHeap<EWrapper>(physicalSize) {}
+        : MaxHeap<EWrapper>(physicalSize) {}
 
   public:
     MaxHeapWhenAlsoHavingMinHeap(EWrapper *    arrayToBuildFrom,
                                  unsigned long sizeOfArrayToBuildFrom)
-        : MinHeap<EWrapper>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
+        : MaxHeap<EWrapper>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   protected:
     void
