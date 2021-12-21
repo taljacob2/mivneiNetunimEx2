@@ -129,17 +129,20 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                 if (*median() < element) {
 
                     // Insert the given EWrapper to the "greater" heap.
-                    _greaterThanMedianDoubleHeap->insertToBothHeaps((E &&)element);
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps(
+                            (E &&) element);
                 } else {
                     transferTheMaxElementFromLessToGreater();
 
                     // Insert the given EWrapper to the "less" heap.
-                    _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&)element);
+                    _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(
+                            (E &&) element);
                 }
             } else if (isLogicalSizeOdd()) {
 
                 // Insert the given EWrapper to the "less" heap.
-                _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&)element);
+                _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(
+                        (E &&) element);
             }
         } else {
 
@@ -148,28 +151,27 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
 
             // Insert the given EWrapper to the "less" heap.
-            _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&)element);
+            _lessOrEqualToMedianDoubleHeap->insertToBothHeaps((E &&) element);
         }
     }
 
   protected:
     void transferTheMaxElementFromLessToGreater() const {
+        transferElementFromLessDoubleHeapViaIndexOfMaxHeapToGreaterDoubleHeap(
+                0);
+    }
 
-        // Get the "less"'s maximum EWrapper.
+  protected:
+    void transferElementFromLessDoubleHeapViaIndexOfMaxHeapToGreaterDoubleHeap(
+            unsigned long index) const {
 
-        // TODO: disabled. need to replace.
-        // EWrapper *lessMaximumEWrapper =
-        //         _lessOrEqualToMedianDoubleHeap->getMaxHeap()->getRoot();
-
-        /**
-         * Delete the EWrapper from both "less" heaps and
-         * also get a deep-copy of it.
-         */
+        // Delete the `EWrapper` from both "less" heaps.
         EWrapper *eWrapperToTransferToGreater =
-                _lessOrEqualToMedianDoubleHeap->deleteFromBothHeapsAndClone(
-                        lessMaximumEWrapper);
+                _lessOrEqualToMedianDoubleHeap
+                        ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
+                                index, false);
 
-        // Transfer the deep-copied EWrapper to the "greater" heap.
+        // Transfer it to both "greater" heaps.
         _greaterThanMedianDoubleHeap->insertToBothHeaps(
                 eWrapperToTransferToGreater);
     }
