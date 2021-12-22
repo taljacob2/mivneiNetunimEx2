@@ -181,13 +181,16 @@ template<typename E> class Heap : public HeapAdt<E> {
         /* Save the value of `element` to return in the end of the method. */
         E *returnElement = getElement(index);
 
-        if (this->_logicalSize > 2) { // TODO: check if should be `> 2` or`>= 2`
-            deleteElementWhenThereAreTwoOrMoreElements(index,
-                                                       fixHeapAfterDeletion);
-        } else if (this->_logicalSize > 0) {
+        if ((this->_logicalSize - index) > 1) {
+            deleteElementWhenThereAreTwoOrMoreElementsSinceIndexGiven(
+                    index, fixHeapAfterDeletion);
+        } else if ((this->_logicalSize - index) > 0) {
 
             /* Delete `_array[index]` manually. */
             this->_array[index] = nullptr;
+
+            // TODO: check if need to swap here. fixheap(i) here.
+
 
             /* Decrease the `_logicalSize` of the _array by `1`. */
             this->_logicalSize--;
@@ -210,7 +213,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *                             ensure that the heap is still valid.
      * @see fixHeap(unsigned long)
      */
-    void deleteElementWhenThereAreTwoOrMoreElements(
+    void deleteElementWhenThereAreTwoOrMoreElementsSinceIndexGiven(
             unsigned long indexOfElementToDelete, bool fixHeapAfterDeletion) {
 
         /*
@@ -219,7 +222,6 @@ template<typename E> class Heap : public HeapAdt<E> {
          */
 
         /* Set the `indexOfElementToDelete` element in the `_array` to be the `last` element. */
-        // TODO: need to update EWrapper's indexes here.
         this->_array[indexOfElementToDelete] =
                 this->_array[this->_logicalSize - 1];
         onUpdateElementWithIndex(_array[indexOfElementToDelete],

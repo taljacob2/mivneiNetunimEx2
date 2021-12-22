@@ -83,17 +83,11 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
         EWrapper *eWrapperToDelete = minHeap->deleteElement(
                 indexOfEWrapperInMinHeapToDeleteFromBothHeaps);
 
-        // TODO: debug
-        std::cout << "TO DELETE: " << *eWrapperToDelete << std::endl;
-
         /*
          * Extract the corresponding `indexOfEWrapperInMinHeapToDeleteFromBothHeaps`
          * of this `eWrapperToDelete`'s element from `maxHeap`,
          * and delete it from the `maxHeap`.
          */
-
-        // BUG: `eWrapperToDelete->getMaxHeapIndex()` is `1` which is okay,
-        //  but for some reason the `_logicalSize` is `1` and not `2`.
         maxHeap->deleteElement(eWrapperToDelete->getMaxHeapIndex());
 
         if (deleteEWrapper) {
