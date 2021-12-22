@@ -116,8 +116,8 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
 
         if (getLogicalSize() >= 3) {
             _greaterThanMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
-                            0, false);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
+                                                                          true);
             if (isLogicalSizeOdd()) {
 
                 // Transfer the maximum from "less" to "greater".
@@ -125,8 +125,8 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
             }
         } else {
             _lessOrEqualToMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
-                            0, false);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
+                                                                          true);
         }
 
         delete element;

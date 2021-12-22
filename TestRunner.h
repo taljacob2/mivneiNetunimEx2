@@ -43,7 +43,7 @@ class TestRunner {
         std::cout << "max:" << priorityQueue.max() << std::endl;
         std::cout << "median:" << priorityQueue.median() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        std::cout << "min: deleted: " << priorityQueue.deleteMin() << std::endl;
+        std::cout << "min: deleted: " << priorityQueue.deleteMax() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
         priorityQueue.insert(9, "9");
         priorityQueue.print(std::cout); // TODO: bug here.
