@@ -189,9 +189,6 @@ template<typename E> class Heap : public HeapAdt<E> {
             /* Delete `_array[index]` manually. */
             this->_array[index] = nullptr;
 
-            // TODO: check if need to swap here. fixheap(i) here.
-
-
             /* Decrease the `_logicalSize` of the _array by `1`. */
             this->_logicalSize--;
         }
