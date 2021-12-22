@@ -181,13 +181,13 @@ template<typename E> class Heap : public HeapAdt<E> {
         /* Save the value of `element` to return in the end of the method. */
         E *returnElement = getElement(index);
 
-        if (this->_logicalSize >= 2) {
+        if (this->_logicalSize > 2) { // TODO: check if should be `> 2` or`>= 2`
             deleteElementWhenThereAreTwoOrMoreElements(index,
                                                        fixHeapAfterDeletion);
         } else if (this->_logicalSize > 0) {
 
-            /* Delete `_array[0]` manually. */
-            this->_array[0] = nullptr;
+            /* Delete `_array[index]` manually. */
+            this->_array[index] = nullptr;
 
             /* Decrease the `_logicalSize` of the _array by `1`. */
             this->_logicalSize--;
@@ -429,7 +429,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      */
     void fixHeapWhile(unsigned long currentIndex, Direction direction) {
 
-        /* _array[currentIndex] is not `nullptr`. Thus, comparable. */
+        /* `_array[currentIndex]` is not `nullptr`. Thus, comparable. */
         while ((0 <= currentIndex) && (currentIndex < (_logicalSize / 2))) {
 
             /* Get the index that points to the `swappable` element. */
