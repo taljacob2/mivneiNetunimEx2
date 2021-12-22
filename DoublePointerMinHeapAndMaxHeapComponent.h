@@ -92,9 +92,6 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
         if (deleteEWrapper) {
 
-            // TODO: debug
-            std::cout << "DELETE: " << *eWrapperToDelete << std::endl;
-
             // `delete` the `EWrapper` from memory.
             delete eWrapperToDelete;
             eWrapperToDelete = nullptr;
