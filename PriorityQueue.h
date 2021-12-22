@@ -74,8 +74,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         `_lessOrEqualToMedianDoubleHeap`'s maximum-heap.
      *         This happens when `getLogicalSize() <= 0`.
      * @see deleteMax()
+     * @see maxEWrapper()
      */
     E *max() override {
+        return maxEWrapper()->getUniqueElement()->getElement();
+    }
+
+  protected:
+    EWrapper *maxEWrapper() {
 
         /*
          * DEVELOPER NOTE: retrieving the max in `_greaterThanMedianDoubleHeap`
@@ -83,16 +89,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
          * the max in `_lessOrEqualToMedianDoubleHeap`.
          */
         return getLogicalSize() >= 3
-                       ? _greaterThanMedianDoubleHeap->getMaxHeap()
-                                 ->getRoot()
-                                 ->getUniqueElement()
-                                 ->getElement()
+                       ? _greaterThanMedianDoubleHeap->getMaxHeap()->getRoot()
                        : _lessOrEqualToMedianDoubleHeap->getMaxHeap()
-                                 ->getRoot()
-                                 ->getUniqueElement()
-                                 ->getElement();
+                                 ->getRoot();
     }
 
+  public:
     /**
      * @warning you will be able to access the value of the `return`ed
      *          element's pointer - but it will be **your responsibility to
@@ -104,7 +106,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      */
     E *deleteMax() override { return deleteMax(false); }
 
-  public:
+  protected:
     /**
      * @param deleteFromHeap @warning
      *                       @note set this parameter to `true` in case
@@ -121,11 +123,15 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      * @see max()
      */
     E *deleteMax(bool deleteFromHeap) {
-        E *returnValue = max();
+        EWrapper *eWrapper = maxEWrapper();
+        eWrapper->getUniqueElement()->setNeedToDeleteElement(false);
+        E *returnValue = eWrapper->getUniqueElement()->getElement();
 
-        // TODO: need to implement: need to `delete` the EWrapper contains the
-        //  `element` but not the `element` itself.
-
+        /*
+         * Extract the element via MOVE.
+         * `delete` the EWrapper which contains the `element` but not the
+         * `element` itself.
+         */
         if (getLogicalSize() >= 3) {
             _greaterThanMedianDoubleHeap
                     ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
@@ -141,6 +147,10 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                             0, deleteFromHeap);
         }
 
+        if (deleteFromHeap) {
+            delete returnValue;
+            returnValue = nullptr;
+        }
         return returnValue;
     }
 
@@ -156,16 +166,22 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         `_lessOrEqualToMedianDoubleHeap`'s minimum-heap.
      *         This happens when `getLogicalSize() <= 0`.
      * @see deleteMin()
+     * @see minEWrapper()
      */
     E *min() override {
 
         // DEVELOPER NOTE: this will always work when `getLogicalSize() > 0`
-        return _lessOrEqualToMedianDoubleHeap->getMinHeap()
-                ->getRoot()
-                ->getUniqueElement()
-                ->getElement();
+        return minEWrapper()->getUniqueElement()->getElement();
     }
 
+  protected:
+    EWrapper *minEWrapper() {
+
+        // DEVELOPER NOTE: this will always work when `getLogicalSize() > 0`
+        return _lessOrEqualToMedianDoubleHeap->getMinHeap()->getRoot();
+    }
+
+  public:
     /**
      * @warning you will be able to access the value of the `return`ed
      *          element's pointer - but it will be **your responsibility to
@@ -177,7 +193,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      */
     E *deleteMin() override { return deleteMin(false); }
 
-  public:
+  protected:
     /**
      * @param deleteFromHeap @warning
      *                       @note set this parameter to `true` in case
@@ -194,15 +210,19 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      * @see min()
      */
     E *deleteMin(bool deleteFromHeap) {
-        E *returnValue = min();
+        EWrapper *eWrapper = minEWrapper();
+        eWrapper->getUniqueElement()->setNeedToDeleteElement(false);
+        E *returnValue = eWrapper->getUniqueElement()->getElement();
 
-        // TODO: need to implement: need to `delete` the EWrapper contains the
-        //  `element` but not the `element` itself.
-
+        /*
+         * Extract the element via MOVE.
+         * `delete` the EWrapper which contains the `element` but not the
+         * `element` itself.
+         */
         if (getLogicalSize() >= 3) {
             _lessOrEqualToMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
-                            0, deleteFromHeap);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
+                                                                          true);
             if (isLogicalSizeEven()) {
 
                 // Transfer the minimum from "greater" to "less".
@@ -210,10 +230,14 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             }
         } else {
             _lessOrEqualToMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
-                            0, deleteFromHeap);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
+                                                                          true);
         }
 
+        if (deleteFromHeap) {
+            delete returnValue;
+            returnValue = nullptr;
+        }
         return returnValue;
     }
 

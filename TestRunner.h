@@ -41,7 +41,7 @@ class TestRunner {
         std::cout << "max:" << *priorityQueue.max() << std::endl;
         std::cout << "median:" << *priorityQueue.median() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        auto *element = priorityQueue.deleteMin(false);
+        auto *element = priorityQueue.deleteMin();
         std::cout << "min: deleted: " << *element << std::endl;
         delete element;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
