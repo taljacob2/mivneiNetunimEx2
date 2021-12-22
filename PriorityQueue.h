@@ -262,16 +262,6 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
   protected:
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
 
-  protected:
-    bool isLogicalSizeOfHeapAdtEven(HeapAdt<EWrapper> *heapAdt) {
-        return heapAdt->getLogicalSize() % 2 == 0;
-    }
-
-  protected:
-    bool isLogicalSizeOfHeapAdtOdd(HeapAdt<EWrapper> *heapAdt) {
-        return !isLogicalSizeOfHeapAdtEven(heapAdt);
-    }
-
   public:
     friend std::ostream &operator<<(std::ostream &       os,
                                     const PriorityQueue &priorityQueue) {
