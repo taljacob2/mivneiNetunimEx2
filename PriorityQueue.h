@@ -69,11 +69,11 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *        This is the root element from the
      *        `_greaterThanMedianDoubleHeap`'s maximum-heap.
      *
-     * @return retrieve the element with the maximum priority in this
-     *         data-structure.
+     * @return the element with the maximum priority in this data-structure.
      * @throws std::runtime_error in case there are no elements in the
      *         `_lessOrEqualToMedianDoubleHeap`'s maximum-heap.
      *         This happens when `getLogicalSize() <= 0`.
+     * @see deleteMax()
      */
     E *max() override {
 
@@ -94,6 +94,10 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   public:
+    /**
+     * @return the element with the maximum priority in this data-structure.
+     * @see max()
+     */
     E *deleteMax() override {}
 
   public:
@@ -103,11 +107,11 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *        This is the root element from the
      *        `_lessOrEqualToMedianDoubleHeap`'s minimum-heap.
      *
-     * @return retrieve the element with the minimum priority in this
-     *         data-structure.
+     * @return the element with the minimum priority in this data-structure.
      * @throws std::runtime_error in case there are no elements in the
      *         `_lessOrEqualToMedianDoubleHeap`'s minimum-heap.
      *         This happens when `getLogicalSize() <= 0`.
+     * @see deleteMin()
      */
     E *min() override {
 
@@ -119,6 +123,10 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   public:
+    /**
+     * @return the element with the minimum priority in this data-structure.
+     * @see min()
+     */
     E *deleteMin() override {}
 
   public:
