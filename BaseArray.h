@@ -97,11 +97,9 @@ template<typename E> class BaseArray : public Object {
         }
     }
 
-    // FIXME:
-    // public:
-    //   BaseArray(const BaseArray &other) { *this = other; }
+  public:
+    BaseArray(const BaseArray &other) = delete;
 
-    // FIXME:
   public:
     BaseArray(BaseArray &&other) noexcept { *this = std::move(other); }
 
@@ -633,6 +631,9 @@ template<typename E> class BaseArray : public Object {
         // Set the new _physicalSize to `newArraySize`.
         _physicalSize = newArraySize;
     }
+
+  public:
+    BaseArray &operator=(const BaseArray &other) = delete;
 
     // // FIXME:
     // public:

@@ -352,10 +352,6 @@ template<typename E> class Heap : public HeapAdt<E> {
     void assertOutOfRange(unsigned long index) {
         if ((index < 0) || (this->_logicalSize <= index)) {
 
-            // TODO: print debug
-            std::cout << "index =" << index << std::endl;
-            std::cout << "_logicalSize =" << _logicalSize << std::endl;
-
             // std::string message;
             // message.append("The index provided is out of range. There are ");
             // message.append(std::to_string(_logicalSize));
