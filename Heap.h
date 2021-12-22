@@ -223,8 +223,8 @@ template<typename E> class Heap : public HeapAdt<E> {
         // TODO: need to update EWrapper's indexes here.
         this->_array[indexOfElementToDelete] =
                 this->_array[this->_logicalSize - 1];
-        onUpdateElementIndex(_array[indexOfElementToDelete],
-                             indexOfElementToDelete);
+        onUpdateElementWithIndex(_array[indexOfElementToDelete],
+                                 indexOfElementToDelete);
 
         /* Set the `last` element to be `nullptr`. */
         this->_array[this->_logicalSize - 1] = nullptr;
@@ -502,8 +502,8 @@ template<typename E> class Heap : public HeapAdt<E> {
      *        to add logic right after an update of an element to another index.
      * @param element an element that was just changed its index.
      */
-    virtual void onUpdateElementIndex(E *&          element,
-                                      unsigned long newIndex) const {}
+    virtual void onUpdateElementWithIndex(E *&          element,
+                                          unsigned long newIndex) const {}
 
   protected:
     /**

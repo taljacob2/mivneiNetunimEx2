@@ -50,7 +50,7 @@ class MaxHeapWhenAlsoHavingMinHeap
   protected:
     void onUpdateElementIndex(EWrapper *&   element,
                               unsigned long newIndex) const override {
-        // Heap<EWrapper>::onUpdateElementIndex(element, newIndex);
+        // Heap<EWrapper>::onUpdateElementWithIndex(element, newIndex);
         element->setMaxHeapIndex(newIndex);
     }
 };
