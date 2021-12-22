@@ -76,11 +76,20 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      */
     E *max() override {
 
-        // FIXME: check
-        return _greaterThanMedianDoubleHeap->getMaxHeap()
-                ->getRoot()
-                ->getUniqueElement()
-                ->getElement();
+        /*
+         * DEVELOPER NOTE: retrieving the max in `_greaterThanMedianDoubleHeap`
+         * will not work when `getLogicalSize() < 3`, so in that case return
+         * the max in `_lessOrEqualToMedianDoubleHeap`.
+         */
+        return getLogicalSize() >= 3
+                       ? _greaterThanMedianDoubleHeap->getMaxHeap()
+                                 ->getRoot()
+                                 ->getUniqueElement()
+                                 ->getElement()
+                       : _lessOrEqualToMedianDoubleHeap->getMaxHeap()
+                                 ->getRoot()
+                                 ->getUniqueElement()
+                                 ->getElement();
     }
 
   public:
@@ -100,7 +109,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      */
     E *min() override {
 
-        // FIXME: check
+        // DEVELOPER NOTE: this will always work when `getLogicalSize() > 0`
         return _lessOrEqualToMedianDoubleHeap->getMinHeap()
                 ->getRoot()
                 ->getUniqueElement()
