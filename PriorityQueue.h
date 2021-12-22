@@ -123,15 +123,16 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      * @see max()
      */
     E *deleteMax(bool deleteFromHeap) {
-        EWrapper *eWrapper = maxEWrapper();
-        eWrapper->getUniqueElement()->setNeedToDeleteElement(false);
-        E *returnValue = eWrapper->getUniqueElement()->getElement();
 
         /*
          * Extract the element via MOVE.
          * `delete` the EWrapper which contains the `element` but not the
          * `element` itself.
          */
+        EWrapper *eWrapper = maxEWrapper();
+        eWrapper->getUniqueElement()->setNeedToDeleteElement(false);
+        E *returnValue = eWrapper->getUniqueElement()->getElement();
+
         if (getLogicalSize() >= 3) {
             _greaterThanMedianDoubleHeap
                     ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
@@ -210,15 +211,16 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      * @see min()
      */
     E *deleteMin(bool deleteFromHeap) {
-        EWrapper *eWrapper = minEWrapper();
-        eWrapper->getUniqueElement()->setNeedToDeleteElement(false);
-        E *returnValue = eWrapper->getUniqueElement()->getElement();
 
         /*
          * Extract the element via MOVE.
          * `delete` the EWrapper which contains the `element` but not the
          * `element` itself.
          */
+        EWrapper *eWrapper = minEWrapper();
+        eWrapper->getUniqueElement()->setNeedToDeleteElement(false);
+        E *returnValue = eWrapper->getUniqueElement()->getElement();
+
         if (getLogicalSize() >= 3) {
             _lessOrEqualToMedianDoubleHeap
                     ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
