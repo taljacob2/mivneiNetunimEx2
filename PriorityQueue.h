@@ -123,6 +123,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     E *deleteMax(bool deleteFromHeap) {
         E *returnValue = max();
 
+        // TODO: need to implement: need to `delete` the EWrapper contains the
+        //  `element` but not the `element` itself.
+
         if (getLogicalSize() >= 3) {
             _greaterThanMedianDoubleHeap
                     ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
@@ -192,6 +195,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      */
     E *deleteMin(bool deleteFromHeap) {
         E *returnValue = min();
+
+        // TODO: need to implement: need to `delete` the EWrapper contains the
+        //  `element` but not the `element` itself.
 
         if (getLogicalSize() >= 3) {
             _lessOrEqualToMedianDoubleHeap
