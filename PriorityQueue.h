@@ -108,12 +108,13 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   protected:
     /**
-     * @param deleteFromHeap @warning
-     *                       @note set this parameter to `true` in case
+     * @warning see the @p deleteFromHeap parameter doc.
+     * @param deleteFromHeap
+     *                       - Set this parameter to `true` in case
      *                       you want to `delete` the element from the heap -
      *                       but then, since the element will be `delete`d, you
      *                       *will not be able to access its value*.
-     *                       @note set this parameter to `false` in case you
+     *                       - Set this parameter to `false` in case you
      *                       *do not* want to `delete` the element from the
      *                       heap - so you will be able to access the value of
      *                       the `return`ed element's pointer - but it will be
@@ -196,12 +197,13 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
 
   protected:
     /**
-     * @param deleteFromHeap @warning
-     *                       @note set this parameter to `true` in case
+     * @warning see the @p deleteFromHeap parameter doc.
+     * @param deleteFromHeap
+     *                       - Set this parameter to `true` in case
      *                       you want to `delete` the element from the heap -
      *                       but then, since the element will be `delete`d, you
      *                       *will not be able to access its value*.
-     *                       @note set this parameter to `false` in case you
+     *                       - Set this parameter to `false` in case you
      *                       *do not* want to `delete` the element from the
      *                       heap - so you will be able to access the value of
      *                       the `return`ed element's pointer - but it will be
