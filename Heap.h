@@ -154,9 +154,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      * @see fixHeap(unsigned long)
      * @see deleteElement(unsigned long, bool)
      */
-    E *deleteElement(unsigned long index) {
-        return deleteElement(index, true);
-    }
+    E *deleteElement(unsigned long index) { return deleteElement(index, true); }
 
   private:
     /**
@@ -487,6 +485,15 @@ template<typename E> class Heap : public HeapAdt<E> {
 
   protected:
     /**
+     * @brief This method enables the sub-classes of `this` class,
+     *        to add logic right after an insertion of an element.
+     * @param elementInserted an element that was just inserted by `this`
+     *                        class.
+     */
+    virtual void onInsert(E *&elementInserted) const {}
+
+  protected:
+    /**
      * @note in case @p currentIndex is `0`, then the result will be `-1`.
      * @param currentIndex the index of the element to get its parent element
      *                     index.
@@ -551,6 +558,7 @@ template<typename E> class Heap : public HeapAdt<E> {
 
         /* Add the `elementToInsert` as the `last` element in the _array. */
         this->_array[this->_logicalSize++] = elementToInsert;
+        onInsert(elementToInsert);
 
         unsigned long currentIndex = this->_logicalSize - 1;
 

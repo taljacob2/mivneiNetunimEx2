@@ -88,6 +88,8 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
          * of this `eWrapperToDelete`'s element from `maxHeap`,
          * and delete it from the `maxHeap`.
          */
+
+        // BUG: `eWrapperToDelete->getMaxHeapIndex()` is 2.
         maxHeap->deleteElement(eWrapperToDelete->getMaxHeapIndex());
 
         if (deleteEWrapper) {
@@ -95,6 +97,9 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
             // `delete` the `EWrapper` from memory.
             delete eWrapperToDelete;
             eWrapperToDelete = nullptr;
+        } else {
+            eWrapperToDelete->setMaxHeapIndex(0); // Reset index.
+            eWrapperToDelete->setMinHeapIndex(0); // Reset index.
         }
 
         return eWrapperToDelete;
@@ -121,6 +126,9 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
             // `delete` the `EWrapper` from memory.
             delete eWrapperToDelete;
             eWrapperToDelete = nullptr;
+        } else {
+            eWrapperToDelete->setMaxHeapIndex(0); // Reset index.
+            eWrapperToDelete->setMinHeapIndex(0); // Reset index.
         }
 
         return eWrapperToDelete;

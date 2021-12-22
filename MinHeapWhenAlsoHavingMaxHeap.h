@@ -40,6 +40,12 @@ class MinHeapWhenAlsoHavingMaxHeap
         Heap<EWrapper>::onSwapIsNeeded(currentIndex,
                                        indexOfOtherSwappableElement);
     }
+
+  protected:
+    void onInsert(EWrapper *&elementInserted) const override {
+        // Heap<EWrapper>::onInsert(elementInserted);
+        elementInserted->setMinHeapIndex(this->_logicalSize - 1);
+    }
 };
 
 #endif // MIN_HEAP_WHEN_ALSO_HAVING_MAX_HEAP_H
