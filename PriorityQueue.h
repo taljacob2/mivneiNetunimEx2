@@ -63,24 +63,48 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   public:
+    /**
+     * @brief retrieve the element with the maximum priority in this
+     *        data-structure.
+     *        This is the root element from the
+     *        `_greaterThanMedianDoubleHeap`'s maximum-heap.
+     *
+     * @return retrieve the element with the maximum priority in this
+     *         data-structure.
+     * @throws std::runtime_error in case the `_greaterThanMedianDoubleHeap`'s
+     *         maximum-heap is empty.
+     */
     E *max() override {
 
         // FIXME: check
         return _greaterThanMedianDoubleHeap->getMaxHeap()
                 ->getRoot()
-                ->getUniqueElement()->getElement();
+                ->getUniqueElement()
+                ->getElement();
     }
 
   public:
     E *deleteMax() override {}
 
   public:
+    /**
+     * @brief retrieve the element with the minimum priority in this
+     *        data-structure.
+     *        This is the root element from the
+     *        `_lessOrEqualToMedianDoubleHeap`'s minimum-heap.
+     *
+     * @return retrieve the element with the minimum priority in this
+     *         data-structure.
+     * @throws std::runtime_error in case the `_lessOrEqualToMedianDoubleHeap`'s
+     *         minimum-heap is empty.
+     */
     E *min() override {
 
         // FIXME: check
         return _lessOrEqualToMedianDoubleHeap->getMinHeap()
                 ->getRoot()
-                ->getUniqueElement()->getElement();
+                ->getUniqueElement()
+                ->getElement();
     }
 
   public:
@@ -139,10 +163,18 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                             (E &&) element);
                 }
             } else if (isLogicalSizeOdd()) {
+                if (*median() < element) {
+                    transferTheMinElementFromGreaterToLess();
 
-                // Insert the given EWrapper to the "less" heap.
-                _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(
-                        (E &&) element);
+                    // Insert the given EWrapper to the "greater" heap.
+                    _greaterThanMedianDoubleHeap->insertToBothHeaps(
+                            (E &&) element);
+                } else {
+
+                    // Insert the given EWrapper to the "less" heap.
+                    _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(
+                            (E &&) element);
+                }
             }
         } else {
 
@@ -157,7 +189,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                 0);
     }
 
-  protected:
+  private:
     void transferElementFromLessDoubleHeapViaIndexOfMaxHeapToGreaterDoubleHeap(
             unsigned long index) const {
 
@@ -172,20 +204,41 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                 eWrapperToTransferToGreater);
     }
 
+  protected:
+    void transferTheMinElementFromGreaterToLess() const {
+        transferElementFromGreaterDoubleHeapViaIndexOfMinHeapToLessDoubleHeap(
+                0);
+    }
+
+  private:
+    void transferElementFromGreaterDoubleHeapViaIndexOfMinHeapToLessDoubleHeap(
+            unsigned long index) const {
+
+        // Delete the `EWrapper` from both "greater" heaps.
+        EWrapper *eWrapperToTransferToLess =
+                _greaterThanMedianDoubleHeap
+                        ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
+                                index, false);
+
+        // Transfer it to both "less" heaps.
+        _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(
+                eWrapperToTransferToLess);
+    }
+
   public:
     /**
      * @return the median priority element - defining the median as the
      *         element that its priority is `ceil(n / 2)`
      * @throws std::runtime_error in case there are no elements in the
-     *         `_lessOrEqualToMedianMaxHeap` heap, and the user requested to
-     *         retrieve the root.
+     *         `_lessOrEqualToMedianDoubleHeap`'s maximum-heap.
      */
     E *median() override {
 
         // FIXME: check
         return _lessOrEqualToMedianDoubleHeap->getMaxHeap()
                 ->getRoot()
-                ->getUniqueElement()->getElement();
+                ->getUniqueElement()
+                ->getElement();
     }
 
   protected:

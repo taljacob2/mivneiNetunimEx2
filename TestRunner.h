@@ -23,7 +23,23 @@ class TestRunner {
         }
 
 
+        // TODO: checking methods here. bug here.
         priorityQueue.print(std::cout); // TODO: bug here.
+        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        priorityQueue.insert(Entry<int, std::string>(4, "4"));
+        priorityQueue.print(std::cout); // TODO: bug here.
+        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        priorityQueue.insert(Entry<int, std::string>(5, "5"));
+        priorityQueue.print(std::cout); // TODO: bug here.
+        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        priorityQueue.insert(Entry<int, std::string>(9, "9"));
+
+        std::cout << "min:" << *priorityQueue.min() << std::endl;
+        std::cout << "max:" << *priorityQueue.max() << std::endl;
+        // std::cout << "median:" << *priorityQueue.median() << std::endl;
+
+        priorityQueue.print(std::cout); // TODO: bug here.
+        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
     }
 
   private:
@@ -52,8 +68,9 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'e') {
                 priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
-                priorityQueue.insert(Entry<int, std::string>(stoi(test.getElement(1)),
-                                                                   test.getElement(2))); // TODO: debug disabled
+                priorityQueue.insert(Entry<int, std::string>(
+                        stoi(test.getElement(1)),
+                        test.getElement(2))); // TODO: debug disabled
                 // priorityQueue.print(std::cout); // TODO: debug
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
