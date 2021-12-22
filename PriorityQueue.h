@@ -94,6 +94,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
     /**
+     * @warning you will be able to access the value of the `return`ed
+     *          element's pointer - but it will be **your responsibility to
+     *          `delete`** the pointer afterwards.
+     * @return the pointer of the *maximum priority* element in the
+     *         data-structure - that is **your responsibility to `delete`
+     *         from the heap** afterwards.
      * @see deleteMax(bool)
      */
     E *deleteMax() override { return deleteMax(false); }
@@ -107,10 +113,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *                       *will not be able to access its value*.
      *                       @note set this parameter to `false` in case you
      *                       *do not* want to `delete` the element from the
-     *                       heap - so you will be able to access the value
-     *                       of the element - but it will be **your
-     *                       responsibility to `delete`** the pointer of the
-     *                       element `return`ed afterwards.
+     *                       heap - so you will be able to access the value of
+     *                       the `return`ed element's pointer - but it will be
+     *                       **your responsibility to `delete`** the pointer afterwards.
      * @return the pointer to the element with the maximum priority in this
      *         data-structure.
      * @see max()
@@ -159,6 +164,12 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
     /**
+     * @warning you will be able to access the value of the `return`ed
+     *          element's pointer - but it will be **your responsibility to
+     *          `delete`** the pointer afterwards.
+     * @return the pointer of the *minimum priority* element in the
+     *         data-structure - that is **your responsibility to `delete`
+     *         from the heap** afterwards.
      * @see deleteMin(bool)
      */
     E *deleteMin() override { return deleteMin(false); }
@@ -172,10 +183,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *                       *will not be able to access its value*.
      *                       @note set this parameter to `false` in case you
      *                       *do not* want to `delete` the element from the
-     *                       heap - so you will be able to access the value
-     *                       of the element - but it will be **your
-     *                       responsibility to `delete`** the pointer of the
-     *                       element `return`ed afterwards.
+     *                       heap - so you will be able to access the value of
+     *                       the `return`ed element's pointer - but it will be
+     *                       **your responsibility to `delete`** the pointer afterwards.
      * @return the pointer to the element with the minimum priority in this
      *         data-structure.
      * @see min()
