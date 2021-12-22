@@ -243,7 +243,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      */
     E *median() override {
 
-        // FIXME: check
+        // DEVELOPER NOTE: this will always work when `getLogicalSize() > 0`
         return _lessOrEqualToMedianDoubleHeap->getMaxHeap()
                 ->getRoot()
                 ->getUniqueElement()
