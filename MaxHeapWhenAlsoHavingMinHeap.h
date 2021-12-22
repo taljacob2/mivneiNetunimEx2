@@ -44,12 +44,12 @@ class MaxHeapWhenAlsoHavingMinHeap
   protected:
     void onInsert(EWrapper *&elementInserted) const override {
         // Heap<EWrapper>::onInsert(elementInserted);
-        onUpdateElementIndex(elementInserted, this->_logicalSize - 1);
+        onUpdateElementWithIndex(elementInserted, this->_logicalSize - 1);
     }
 
   protected:
-    void onUpdateElementIndex(EWrapper *&   element,
-                              unsigned long newIndex) const override {
+    void onUpdateElementWithIndex(EWrapper *&   element,
+                                  unsigned long newIndex) const override {
         // Heap<EWrapper>::onUpdateElementWithIndex(element, newIndex);
         element->setMaxHeapIndex(newIndex);
     }
