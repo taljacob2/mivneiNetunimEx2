@@ -92,8 +92,8 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
          * and delete it from the `maxHeap`.
          */
 
-        // BUG: `eWrapperToDelete->getMaxHeapIndex()` is `2` which is okay,
-        //  but for some reason the `_logicalSize` is `2` and not `3`.
+        // BUG: `eWrapperToDelete->getMaxHeapIndex()` is `1` which is okay,
+        //  but for some reason the `_logicalSize` is `1` and not `2`.
         maxHeap->deleteElement(eWrapperToDelete->getMaxHeapIndex());
 
         if (deleteEWrapper) {

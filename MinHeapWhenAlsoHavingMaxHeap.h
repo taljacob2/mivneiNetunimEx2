@@ -42,12 +42,6 @@ class MinHeapWhenAlsoHavingMaxHeap
     }
 
   protected:
-    void onInsert(EWrapper *&elementInserted) const override {
-        // Heap<EWrapper>::onInsert(elementInserted);
-        onUpdateElementWithIndex(elementInserted, this->_logicalSize - 1);
-    }
-
-  protected:
     void onUpdateElementWithIndex(EWrapper *&   element,
                                   unsigned long newIndex) const override {
         // Heap<EWrapper>::onUpdateElementWithIndex(element, newIndex);

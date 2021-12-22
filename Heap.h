@@ -187,7 +187,6 @@ template<typename E> class Heap : public HeapAdt<E> {
         } else if (this->_logicalSize > 0) {
 
             /* Delete `_array[0]` manually. */
-            // TODO: check if need to update EWrapper indexes here
             this->_array[0] = nullptr;
 
             /* Decrease the `_logicalSize` of the _array by `1`. */
@@ -490,15 +489,6 @@ template<typename E> class Heap : public HeapAdt<E> {
   protected:
     /**
      * @brief This method enables the sub-classes of `this` class,
-     *        to add logic right after the insertion of an element.
-     * @param elementInserted an element that was just inserted by `this`
-     *                        class.
-     */
-    virtual void onInsert(E *&elementInserted) const {}
-
-  protected:
-    /**
-     * @brief This method enables the sub-classes of `this` class,
      *        to add logic right after an update of an element to another index.
      * @param element an element that was just changed its index.
      */
@@ -571,9 +561,8 @@ template<typename E> class Heap : public HeapAdt<E> {
 
         /* Add the `elementToInsert` as the `last` element in the _array. */
         this->_array[this->_logicalSize++] = elementToInsert;
-        onInsert(elementToInsert);
-
-        unsigned long currentIndex = this->_logicalSize - 1;
+        unsigned long currentIndex         = this->_logicalSize - 1;
+        onUpdateElementWithIndex(elementToInsert, currentIndex);
 
         /*
          * Check upwards the heap, whether there is a need to `swap` the
