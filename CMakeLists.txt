@@ -9,4 +9,5 @@ add_executable(mivneiNetunimEx2 main.cpp Constants.h
         HeapAdt.h Heap.h ElementInMinHeapAndMaxHeap.h
         BaseArray.h StaticArray.h Polymorpher.h
         MinHeapWhenAlsoHavingMaxHeap.h MaxHeapWhenAlsoHavingMinHeap.h
-        DoublePointerMinHeapAndMaxHeapComponent.h Unique.h Object.h)
+        DoublePointerMinHeapAndMaxHeapComponent.h Unique.h Object.h
+        PriorityQueueKv.h PriorityQueueKvAdt.h)

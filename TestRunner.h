@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Polymorpher.h"
 #include "PriorityQueue.h"
+#include "PriorityQueueKv.h"
 #include <string>
 
 class TestRunner {
@@ -13,13 +14,15 @@ class TestRunner {
   public:
     static void runAllTests(BaseArray<std::string> &testArray) {
         // TODO: polymorph with adt
-        PriorityQueue<Entry<int, std::string>> priorityQueue;
+        // PriorityQueue<Entry<int, std::string>> priorityQueue;
+        PriorityQueueKv<int, std::string> priorityQueue;
         // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
 
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            runTest<Entry<int, std::string>>(test, priorityQueue);
+            // runTest<Entry<int, std::string>>(test, priorityQueue);
+            runTest<int, std::string>(test, priorityQueue);
         }
 
 
@@ -29,13 +32,13 @@ class TestRunner {
         std::cout << "max:" << priorityQueue.max() << std::endl;
         std::cout << "median:" << priorityQueue.median() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        priorityQueue.insert(Entry<int, std::string>(4, "4"));
+        priorityQueue.insert(4, "4");
         priorityQueue.print(std::cout); // TODO: bug here.
         std::cout << "min:" << priorityQueue.min() << std::endl;
         std::cout << "max:" << priorityQueue.max() << std::endl;
         std::cout << "median:" << priorityQueue.median() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        priorityQueue.insert(Entry<int, std::string>(5, "5"));
+        priorityQueue.insert(5, "5");
         priorityQueue.print(std::cout); // TODO: bug here.
         std::cout << "min:" << priorityQueue.min() << std::endl;
         std::cout << "max:" << priorityQueue.max() << std::endl;
@@ -43,7 +46,7 @@ class TestRunner {
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
         std::cout << "min: deleted: " << priorityQueue.deleteMin() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        priorityQueue.insert(Entry<int, std::string>(9, "9"));
+        priorityQueue.insert(9, "9");
         priorityQueue.print(std::cout); // TODO: bug here.
         std::cout << "min:" << priorityQueue.min() << std::endl;
         std::cout << "max:" << priorityQueue.max() << std::endl;
@@ -52,9 +55,9 @@ class TestRunner {
     }
 
   private:
-    template<typename E>
+    template<typename K, typename V>
     static void runTest(BaseArray<std::string> &test,
-                        PriorityQueue<E> &      priorityQueue) {
+                        PriorityQueueKv<K, V> & priorityQueue) {
         // TODO: do something with `test` here...
         invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
                 test, priorityQueue);
@@ -62,8 +65,8 @@ class TestRunner {
 
   private:
     static void invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
-            BaseArray<std::string> &                test,
-            PriorityQueue<Entry<int, std::string>> &priorityQueue) {
+            BaseArray<std::string> &           test,
+            PriorityQueueKv<int, std::string> &priorityQueue) {
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
@@ -77,8 +80,8 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'e') {
                 priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
-                priorityQueue.insert(Entry<int, std::string>(
-                        stoi(test.getElement(1)), test.getElement(2)));
+                priorityQueue.insert(stoi(test.getElement(1)),
+                                     test.getElement(2));
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
             }
