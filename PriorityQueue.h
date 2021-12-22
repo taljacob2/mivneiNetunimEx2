@@ -93,18 +93,35 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                                  ->getElement();
     }
 
+    /**
+     * @see deleteMax(bool)
+     */
+    E *deleteMax() override { return deleteMax(false); }
+
   public:
     /**
-     * @return the element with the maximum priority in this data-structure.
+     * @param deleteFromHeap @warning
+     *                       @note set this parameter to `true` in case
+     *                       you want to `delete` the element from the heap -
+     *                       but then, since the element will be `delete`d, you
+     *                       *will not be able to access its value*.
+     *                       @note set this parameter to `false` in case you
+     *                       *do not* want to `delete` the element from the
+     *                       heap - so you will be able to access the value
+     *                       of the element - but it will be **your
+     *                       responsibility to `delete`** the pointer of the
+     *                       element `return`ed afterwards.
+     * @return the pointer to the element with the maximum priority in this
+     *         data-structure.
      * @see max()
      */
-    E *deleteMax() override {
+    E *deleteMax(bool deleteFromHeap) {
         E *returnValue = max();
 
         if (getLogicalSize() >= 3) {
             _greaterThanMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
-                                                                          true);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
+                            0, deleteFromHeap);
             if (isLogicalSizeOdd()) {
 
                 // Transfer the maximum from "less" to "greater".
@@ -112,8 +129,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             }
         } else {
             _lessOrEqualToMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
-                                                                          true);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
+                            0, deleteFromHeap);
         }
 
         return returnValue;
@@ -141,18 +158,35 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                 ->getElement();
     }
 
+    /**
+     * @see deleteMin(bool)
+     */
+    E *deleteMin() override { return deleteMin(false); }
+
   public:
     /**
-     * @return the element with the minimum priority in this data-structure.
+     * @param deleteFromHeap @warning
+     *                       @note set this parameter to `true` in case
+     *                       you want to `delete` the element from the heap -
+     *                       but then, since the element will be `delete`d, you
+     *                       *will not be able to access its value*.
+     *                       @note set this parameter to `false` in case you
+     *                       *do not* want to `delete` the element from the
+     *                       heap - so you will be able to access the value
+     *                       of the element - but it will be **your
+     *                       responsibility to `delete`** the pointer of the
+     *                       element `return`ed afterwards.
+     * @return the pointer to the element with the minimum priority in this
+     *         data-structure.
      * @see min()
      */
-    E *deleteMin() override {
+    E *deleteMin(bool deleteFromHeap) {
         E *returnValue = min();
 
         if (getLogicalSize() >= 3) {
             _lessOrEqualToMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
-                                                                          true);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
+                            0, deleteFromHeap);
             if (isLogicalSizeEven()) {
 
                 // Transfer the minimum from "greater" to "less".
@@ -160,8 +194,8 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
             }
         } else {
             _lessOrEqualToMedianDoubleHeap
-                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
-                                                                          true);
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
+                            0, deleteFromHeap);
         }
 
         return returnValue;

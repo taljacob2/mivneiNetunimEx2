@@ -41,6 +41,10 @@ class TestRunner {
         std::cout << "max:" << *priorityQueue.max() << std::endl;
         std::cout << "median:" << *priorityQueue.median() << std::endl;
         std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        auto *element = priorityQueue.deleteMin(false);
+        std::cout << "min: deleted: " << *element << std::endl;
+        delete element;
+        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
         priorityQueue.insert(Entry<int, std::string>(9, "9"));
         priorityQueue.print(std::cout); // TODO: bug here.
         std::cout << "min:" << *priorityQueue.min() << std::endl;
