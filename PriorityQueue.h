@@ -98,7 +98,26 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      * @return the element with the maximum priority in this data-structure.
      * @see max()
      */
-    E *deleteMax() override {}
+    E *deleteMax() override {
+        E *returnValue = max();
+
+        if (getLogicalSize() >= 3) {
+            _greaterThanMedianDoubleHeap
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
+                                                                          true);
+            if (isLogicalSizeOdd()) {
+
+                // Transfer the maximum from "less" to "greater".
+                transferTheMaxElementFromLessToGreater();
+            }
+        } else {
+            _lessOrEqualToMedianDoubleHeap
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
+                                                                          true);
+        }
+
+        return returnValue;
+    }
 
   public:
     /**
@@ -127,7 +146,26 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      * @return the element with the minimum priority in this data-structure.
      * @see min()
      */
-    E *deleteMin() override {}
+    E *deleteMin() override {
+        E *returnValue = min();
+
+        if (getLogicalSize() >= 3) {
+            _lessOrEqualToMedianDoubleHeap
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
+                                                                          true);
+            if (isLogicalSizeEven()) {
+
+                // Transfer the minimum from "greater" to "less".
+                transferTheMinElementFromGreaterToLess();
+            }
+        } else {
+            _lessOrEqualToMedianDoubleHeap
+                    ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
+                                                                          true);
+        }
+
+        return returnValue;
+    }
 
   public:
     void createEmpty() override {
@@ -268,10 +306,16 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     }
 
   protected:
-    bool isLogicalSizeEven() { return getLogicalSize() % 2 == 0; }
+    bool isLogicalSizeEven() { return isEven(getLogicalSize()); }
+
+  protected:
+    static bool isEven(unsigned long number) { return number % 2 == 0; }
 
   protected:
     bool isLogicalSizeOdd() { return !isLogicalSizeEven(); }
+
+  protected:
+    static bool isOdd(unsigned long number) { return !isEven(number); }
 
   public:
     friend std::ostream &operator<<(std::ostream &       os,
