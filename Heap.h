@@ -490,7 +490,7 @@ template<typename E> class Heap : public HeapAdt<E> {
   protected:
     /**
      * @brief This method enables the sub-classes of `this` class,
-     *        to add logic right after an insertion of an element.
+     *        to add logic right after the insertion of an element.
      * @param elementInserted an element that was just inserted by `this`
      *                        class.
      */
