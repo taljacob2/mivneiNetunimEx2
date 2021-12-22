@@ -177,9 +177,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
     void
     createDoubleHeap(DoublePointerMinHeapAndMaxHeapComponent<E> *
                              &fieldOfDoublePointerMinHeapAndMaxHeapComponent) {
-
         auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>(SIZE);
-
         auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>(SIZE);
 
         // Polymorphing `MinHeap` and `MaxHeap` through parameters.
@@ -188,20 +186,19 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
                                                                maxHeap);
     }
 
-    // protected:
-    //   void createDoubleHeapWithPhysicalSize(
-    //           DoublePointerMinHeapAndMaxHeapComponent<E> *
-    //                   &     fieldOfDoublePointerMinHeapAndMaxHeapComponent,
-    //           unsigned long physicalSize) {
-    //
-    //       // Polymorphing `MinHeap` and `MaxHeap` through parameters.
-    //       fieldOfDoublePointerMinHeapAndMaxHeapComponent =
-    //               new DoublePointerMinHeapAndMaxHeapComponent<E>(
-    //                       (MinHeap<EWrapper> *) new MinHeapWhenAlsoHavingMaxHeap<
-    //                               EWrapper>(physicalSize),
-    //                       (MaxHeap<EWrapper> *) new MaxHeapWhenAlsoHavingMinHeap<
-    //                               EWrapper>(physicalSize));
-    //   }
+  protected:
+    void createDoubleHeapWithPhysicalSize(
+            DoublePointerMinHeapAndMaxHeapComponent<E> *
+                    &     fieldOfDoublePointerMinHeapAndMaxHeapComponent,
+            unsigned long physicalSize) {
+        auto *minHeap = new MinHeapWhenAlsoHavingMaxHeap<E>(physicalSize);
+        auto *maxHeap = new MaxHeapWhenAlsoHavingMinHeap<E>(physicalSize);
+
+        // Polymorphing `MinHeap` and `MaxHeap` through parameters.
+        fieldOfDoublePointerMinHeapAndMaxHeapComponent =
+                new DoublePointerMinHeapAndMaxHeapComponent<E>(minHeap,
+                                                               maxHeap);
+    }
 
   public:
     void insert(E &&element) override {
