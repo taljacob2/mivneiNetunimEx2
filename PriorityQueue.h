@@ -71,8 +71,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *
      * @return retrieve the element with the maximum priority in this
      *         data-structure.
-     * @throws std::runtime_error in case the `_greaterThanMedianDoubleHeap`'s
-     *         maximum-heap is empty.
+     * @throws std::runtime_error in case there are no elements in the
+     *         `_lessOrEqualToMedianDoubleHeap`'s maximum-heap.
+     *         This happens when `getLogicalSize() <= 0`.
      */
     E *max() override {
 
@@ -104,8 +105,9 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *
      * @return retrieve the element with the minimum priority in this
      *         data-structure.
-     * @throws std::runtime_error in case the `_lessOrEqualToMedianDoubleHeap`'s
-     *         minimum-heap is empty.
+     * @throws std::runtime_error in case there are no elements in the
+     *         `_lessOrEqualToMedianDoubleHeap`'s minimum-heap.
+     *         This happens when `getLogicalSize() <= 0`.
      */
     E *min() override {
 
@@ -240,6 +242,7 @@ template<typename E> class PriorityQueue : public PriorityQueueAdt<E> {
      *         element that its priority is `ceil(n / 2)`
      * @throws std::runtime_error in case there are no elements in the
      *         `_lessOrEqualToMedianDoubleHeap`'s maximum-heap.
+     *          This happens when `getLogicalSize() <= 0`.
      */
     E *median() override {
 
