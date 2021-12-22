@@ -24,21 +24,17 @@ class MinHeapWhenAlsoHavingMaxHeap
         : MinHeap<EWrapper>(arrayToBuildFrom, sizeOfArrayToBuildFrom) {}
 
   protected:
-    void
-    onSwapIsNeeded(unsigned long currentIndex,
-                   unsigned long indexOfOtherSwappableElement) const override {
+    void onSwapIsNeeded(unsigned long index1,
+                        unsigned long index2) const override {
 
         // Update this element's heap-index to the new index:
-        (this->_array[currentIndex])
-                ->setMinHeapIndex(indexOfOtherSwappableElement);
+        (this->_array[index1])->setMinHeapIndex(index2);
 
         // Update this element's heap-index to the new index:
-        (this->_array[indexOfOtherSwappableElement])
-                ->setMinHeapIndex(currentIndex);
+        (this->_array[index2])->setMinHeapIndex(index1);
 
         // Swap the elements:
-        Heap<EWrapper>::onSwapIsNeeded(currentIndex,
-                                       indexOfOtherSwappableElement);
+        Heap<EWrapper>::onSwapIsNeeded(index1, index2);
     }
 
   protected:
