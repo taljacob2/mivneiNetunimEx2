@@ -2,6 +2,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include "BaseArray.h"
 #include "Constants.h"
 #include "Unique.h"
 #include <exception>
