@@ -79,41 +79,12 @@ class TestRunner {
              */
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
-
-
-        // // TODO: checking methods here. bug here.
-        // priorityQueueKvAdt.print(std::cout); // TODO: bug here.
-        // std::cout << "min:" << priorityQueueKvAdt.min() << std::endl;
-        // std::cout << "max:" << priorityQueueKvAdt.max() << std::endl;
-        // std::cout << "median:" << priorityQueueKvAdt.median() << std::endl;
-        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        // priorityQueueKvAdt.insert(4, "4");
-        // priorityQueueKvAdt.print(std::cout); // TODO: bug here.
-        // std::cout << "min:" << priorityQueueKvAdt.min() << std::endl;
-        // std::cout << "max:" << priorityQueueKvAdt.max() << std::endl;
-        // std::cout << "median:" << priorityQueueKvAdt.median() << std::endl;
-        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        // priorityQueueKvAdt.insert(5, "5");
-        // priorityQueueKvAdt.print(std::cout); // TODO: bug here.
-        // std::cout << "min:" << priorityQueueKvAdt.min() << std::endl;
-        // std::cout << "max:" << priorityQueueKvAdt.max() << std::endl;
-        // std::cout << "median:" << priorityQueueKvAdt.median() << std::endl;
-        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        // std::cout << "min: deleted: " << priorityQueueKvAdt.deleteMax() << std::endl;
-        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        // priorityQueueKvAdt.insert(9, "9");
-        // priorityQueueKvAdt.print(std::cout); // TODO: bug here.
-        // std::cout << "min:" << priorityQueueKvAdt.min() << std::endl;
-        // std::cout << "max:" << priorityQueueKvAdt.max() << std::endl;
-        // std::cout << "median:" << priorityQueueKvAdt.median() << std::endl;
-        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
     }
 
   private:
     template<typename K, typename V>
     static void runTest(BaseArray<std::string> &  test,
                         PriorityQueueKvAdt<K, V> &priorityQueueKvAdt) {
-        // TODO: do something with `test` here...
         invokeMethodInPriorityQueueBySwitchAndPrintReturnValuesIfExist(
                 test, priorityQueueKvAdt);
     }
