@@ -3,7 +3,6 @@
 #define INPUT_H
 
 #include "Constants.h"
-#include "StaticArray.h"
 #include "Unique.h"
 #include <exception>
 #include <functional>
@@ -110,7 +109,7 @@ class Input {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
-            testArray.setElement(getLine(std::cin), i); // TODO: "rvalue" set
+            testArray.setElement(getLine(std::cin), i);
             sizeCounter++;
         }
 
