@@ -5,6 +5,9 @@
 #include "ElementInMinHeapAndMaxHeap.h"
 #include "MinHeap.h"
 
+/**
+ * @note `ElementInMinHeapAndMaxHeap<E>` will be also be referred as `EWrapper`.
+ */
 template<typename E>
 class MaxHeapWhenAlsoHavingMinHeap
     : public MaxHeap<ElementInMinHeapAndMaxHeap<E>> {

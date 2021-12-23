@@ -8,6 +8,13 @@
 #include <ostream>
 
 /**
+ * @brief This class contains two `Heap`s, that share a mutual
+ *        `ElementInMinHeapAndMaxHeap` together. In this way, an element
+ *        within one heap can be instantly reached by the other heap.
+ *        This is done by the indexes stored for each heap within every
+ *        `ElementInMinHeapAndMaxHeap`.
+ *
+ * @note `ElementInMinHeapAndMaxHeap<E>` will be also be referred as `EWrapper`.
  * @see MinHeapWhenAlsoHavingMaxHeap
  * @see MaxHeapWhenAlsoHavingMinHeap
  * @see ElementInMinHeapAndMaxHeap
@@ -55,12 +62,21 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     MaxHeapWhenAlsoHavingMinHeap<E> *getMaxHeap() { return maxHeap; }
 
   public:
+    /**
+     * @brief "wraps" a given @p element with an `EWrapper`, and inserts it
+     *        to both heaps.
+     * @param element an element to be "wrapped" with an `EWrapper` to insert.
+     */
     void insertToBothHeaps(E &&element) {
         auto *eWrapper = new EWrapper((E &&) element);
         insertToBothHeaps(eWrapper);
     }
 
   public:
+    /**
+     * @brief inserts an *already-created* `EWrapper` to both heaps.
+     * @param eWrapper the `EWrapper` to insert.
+     */
     void insertToBothHeaps(EWrapper *&eWrapper) {
         minHeap->insert(eWrapper);
         maxHeap->insert(eWrapper);
@@ -68,9 +84,10 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
 
   public:
     /**
-     * @return - `nullptr`: when the `EWrapper` was *removed* and `delete`d -
+     * @return One of these returns:
+     *         - `nullptr`: when the `EWrapper` was *removed* and `delete`d -
      *           in case @p deleteEWrapper is `true`.
-     *         - *EWrapper removed*: when the `EWrapper` was *removed*
+     *         - the *EWrapper removed*: when the `EWrapper` was *removed*
      *           without being `delete`d - in case @p deleteEWrapper is `false`.
      */
     EWrapper *deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(
@@ -102,6 +119,13 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     }
 
   public:
+    /**
+     * @return One of these returns:
+     *         - `nullptr`: when the `EWrapper` was *removed* and `delete`d -
+     *           in case @p deleteEWrapper is `true`.
+     *         - the *EWrapper removed*: when the `EWrapper` was *removed*
+     *           without being `delete`d - in case @p deleteEWrapper is `false`.
+     */
     EWrapper *deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(
             unsigned long indexOfEWrapperInMaxHeapToDeleteFromBothHeaps,
             bool          deleteEWrapper = false) const {
