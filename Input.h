@@ -306,12 +306,6 @@ class Input {
         char        input;
         std::string returnValue = (char *) "";
 
-        // Ignore the first char if it is an `endingChar`.
-
-        // TODO: check if can disable
-        // istream.get(input);                           // DISABLED
-        // if (input != endingChar) { istream.unget(); } // DISABLED
-
         istream.get(input);
         while (input != endingChar) {
             returnValue += input;
