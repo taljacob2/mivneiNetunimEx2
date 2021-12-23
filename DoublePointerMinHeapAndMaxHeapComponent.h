@@ -8,8 +8,8 @@
 #include <ostream>
 
 /**
- * @see MinHeap
- * @see MaxHeap
+ * @see MinHeapWhenAlsoHavingMaxHeap
+ * @see MaxHeapWhenAlsoHavingMinHeap
  * @see ElementInMinHeapAndMaxHeap
  */
 template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
@@ -17,11 +17,9 @@ template<typename E> class DoublePointerMinHeapAndMaxHeapComponent {
     typedef ElementInMinHeapAndMaxHeap<E> EWrapper;
 
   protected:
-    // TODO: polymorph
     MinHeapWhenAlsoHavingMaxHeap<E> *minHeap = nullptr;
 
   protected:
-    // TODO: polymorph
     MaxHeapWhenAlsoHavingMinHeap<E> *maxHeap = nullptr;
 
   public:

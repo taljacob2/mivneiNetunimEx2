@@ -13,6 +13,7 @@
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
  * @see DoublePointerMinHeapAndMaxHeapComponent
+ * @see Entry
  * @version 2.0
  */
 template<typename K, typename V>
