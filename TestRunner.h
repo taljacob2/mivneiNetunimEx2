@@ -101,20 +101,20 @@ class TestRunner {
         try {
             char methodLetterToInvokeInPriorityQueue = test.getElement(0)[0];
             if (methodLetterToInvokeInPriorityQueue == 'a') {
-                std::cout << priorityQueue.max();
+                std::cout << priorityQueue.max() << std::endl;
             } else if (methodLetterToInvokeInPriorityQueue == 'b') {
-                std::cout << priorityQueue.deleteMax();
+                std::cout << priorityQueue.deleteMax() << std::endl;
             } else if (methodLetterToInvokeInPriorityQueue == 'c') {
-                std::cout << priorityQueue.min();
+                std::cout << priorityQueue.min() << std::endl;
             } else if (methodLetterToInvokeInPriorityQueue == 'd') {
-                std::cout << priorityQueue.deleteMin();
+                std::cout << priorityQueue.deleteMin() << std::endl;
             } else if (methodLetterToInvokeInPriorityQueue == 'e') {
                 priorityQueue.createEmpty();
             } else if (methodLetterToInvokeInPriorityQueue == 'f') {
                 priorityQueue.insert(stoi(test.getElement(1)),
                                      test.getElement(2));
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
-                std::cout << priorityQueue.median();
+                std::cout << priorityQueue.median() << std::endl;
             }
         } catch (std::exception &e) { throw; }
     }
