@@ -70,7 +70,6 @@ class Input {
     getTestArray(unsigned long &numberOfTestsInputted) {
         auto testArray        = BaseArray<std::string>(getValidTestArraySize());
         numberOfTestsInputted = initializeTestArray(testArray);
-        // validateTestArray(testArray, testArraySize);
         return testArray;
     }
 
@@ -130,41 +129,6 @@ class Input {
         return numberOfTestsInputted;
     }
 
-  private:
-    /**
-     * @brief Checks the given @p testArray for its validity.
-     * @param testArray the _array of strings the user inputted.
-     * @param testArraySize the size of the given @p testArray.
-     * @throws std::runtime_error in case the given @p testArray is not valid.
-     * @see initializeTestArray(std::string *&, int)
-     * @see assertSplit(int, int, std::string *&, std::string *&)
-     */
-    static void validateTestArray(BaseArray<std::string> &testArray,
-                                  int                     testArraySize) {
-        for (int i = 0; i < testArraySize; i++) {
-            validateTest(testArray, ' ', i);
-        }
-    }
-
-  private:
-    /**
-     * @deprecated this implementation validates a test string (of `testArray[i]`),
-     *             without returning it.
-     * @throws std::runtime_error in case the `testArray[i]` is not valid.
-     * @see getTest(std::string *&, char &, int)
-     */
-    static void validateTest(BaseArray<std::string> &testArray, char delimiter,
-                             int i) {
-        try {
-
-            // Split the current line by ' ' delimiter.
-            BaseArray<std::string> splitArray =
-                    split(testArray.getElement(i), delimiter);
-
-            assertSplit(i, testArray, splitArray);
-        } catch (std::exception &e) { throw; }
-    }
-
   public:
     /**
      * @brief this method returns a test string, which is an element of @p
@@ -179,43 +143,42 @@ class Input {
      * @see validateTest(std::string *&, char &, int)
      * @todo delete [] splitArray.
      */
-    static BaseArray<std::string> getTest(BaseArray<std::string> &testArray,
-                                          char delimiter, unsigned long i) {
+    static BaseArray<std::string> getTest(std::string &testLine, char delimiter,
+                                          unsigned long i) {
         try {
 
-            // Split the current line by ' ' delimiter.
-            BaseArray<std::string> splitArray =
-                    split(testArray.getElement(i), delimiter);
+            // Split the `testLine` by ' ' delimiter.
+            BaseArray<std::string> splitArray = split(testLine, delimiter);
 
-            assertSplit(i, testArray, splitArray);
+            assertSplit(testLine, splitArray, i);
 
             return splitArray;
         } catch (std::exception &e) { throw; }
     }
 
   private:
-    static void assertSplit(unsigned long i, BaseArray<std::string> &testArray,
-                            BaseArray<std::string> &splitArray) {
+    static void assertSplit(std::string &           testLine,
+                            BaseArray<std::string> &splitArray,
+                            unsigned long           i) {
 
         // Assert first letter.
-        assertFirstLetter(i, testArray, splitArray);
+        assertFirstLetter(testLine, splitArray, i);
 
         // Assert parameters after first letter.
         if (splitArray.size() > 1) { assertAllowedTwoParameters(splitArray); }
     }
 
   private:
-    static void assertFirstLetter(unsigned long           i,
-                                  BaseArray<std::string> &testArray,
-                                  BaseArray<std::string> &splitArray) {
+    static void assertFirstLetter(std::string &           testLine,
+                                  BaseArray<std::string> &splitArray,
+                                  unsigned long           i) {
         if (i == 0) {
-            if (!((testArray.getElement(i).length() == 1) &&
-                  testArray.getElement(i)[0] == FIRST_LETTER)) {
+            if ((testLine.length() != 1) && (testLine[0] == FIRST_LETTER)) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         } else {
             if (!predicateIsValidLetter(splitArray.getElement(0)) ||
-                testArray.getElement(i)[0] == FIRST_LETTER) {
+                testLine[0] == FIRST_LETTER) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         }

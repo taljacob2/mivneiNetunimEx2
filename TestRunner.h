@@ -32,9 +32,8 @@ class TestRunner {
                         : numberOfTestsInputted;
 
         for (unsigned long i = 0; i < minimumTestsSize; i++) {
-            std::string line = Input::getLine(std::cin);
-            BaseArray<std::string> test =
-                    Input::getTest(&line, ' ', i);
+            std::string            line = Input::getLine(std::cin);
+            BaseArray<std::string> test = Input::getTest(line, ' ', i);
             runTest<int, std::string>(test, priorityQueue);
         }
 
