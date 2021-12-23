@@ -66,11 +66,9 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static BaseArray<std::string>
-    getTestArray(unsigned long &numberOfTestsInputted) {
-        auto testArray        = BaseArray<std::string>(getValidTestArraySize());
-        numberOfTestsInputted = initializeTestArray(testArray);
-        return testArray;
+    static void
+    getTestArray(unsigned long &numberOfTestsDeclared) {
+        numberOfTestsDeclared = getValidTestArraySize();
     }
 
   private:
