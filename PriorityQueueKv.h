@@ -13,6 +13,7 @@
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
  * @see DoublePointerMinHeapAndMaxHeapComponent
+ * @version 2.0
  */
 template<typename K, typename V>
 class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
@@ -85,10 +86,10 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
 
         /*
          * DEVELOPER NOTE: retrieving the max in `_greaterThanMedianDoubleHeap`
-         * will not work when `getLogicalSize() < 3`, so in that case return
+         * will not work when `getLogicalSize() < 2`, so in that case return
          * the max in `_lessOrEqualToMedianDoubleHeap`.
          */
-        return getLogicalSize() >= 3
+        return getLogicalSize() >= 2
                        ? _greaterThanMedianDoubleHeap->getMaxHeap()->getRoot()
                        : _lessOrEqualToMedianDoubleHeap->getMaxHeap()
                                  ->getRoot();
@@ -111,11 +112,11 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
         auto *element     = eWrapper->getUniqueElement()->getElement();
         E     returnValue = *element;
 
-        if (getLogicalSize() >= 3) {
+        if (getLogicalSize() >= 2) {
             _greaterThanMedianDoubleHeap
                     ->deleteEWrapperFromBothHeapsViaIndexOfMaxHeapElement(0,
                                                                           true);
-            if (isLogicalSizeOdd()) {
+            if (isLogicalSizeEven()) {
 
                 // Transfer the maximum from "less" to "greater".
                 transferTheMaxElementFromLessToGreater();
@@ -175,11 +176,11 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
         auto *element     = eWrapper->getUniqueElement()->getElement();
         E     returnValue = *element;
 
-        if (getLogicalSize() >= 3) {
+        if (getLogicalSize() >= 2) {
             _lessOrEqualToMedianDoubleHeap
                     ->deleteEWrapperFromBothHeapsViaIndexOfMinHeapElement(0,
                                                                           true);
-            if (isLogicalSizeEven()) {
+            if (isLogicalSizeOdd()) {
 
                 // Transfer the minimum from "greater" to "less".
                 transferTheMinElementFromGreaterToLess();
@@ -232,7 +233,7 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
     void insert(K key, V value) override {
         E element = Entry<K, V>(key, value);
         if (getLogicalSize() > 0) {
-            if (isLogicalSizeOdd()) { // TODO: continue implement.
+            if (isLogicalSizeOdd()) {
                 if (median() < element) {
 
                     // Insert the given EWrapper to the "greater" heap.
@@ -245,7 +246,7 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
                     _lessOrEqualToMedianDoubleHeap->insertToBothHeaps(
                             (E &&) element);
                 }
-            } else if (isLogicalSizeOdd()) {
+            } else if (isLogicalSizeEven()) {
                 if (median() < element) {
                     transferTheMinElementFromGreaterToLess();
 
