@@ -24,6 +24,11 @@ class TestRunner {
         PriorityQueueKv<int, std::string> priorityQueue;
         // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
 
+        /*
+         * IMPORTANT: the below loop ends only when the user inputs another
+         * whole `\n` line - As said in the "mama" forum at:
+         * https://mama.mta.ac.il/mod/forum/discuss.php?d=5015.
+         */
         unsigned long i = 0;
         std::string   line;
         for (; !((line = Input::getLine(std::cin)).empty()); i++) {
@@ -32,8 +37,6 @@ class TestRunner {
 
             if (i > numberOfTestsDeclared) {
 
-                // FIXME: this is ending only when the user inputs another
-                //  whole `\n` line - which will not really gonna happen...
                 /*
                  * `i` is larger than `numberOfTestsDeclared`.
                  * The actual number-of-tests-inputted is not the same as the
@@ -54,32 +57,33 @@ class TestRunner {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
-        // TODO: checking methods here. bug here.
-        priorityQueue.print(std::cout); // TODO: bug here.
-        std::cout << "min:" << priorityQueue.min() << std::endl;
-        std::cout << "max:" << priorityQueue.max() << std::endl;
-        std::cout << "median:" << priorityQueue.median() << std::endl;
-        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        priorityQueue.insert(4, "4");
-        priorityQueue.print(std::cout); // TODO: bug here.
-        std::cout << "min:" << priorityQueue.min() << std::endl;
-        std::cout << "max:" << priorityQueue.max() << std::endl;
-        std::cout << "median:" << priorityQueue.median() << std::endl;
-        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        priorityQueue.insert(5, "5");
-        priorityQueue.print(std::cout); // TODO: bug here.
-        std::cout << "min:" << priorityQueue.min() << std::endl;
-        std::cout << "max:" << priorityQueue.max() << std::endl;
-        std::cout << "median:" << priorityQueue.median() << std::endl;
-        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        std::cout << "min: deleted: " << priorityQueue.deleteMax() << std::endl;
-        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-        priorityQueue.insert(9, "9");
-        priorityQueue.print(std::cout); // TODO: bug here.
-        std::cout << "min:" << priorityQueue.min() << std::endl;
-        std::cout << "max:" << priorityQueue.max() << std::endl;
-        std::cout << "median:" << priorityQueue.median() << std::endl;
-        std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        //
+        // // TODO: checking methods here. bug here.
+        // priorityQueue.print(std::cout); // TODO: bug here.
+        // std::cout << "min:" << priorityQueue.min() << std::endl;
+        // std::cout << "max:" << priorityQueue.max() << std::endl;
+        // std::cout << "median:" << priorityQueue.median() << std::endl;
+        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        // priorityQueue.insert(4, "4");
+        // priorityQueue.print(std::cout); // TODO: bug here.
+        // std::cout << "min:" << priorityQueue.min() << std::endl;
+        // std::cout << "max:" << priorityQueue.max() << std::endl;
+        // std::cout << "median:" << priorityQueue.median() << std::endl;
+        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        // priorityQueue.insert(5, "5");
+        // priorityQueue.print(std::cout); // TODO: bug here.
+        // std::cout << "min:" << priorityQueue.min() << std::endl;
+        // std::cout << "max:" << priorityQueue.max() << std::endl;
+        // std::cout << "median:" << priorityQueue.median() << std::endl;
+        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        // std::cout << "min: deleted: " << priorityQueue.deleteMax() << std::endl;
+        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+        // priorityQueue.insert(9, "9");
+        // priorityQueue.print(std::cout); // TODO: bug here.
+        // std::cout << "min:" << priorityQueue.min() << std::endl;
+        // std::cout << "max:" << priorityQueue.max() << std::endl;
+        // std::cout << "median:" << priorityQueue.median() << std::endl;
+        // std::cout << "++++++++++++++++++++++++++++++++++++++++++" << std::endl;
     }
 
   private:

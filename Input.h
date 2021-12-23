@@ -8,6 +8,7 @@
 #include <exception>
 #include <functional>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 /**
@@ -66,8 +67,7 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static void
-    getTestArray(unsigned long &numberOfTestsDeclared) {
+    static void getTestArray(unsigned long &numberOfTestsDeclared) {
         numberOfTestsDeclared = getValidTestArraySize();
     }
 
