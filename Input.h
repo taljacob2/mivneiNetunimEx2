@@ -49,30 +49,6 @@ class Input {
 
   public:
     /**
-     * @brief Gets the an _array of tests from the input-stream, and asserts
-     *        only its size validity.
-     *
-     * For example:
-     * a valid input would be:
-     * @code
-     * 6
-     * e
-     * f 3 hi
-     * f 2 why
-     * f 9 bye
-     * f 7 day hello hey
-     * g
-     * @endcode
-     *
-     * @return an _array that each element of it is a line inputted.
-     * @todo delete[] testArray.
-     */
-    static void getTestArray(unsigned long &numberOfTestsDeclared) {
-        numberOfTestsDeclared = getValidTestArraySize();
-    }
-
-  private:
-    /**
      * @brief Gets the number of tests for the user to input.
      * @return `numberOfTests` gotten. This value serves as the size of
      *         `testArray` in the system.
@@ -80,7 +56,7 @@ class Input {
      *         in case the number gotten is non-positive.
      * @see getTestArray(unsigned long &)
      */
-    static unsigned long getValidTestArraySize() {
+    static unsigned long getValidNumberOfTestsDeclared() {
         std::string numberOfTestsString;
         numberOfTestsString = getLine(std::cin);
 
