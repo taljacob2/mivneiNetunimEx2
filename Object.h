@@ -26,7 +26,6 @@
  * > priorityQueue->insert(new Entry<int, std::string>(4, "yes"));
  * > @endcode
  *
- * @author Tal Jacob
  * @version 1.0.1
  */
 class Object {
