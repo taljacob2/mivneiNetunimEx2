@@ -171,7 +171,10 @@ class Input {
                                   BaseArray<std::string> &splitArray,
                                   unsigned long           i) {
         if (i == 0) {
-            if ((testLine.length() != 1) && (testLine[0] == FIRST_LETTER)) {
+            if (testLine[0] != FIRST_LETTER) {
+                throw std::runtime_error(Constants::WRONG_INPUT);
+            }
+            if ((testLine[0] == FIRST_LETTER) && (testLine.length() != 1)) {
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
         } else {
