@@ -10,6 +10,9 @@
  * @brief This *priority-queue* is implemented by four *Heaps*, and each of
  *        these Heaps' elements are *Entries* that are composed by a *key* and a *value*.
  *
+ * @attention the `median()` is defined as the element that its priority is
+ *            `ceil(n / 2)`.
+ *
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
  * @see DoublePointerMinHeapAndMaxHeapComponent
@@ -310,7 +313,8 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
 
   public:
     /**
-     * @return the median priority element.
+     * @return the median priority element - defining the median as the
+     *         element that its priority is `ceil(n / 2)`
      * @throws std::runtime_error in case there are no elements in the
      *         `_lessOrEqualToMedianDoubleHeap`'s maximum-heap.
      *          This happens when `getLogicalSize() <= 0`.
