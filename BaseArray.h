@@ -50,7 +50,7 @@
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.4
+ * @version 1.0.5
  */
 template<typename E> class BaseArray : public Object {
 
@@ -634,34 +634,6 @@ template<typename E> class BaseArray : public Object {
 
   public:
     BaseArray &operator=(const BaseArray &other) = delete;
-
-    // // FIXME:
-    // public:
-    //   BaseArray &operator=(const BaseArray &other) {
-    //
-    //       // Guard self assignment
-    //       if (this == &other) { return *this; }
-    //
-    //       // Free the existing resource.
-    //       deleteThis();
-    //
-    //       // Copy the data pointer and its size from the source object.
-    //       this->_physicalSize = other._physicalSize;
-    //       // this->_array = other._array; // Shallow-Copy the pointer's reference.
-    //       this->_array = new Unique<E> *[_physicalSize];
-    //       for (unsigned long i = 0; i < _physicalSize; i++) {
-    //           _array[i] = new Unique<E>(*other._array[i]);
-    //           // // TODO :debug
-    //           // std::cout << *_array[i] << std::endl;
-    //       }
-    //
-    //       /*
-    //        * `other` is deleted automatically here.
-    //        * So, you must "deep copy" (or "move") each pointers' reference,
-    //        * or else the references will be `deleted`.
-    //        */
-    //       return *this;
-    //   }
 
   public:
     BaseArray &operator=(BaseArray &&other) noexcept {

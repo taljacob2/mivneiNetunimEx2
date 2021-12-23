@@ -72,37 +72,6 @@ class Input {
         return numberOfTests;
     }
 
-  private:
-    /**
-     * @brief Gets all the tests inputted, and places them as elements in
-     *        `testArray` with the type of `std::string`s.
-     * @param testArray an empty _array of `std::string`s, to be initialized
-     *                  with all the tests the user inputted.
-     * @return the number of tests inputted.
-     */
-    static unsigned long
-    initializeTestArray(BaseArray<std::string> &testArray) {
-        unsigned long numberOfTestsInputted = 0;
-        std::string   line;
-        while (!((line = getLine(std::cin)).empty())) {
-            testArray.setElement((std::string &&) line, numberOfTestsInputted);
-            numberOfTestsInputted++;
-
-            // TODO: debug:
-            std::cout << "numberOfTestsInputted:" << numberOfTestsInputted
-                      << std::endl;
-        }
-
-        // TODO: debug:
-        std::cout << "done input:" << std::endl;
-
-        // if (numberOfTestsInputted != testArray.size()) {
-        //     throw std::runtime_error(Constants::WRONG_INPUT);
-        // }
-
-        return numberOfTestsInputted;
-    }
-
   public:
     /**
      * @brief this method returns a test string, which is an element of @p
@@ -200,7 +169,6 @@ class Input {
                                      });
         }
     }
-
 
   private:
     /**
@@ -327,7 +295,7 @@ class Input {
                 splitArray.setElement(
                         stringToSplit.substr(startIndex,
                                              stringToSplitIndex - startIndex),
-                        splitArrayIndex); // TODO: NOTE: "rvalue" "set"
+                        splitArrayIndex);
                 splitArrayIndex++;
                 startIndex = stringToSplitIndex + 1;
             }
