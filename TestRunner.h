@@ -84,13 +84,6 @@ class TestRunner {
                 std::cout << priorityQueue.median();
             }
         } catch (std::exception &e) {
-
-            // TODO: remember to throw inside PriorityQueue.
-            /*
-             * Should occur when trying to delete and the priority-queue is
-             * already empty.
-             */
-            // std::cout << Constants::WRONG_INPUT << std::endl;
             throw;
         }
     }
