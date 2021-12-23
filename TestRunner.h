@@ -32,10 +32,7 @@ class TestRunner {
         unsigned long i = 0;
         std::string   line;
         for (; !((line = Input::getLine(std::cin)).empty()); i++) {
-            BaseArray<std::string> test = Input::getTest(line, ' ', i);
-            runTest<int, std::string>(test, priorityQueue);
-
-            if (i > numberOfTestsDeclared) {
+            if (i >= numberOfTestsDeclared) {
 
                 /*
                  * `i` is larger than `numberOfTestsDeclared`.
@@ -44,6 +41,9 @@ class TestRunner {
                  */
                 throw std::runtime_error(Constants::WRONG_INPUT);
             }
+
+            BaseArray<std::string> test = Input::getTest(line, ' ', i);
+            runTest<int, std::string>(test, priorityQueue);
         }
 
         if (i != numberOfTestsDeclared) {
