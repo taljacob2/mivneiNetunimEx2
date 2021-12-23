@@ -21,6 +21,7 @@
  *       exception will be thrown, and it will be okay memory-wise without
  *       any leaks.
  * @tparam E the type of element to be stored.
+ * @see Object
  */
 template<typename E> class Unique : public Object {
 

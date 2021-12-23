@@ -50,6 +50,7 @@
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  *
+ * @see Unique
  * @version 1.0.6
  */
 template<typename E> class BaseArray : public Object {
