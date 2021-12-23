@@ -32,7 +32,7 @@
  *
  *           // Example: "normal lvalue"
  *           std::string str = getLine(std::cin);
- *           testArray.setElement(&str, 0);
+ *           testArray.setElement((std::string str &&) str, 0);
  *           std::cout << testArray << std::endl;
  *
  *           // Example: "inline anonymous heap allocated lvalue"

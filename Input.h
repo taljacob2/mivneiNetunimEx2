@@ -66,8 +66,9 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static BaseArray<std::string> getTestArray(unsigned long &numberOfTestsInputted) {
-        auto testArray = BaseArray<std::string>(getValidTestArraySize());
+    static BaseArray<std::string>
+    getTestArray(unsigned long &numberOfTestsInputted) {
+        auto testArray        = BaseArray<std::string>(getValidTestArraySize());
         numberOfTestsInputted = initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
         return testArray;
@@ -84,7 +85,7 @@ class Input {
      */
     static unsigned long getValidTestArraySize() {
         std::string numberOfTestsString;
-        std::cin >> numberOfTestsString;
+        numberOfTestsString = getLine(std::cin);
 
         if (!predicateIsStringAnUnsignedNumber(numberOfTestsString)) {
             throw std::runtime_error(Constants::WRONG_INPUT);
@@ -106,19 +107,27 @@ class Input {
      *                  with all the tests the user inputted.
      * @return the number of tests inputted.
      */
-    static unsigned long initializeTestArray(BaseArray<std::string> &testArray) {
-        unsigned long sizeCounter = 0;
+    static unsigned long
+    initializeTestArray(BaseArray<std::string> &testArray) {
+        unsigned long numberOfTestsInputted = 0;
+        std::string   line;
+        while (!((line = getLine(std::cin)).empty())) {
+            testArray.setElement((std::string &&) line, numberOfTestsInputted);
+            numberOfTestsInputted++;
 
-        for (unsigned long i = 0; i < testArray.size(); i++) {
-            testArray.setElement(getLine(std::cin), i);
-            sizeCounter++;
+            // TODO: debug:
+            std::cout << "numberOfTestsInputted:" << numberOfTestsInputted
+                      << std::endl;
         }
 
-        // if (sizeCounter != testArray.size()) {
+        // TODO: debug:
+        std::cout << "done input:" << std::endl;
+
+        // if (numberOfTestsInputted != testArray.size()) {
         //     throw std::runtime_error(Constants::WRONG_INPUT);
         // }
 
-        return sizeCounter;
+        return numberOfTestsInputted;
     }
 
   private:
@@ -309,7 +318,7 @@ class Input {
         return true;
     }
 
-  private:
+  public:
     /**
      * @brief Gets a whole line from an input-stream - from the start of the
      *        line until the `Constants::NEW_LINE` char (not included).
@@ -323,7 +332,7 @@ class Input {
         return getLineUntilEndingChar(istream, Constants::NEW_LINE);
     }
 
-  private:
+  public:
     /**
      * @brief Gets a whole line from an input-stream - from the start of the
      *        line until the @p endingChar char (not included).
@@ -334,11 +343,13 @@ class Input {
     static std::string getLineUntilEndingChar(std::istream &istream,
                                               char          endingChar) {
         char        input;
-        std::string returnValue;
+        std::string returnValue = (char *) "";
 
         // Ignore the first char if it is an `endingChar`.
-        istream.get(input);
-        if (input != endingChar) { istream.unget(); }
+
+        // TODO: check if can disable
+        // istream.get(input);                           // DISABLED
+        // if (input != endingChar) { istream.unget(); } // DISABLED
 
         istream.get(input);
         while (input != endingChar) {

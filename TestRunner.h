@@ -14,29 +14,38 @@ class TestRunner {
         unsigned long          numberOfTestsInputted = 0;
         BaseArray<std::string> testArray =
                 Input::getTestArray(numberOfTestsInputted);
-        runAllTests(testArray);
-
-        if (numberOfTestsInputted != testArray.size()) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
-        }
+        runAllTests(testArray, numberOfTestsInputted);
     }
 
   private:
-    static void runAllTests(BaseArray<std::string> &testArray) {
+    static void runAllTests(BaseArray<std::string> &testArray,
+                            unsigned long &         numberOfTestsInputted) {
 
         // TODO: polymorph with adt
         // PriorityQueue<Entry<int, std::string>> priorityQueue;
         PriorityQueueKv<int, std::string> priorityQueue;
         // PriorityQueueAdt<E> *priorityQueueAdt = &priorityQueue;
 
+        unsigned long minimumTestsSize =
+                testArray.size() < numberOfTestsInputted
+                        ? testArray.size()
+                        : numberOfTestsInputted;
 
-        for (unsigned long i = 0; i < testArray.size(); i++) {
-
-            BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
-            // runTest<Entry<int, std::string>>(test, priorityQueue);
+        for (unsigned long i = 0; i < minimumTestsSize; i++) {
+            std::string line = Input::getLine(std::cin);
+            BaseArray<std::string> test =
+                    Input::getTest(&line, ' ', i);
             runTest<int, std::string>(test, priorityQueue);
         }
 
+        if (numberOfTestsInputted != testArray.size()) {
+
+            /*
+             * The actual number-of-tests-inputted is not the same as the
+             * user has declared in the first place.
+             */
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
 
         // TODO: checking methods here. bug here.
         priorityQueue.print(std::cout); // TODO: bug here.
