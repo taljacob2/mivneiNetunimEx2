@@ -80,22 +80,22 @@ class Input {
      *         `testArray` in the system.
      * @throws std::runtime_error in case the size gotten is not a number, or
      *         in case the number gotten is non-positive.
-     * @see getTestArray(int &)
+     * @see getTestArray()
      */
-    static int getValidTestArraySize() {
+    static unsigned long getValidTestArraySize() {
         std::string numberOfTestsString;
         std::cin >> numberOfTestsString;
 
-        if (!predicateIsStringAnUnsignedInt(numberOfTestsString)) {
+        if (!predicateIsStringAnUnsignedNumber(numberOfTestsString)) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
-        int numberOfTestsInt = stoi(numberOfTestsString);
-        if (numberOfTestsInt < 1) {
+        unsigned long numberOfTests = stol(numberOfTestsString);
+        if (numberOfTests < 1) {
             throw std::runtime_error(Constants::WRONG_INPUT);
         }
 
-        return numberOfTestsInt;
+        return numberOfTests;
     }
 
   private:
@@ -277,12 +277,12 @@ class Input {
 
   private:
     /**
-     * @param str the `std::string` to check if it represents an `unsigned int`
+     * @param str the `std::string` to check if it represents an `unsigned`
      *            number.
-     * @return `true` if the @p str given represents an `unsigned int` number.
+     * @return `true` if the @p str given represents an `unsigned` number.
      *          Else, `false`.
      */
-    static bool predicateIsStringAnUnsignedInt(std::string &str) {
+    static bool predicateIsStringAnUnsignedNumber(std::string &str) {
         for (char c : str) {
             if (!(('0' <= c) && (c <= '9'))) { return false; }
         }
