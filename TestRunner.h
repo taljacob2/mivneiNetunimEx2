@@ -10,7 +10,20 @@
 class TestRunner {
 
   public:
+    static void getTestArrayAndRunAllTests() {
+        unsigned long          numberOfTestsInputted = 0;
+        BaseArray<std::string> testArray =
+                Input::getTestArray(numberOfTestsInputted);
+        runAllTests(testArray);
+
+        if (numberOfTestsInputted != testArray.size()) {
+            throw std::runtime_error(Constants::WRONG_INPUT);
+        }
+    }
+
+  private:
     static void runAllTests(BaseArray<std::string> &testArray) {
+
         // TODO: polymorph with adt
         // PriorityQueue<Entry<int, std::string>> priorityQueue;
         PriorityQueueKv<int, std::string> priorityQueue;
@@ -18,6 +31,7 @@ class TestRunner {
 
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
+
             BaseArray<std::string> test = Input::getTest(testArray, ' ', i);
             // runTest<Entry<int, std::string>>(test, priorityQueue);
             runTest<int, std::string>(test, priorityQueue);
@@ -83,9 +97,7 @@ class TestRunner {
             } else if (methodLetterToInvokeInPriorityQueue == 'g') {
                 std::cout << priorityQueue.median();
             }
-        } catch (std::exception &e) {
-            throw;
-        }
+        } catch (std::exception &e) { throw; }
     }
 };
 

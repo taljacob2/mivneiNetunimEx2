@@ -11,15 +11,7 @@
  */
 int main() {
     try {
-        auto testArray = Input::getTestArray();
-
-        // TODO: print
-        std::cout << testArray << std::endl;
-
-        TestRunner::runAllTests(testArray);
-
-        // testArray.forEach([testArray](std::string *s) { delete s; });
-
+        TestRunner::getTestArrayAndRunAllTests();
     } catch (std::exception &e) {
         std::cout << Constants::WRONG_INPUT << std::endl;
         return Constants::MAIN_ERROR;

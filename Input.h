@@ -66,9 +66,9 @@ class Input {
      * @return an _array that each element of it is a line inputted.
      * @todo delete[] testArray.
      */
-    static BaseArray<std::string> getTestArray() {
+    static BaseArray<std::string> getTestArray(unsigned long &numberOfTestsInputted) {
         auto testArray = BaseArray<std::string>(getValidTestArraySize());
-        initializeTestArray(testArray);
+        numberOfTestsInputted = initializeTestArray(testArray);
         // validateTestArray(testArray, testArraySize);
         return testArray;
     }
@@ -80,7 +80,7 @@ class Input {
      *         `testArray` in the system.
      * @throws std::runtime_error in case the size gotten is not a number, or
      *         in case the number gotten is non-positive.
-     * @see getTestArray()
+     * @see getTestArray(unsigned long &)
      */
     static unsigned long getValidTestArraySize() {
         std::string numberOfTestsString;
@@ -104,9 +104,9 @@ class Input {
      *        `testArray` with the type of `std::string`s.
      * @param testArray an empty _array of `std::string`s, to be initialized
      *                  with all the tests the user inputted.
-     * @param testArraySize the size of the given @p testArray.
+     * @return the number of tests inputted.
      */
-    static void initializeTestArray(BaseArray<std::string> &testArray) {
+    static unsigned long initializeTestArray(BaseArray<std::string> &testArray) {
         unsigned long sizeCounter = 0;
 
         for (unsigned long i = 0; i < testArray.size(); i++) {
@@ -114,9 +114,11 @@ class Input {
             sizeCounter++;
         }
 
-        if (sizeCounter != testArray.size()) {
-            throw std::runtime_error(Constants::WRONG_INPUT);
-        }
+        // if (sizeCounter != testArray.size()) {
+        //     throw std::runtime_error(Constants::WRONG_INPUT);
+        // }
+
+        return sizeCounter;
     }
 
   private:
