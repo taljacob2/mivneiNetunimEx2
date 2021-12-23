@@ -12,6 +12,7 @@
  *
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
+ * @note `Entry<K, V>` will be also be referred as `E`.
  * @note `ElementInMinHeapAndMaxHeap<E>` will be also be referred as `EWrapper`.
  * @see DoublePointerMinHeapAndMaxHeapComponent
  * @see Entry

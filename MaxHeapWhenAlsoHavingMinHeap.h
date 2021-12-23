@@ -6,7 +6,14 @@
 #include "MinHeap.h"
 
 /**
+ * @brief This special class is made especially to be used when there is
+ *        another heap than this one, that wants to be updated with the
+ *        elements of this heap. This is done with the `ElementInMinHeapAndMaxHeap`
+ *        class.
+ *
  * @note `ElementInMinHeapAndMaxHeap<E>` will be also be referred as `EWrapper`.
+ * @see MaxHeap
+ * @see Heap
  */
 template<typename E>
 class MaxHeapWhenAlsoHavingMinHeap

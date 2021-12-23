@@ -12,6 +12,7 @@
  *
  * @tparam E The type of each element. **Must** be `comparable`.
  *           The *priority* of each element is based on this comparable `key`.
+ * @note `Entry<K, V>` will be also be referred as `E`.
  */
 template<typename K, typename V> class PriorityQueueKvAdt {
     typedef Entry<K, V> E;
