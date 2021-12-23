@@ -2,8 +2,8 @@
 #ifndef MAX_HEAP_H
 #define MAX_HEAP_H
 
+#include "BasicAlgorithms.h"
 #include "Heap.h"
-#include "my_algorithms.h"
 
 /**
  * @brief This class implements a **Maximum-Heap** which its elements are
@@ -41,7 +41,7 @@ template<typename E> class MaxHeap : public Heap<E> {
     getIndexOfChildToSwapWithParent(E **array, unsigned long size,
                                     unsigned long indexToElement1,
                                     unsigned long indexToElement2) override {
-        return my_algorithms::max(array, size, indexToElement1,
+        return BasicAlgorithms::max(array, size, indexToElement1,
                                   indexToElement2);
     }
 

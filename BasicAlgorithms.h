@@ -1,6 +1,6 @@
 
-#ifndef MY_ALGORITHMS_H
-#define MY_ALGORITHMS_H
+#ifndef BASIC_ALGORITHMS_H
+#define BASIC_ALGORITHMS_H
 
 #include "Constants.h"
 #include <exception>
@@ -10,7 +10,7 @@
  * @brief this class bundles together all the generic algorithms
  *        methods in the program.
  */
-class my_algorithms {
+class BasicAlgorithms {
 
   public:
     /**
@@ -179,7 +179,6 @@ class my_algorithms {
         element1 = element2;
         element2 = tmp;
     }
-
 };
 
-#endif // MY_ALGORITHMS_H
+#endif // BASIC_ALGORITHMS_H

@@ -2,8 +2,8 @@
 #ifndef HEAP_H
 #define HEAP_H
 
+#include "BasicAlgorithms.h"
 #include "HeapAdt.h"
-#include "my_algorithms.h"
 #include <cmath>
 
 /**
@@ -477,7 +477,7 @@ template<typename E> class Heap : public HeapAdt<E> {
   protected:
     virtual void onSwapIsNeeded(unsigned long index1,
                                 unsigned long index2) const {
-        my_algorithms::swap(_array, index1, index2);
+        BasicAlgorithms::swap(_array, index1, index2);
     }
 
   protected:

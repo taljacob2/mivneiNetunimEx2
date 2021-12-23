@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(mivneiNetunimEx2 main.cpp Constants.h
         Entry.h Input.h
-        TestRunner.h MinHeap.h MaxHeap.h my_algorithms.h
+        TestRunner.h MinHeap.h MaxHeap.h BasicAlgorithms.h
         HeapAdt.h Heap.h ElementInMinHeapAndMaxHeap.h
         BaseArray.h
         MinHeapWhenAlsoHavingMaxHeap.h MaxHeapWhenAlsoHavingMinHeap.h
