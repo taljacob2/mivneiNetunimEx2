@@ -30,7 +30,7 @@
  *           testArray.setElement(getLine(std::cin), 0);
  *           std::cout << testArray << std::endl;
  *
- *           // Example: "normal lvalue"
+ *           // Example: "normal lvalue. convert it to a rvalue to insert"
  *           std::string str = getLine(std::cin);
  *           testArray.setElement((std::string str &&) str, 0);
  *           std::cout << testArray << std::endl;
