@@ -32,6 +32,8 @@ class TestRunner {
 
             if (i > numberOfTestsDeclared) {
 
+                // FIXME: this is ending only when the user inputs another
+                //  whole `\n` line - which will not really gonna happen...
                 /*
                  * `i` is larger than `numberOfTestsDeclared`.
                  * The actual number-of-tests-inputted is not the same as the
@@ -43,6 +45,7 @@ class TestRunner {
 
         if (i != numberOfTestsDeclared) {
 
+            // FIXME: this is okay.
             /*
              * `i` is smaller than `numberOfTestsDeclared`.
              * The actual number-of-tests-inputted is not the same as the
