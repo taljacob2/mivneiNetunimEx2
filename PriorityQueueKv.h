@@ -231,8 +231,8 @@ class PriorityQueueKv : public PriorityQueueKvAdt<K, V> {
   public:
     void insert(K key, V value) override {
         E element = Entry<K, V>(key, value);
-        if (getLogicalSize() > 1) {
-            if (isLogicalSizeEven()) {
+        if (getLogicalSize() > 0) {
+            if (isLogicalSizeOdd()) { // TODO: continue implement.
                 if (median() < element) {
 
                     // Insert the given EWrapper to the "greater" heap.
