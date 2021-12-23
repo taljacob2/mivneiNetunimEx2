@@ -50,7 +50,7 @@
  *       is larger than the logical-`size` by `1` at all times.
  * @tparam E the type of `element` in the array.
  *
- * @version 1.0.5
+ * @version 1.0.6
  */
 template<typename E> class BaseArray : public Object {
 
@@ -114,35 +114,6 @@ template<typename E> class BaseArray : public Object {
         for (unsigned long i = 0; i < size; i++) { delete array[i]; }
         delete[] array;
     }
-
-    // public:
-    //   /**
-    //    * @warning in case the element you are trying to get was originally a
-    //    *          `rvalue`, you will get the *one and only* reference to that element,
-    //    *          and `this` array won't have access to it anymore.
-    //    *          Thus, in case you need the reference to this element more than
-    //    *          once, you **must catch** the return value of this method,
-    //    *          or else nobody will have a reference for this element anymore,
-    //    *          and it will be destroyed.
-    //    *          @note as said before, in case the element you are trying to get
-    //    *                was originally a `rvalue`, you will get the *one and only* reference to
-    //    *                this element - and then, `this` array will replace its
-    //    *                presence with `nullptr` (to mark it as "deleted").
-    //    */
-    //   virtual E *getElementUnsafe(unsigned long index) {
-    //       if (isOutOfRange(index)) {
-    //           throw std::out_of_range(OUT_OF_RANGE_MESSAGE);
-    //       }
-    //
-    //       E *element = _array[index]->getElement(); // Shallow copy pointer.
-    //
-    //       if (_array[index]->isNeedToDeleteElement()) {
-    //           delete _array[index]; // Delete the old unique pointer.
-    //           _array[index] = new Unique<E>(nullptr);
-    //       }
-    //
-    //       return element;
-    //   }
 
   public:
     virtual E &getElement(unsigned long index) {
@@ -570,7 +541,6 @@ template<typename E> class BaseArray : public Object {
             throw std::runtime_error(msg + " " + msg2);
         }
     }
-
 
   public:
     void manipulateElementByRangeOfElements(
