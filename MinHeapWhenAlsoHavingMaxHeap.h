@@ -10,6 +10,8 @@
  *        another heap than this one, that wants to be updated with the
  *        elements of this heap. This is done with the `ElementInMinHeapAndMaxHeap`
  *        class.
+ *        This class *overrides* special *virtual methods* to be invoked via
+ *        the `Heap` and `MinHeap` classes.
  *
  * @note `ElementInMinHeapAndMaxHeap<E>` will be also be referred as `EWrapper`.
  * @see MinHeap
