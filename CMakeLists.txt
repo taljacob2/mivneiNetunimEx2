@@ -7,7 +7,7 @@ add_executable(mivneiNetunimEx2 main.cpp Constants.h
         Entry.h Input.h
         TestRunner.h MinHeap.h MaxHeap.h my_algorithms.h
         HeapAdt.h Heap.h ElementInMinHeapAndMaxHeap.h
-        BaseArray.h Polymorpher.h
+        BaseArray.h
         MinHeapWhenAlsoHavingMaxHeap.h MaxHeapWhenAlsoHavingMinHeap.h
         DoublePointerMinHeapAndMaxHeapComponent.h Unique.h Object.h
         PriorityQueueKv.h PriorityQueueKvAdt.h)
