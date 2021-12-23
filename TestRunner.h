@@ -48,7 +48,6 @@ class TestRunner {
 
         if (i != numberOfTestsDeclared) {
 
-            // FIXME: this is okay.
             /*
              * `i` is smaller than `numberOfTestsDeclared`.
              * The actual number-of-tests-inputted is not the same as the
