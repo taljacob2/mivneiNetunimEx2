@@ -26,7 +26,41 @@
  * > priorityQueue->insert(new Entry<int, std::string>(4, "yes"));
  * > @endcode
  *
- * @version 1.0.1
+ * **Flowchart Logic Explained:**
+ * 
+ * 0. We set a static variable named `Object::createdOnHeapStatic`, which its
+ *    default value is set to `false`.
+ * 
+ * ----- The user calls the operator `new` to allocate a `new Object` on the heap ------
+ * 
+ * 1. `operator new` allocates the `Object` on heap memory.
+ * 2. `operator new` changes `Object::createdOnHeapStatic` to `true`.
+ * 
+ * ----- Object creation begins ( = "lifecycle"): ------
+ * 
+ * 3. `this->onInit()` copies the value from `Object::createdOnHeapStatic` and
+ *    sets it to `this->createdOnHeap`
+ * 4. `this->onInit()` resets the value of `Object::createdOnHeapStatic` to
+ *    `false` as the default value for the next Object creation.
+ * 5. (Constructor is called here...)
+ * 6. Other interfaces can check if the Object was allocated on heap by
+ *    checking the value of `this->createdOnHeap`.
+ * 
+ * ----- The user calls the operator `delete`, may it be on purpose or by mistake ------
+ * 
+ * The `delete` operator now has an updated logic, that checks
+ * `this->createdOnHeap` to indicate whether it is required to delete the
+ * Object from the heap or not:
+ * @code
+ * if (obj->isCreatedOnHeap()) { ::operator delete(ptrToDelete); }
+ * @endcode
+ * 
+ * Thus, the user doesn't really need to know whether the Object was originally
+ * allocated on the heap or not. So now, it is possible to call the `delete`
+ * operator on any Object, even if it may be *stack-allocated* - and *without*
+ * causing a crash of `Invalid free() / delete / delete[] / realloc()`.
+ * 
+ * @version 1.0.2
  */
 class Object {
 
