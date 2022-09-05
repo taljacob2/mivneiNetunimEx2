@@ -6,7 +6,7 @@
 
 /**
  * @brief This class may serve as the root of all classes, because it gives
- *        them more functionalities and stability.
+ *        them more functionality and stability.
  *
  * @li This class enables the use of the `onInit()` method, which is being
  * invoked **before the constructor** and enables *lifecycle* to `this` object.
@@ -190,8 +190,9 @@ class Object {
      *
      * @see operatorNewPrivate(size_t)
      */
-    virtual void *invokeOperatorNew(size_t sz) { return operatorNewPrivate
-                                                 (sz); }
+    virtual void *invokeOperatorNew(size_t sz) {
+        return operatorNewPrivate(sz);
+    }
 
     /* --------------- operator `delete` --------------- */
 
