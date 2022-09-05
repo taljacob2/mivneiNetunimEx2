@@ -456,7 +456,6 @@ template<typename E> class Heap : public HeapAdt<E> {
                         currentIndex = getParentIndex(currentIndex);
                     }
                 } else {
-
                     /*
                      * Second stop condition:
                      * the parent is not smaller than its child. break.
@@ -499,7 +498,7 @@ template<typename E> class Heap : public HeapAdt<E> {
      *         is the given @p currentIndex.
      */
     static unsigned long getParentIndex(unsigned long currentIndex) {
-        return (unsigned long) (floor(((double) (currentIndex - 1)) / 2));
+        return floor(((double) (currentIndex - 1)) / 2);
     }
 
   protected:
